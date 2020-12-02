@@ -36,7 +36,7 @@
     "cweagans/composer-patches": "^1.6",
     "fastybird/database": "@dev",
     "fastybird/json-api": "@dev",
-    "fastybird/modules-metadata": "9999999-dev",
+    "fastybird/modules-metadata": "@dev",
     "fastybird/simple-auth": "@dev",
     "fastybird/web-server": "@dev",
     "ipub/doctrine-consistence": "^0.3",
