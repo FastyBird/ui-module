@@ -4,7 +4,7 @@
  * GroupedButton.php
  *
  * @license        More in license.md
- * @copyright      https://fastybird.com
+ * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
@@ -25,5 +25,4 @@ class GroupedButton extends Display implements IGroupedButton
 {
 
 	use Entities\Widgets\Display\Parameters\TIcon;
-
 }
