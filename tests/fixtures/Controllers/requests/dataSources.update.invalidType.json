@@ -1,0 +1,10 @@
+{
+  "data" : {
+    "id" : "764937a7-8565-472e-8e12-fe97cd55a377",
+    "type" : "ui-module/widget-invalid-data-source",
+    "attributes" : {
+      "channel" : "channel-other",
+      "property" : "action-property"
+    }
+  }
+}

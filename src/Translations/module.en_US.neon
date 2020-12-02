@@ -1,0 +1,116 @@
+#
+# Service translations
+#
+# @language		en_US
+#
+# @license		More in license.md
+# @copyright	https://fastybird.com
+# @author		Adam Kadlec <adam.kadlec@fastybird.com>
+# @package		FastyBird:UIModule!
+# @subpackage	Translations
+# @since		0.1.0
+#
+# @date			25.05.20
+#
+
+base:
+	messages:
+		notValidJson:
+			heading	: "Not valid content"
+			message	: "Provided request content is not valid JSON content"
+		notValidJsonApi:
+			heading	: "Not valid content"
+			message	: "Provided request content is not valid {JSON:API} content"
+		unknownRelation:
+			heading	: "Relation not found"
+			message	: "Requested unknown relation"
+		relationNotFound:
+			heading	: "Relation not found"
+			message	: "Requested relation %relation% was not found"
+		missingRequired:
+			heading	: "Missing required attribute"
+			message	: "Provided request is missing required attribute or relation"
+		invalid:
+			heading	: "Bad request"
+			message	: "Request resource identifier is invalid"
+		dashboardNotFound:
+			heading	: "Dashboard not found"
+			message	: "Requested dashboard was not found"
+		widgetNotFound:
+			heading	: "Widget not found"
+			message	: "Requested widget was not found"
+
+dashboards:
+	messages:
+		invalidType:
+			heading	: "Invalid type"
+			message	: "Provided dashboard entity type is not valid"
+		notCreated:
+			heading	: "System error"
+			message	: "Something went wrong, dashboard could not be created"
+		notUpdated:
+			heading	: "System error"
+			message	: "Something went wrong, dashboard could not be updated"
+		notDeleted:
+			heading	: "System error"
+			message	: "Something went wrong, dashboard could not be deleted"
+
+groups:
+	messages:
+		invalidType:
+			heading	: "Invalid type"
+			message	: "Provided group entity type is not valid"
+		notCreated:
+			heading	: "System error"
+			message	: "Something went wrong, group could not be created"
+		notUpdated:
+			heading	: "System error"
+			message	: "Something went wrong, group could not be updated"
+		notDeleted:
+			heading	: "System error"
+			message	: "Something went wrong, group could not be deleted"
+		notFound:
+			heading	: "Group not found"
+			message	: "Requested group was not found"
+
+widgets:
+	messages:
+		invalidType:
+			heading	: "Invalid type"
+			message	: "Provided widget entity type is not valid"
+		notCreated:
+			heading	: "System error"
+			message	: "Something went wrong, widget could not be created"
+		notUpdated:
+			heading	: "System error"
+			message	: "Something went wrong, widget could not be updated"
+		notDeleted:
+			heading	: "System error"
+			message	: "Something went wrong, widget could not be deleted"
+
+display:
+	messages:
+		invalidType:
+			heading	: "Invalid type"
+			message	: "Provided widget display entity type is not valid"
+		notUpdated:
+			heading	: "System error"
+			message	: "Something went wrong, widget display could not be updated"
+
+dataSources:
+	messages:
+		invalidType:
+			heading	: "Invalid type"
+			message	: "Provided data source entity type is not valid"
+		notCreated:
+			heading	: "System error"
+			message	: "Something went wrong, data source could not be created"
+		notUpdated:
+			heading	: "System error"
+			message	: "Something went wrong, data source could not be updated"
+		notDeleted:
+			heading	: "System error"
+			message	: "Something went wrong, data source could not be deleted"
+		notFound:
+			heading	: "Group not found"
+			message	: "Requested data source was not found"

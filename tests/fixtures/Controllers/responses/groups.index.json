@@ -1,0 +1,76 @@
+{
+  "data" : [
+    {
+      "attributes" : {
+        "comment" : null,
+        "name" : "House heaters",
+        "params" : [],
+        "priority" : 0
+      },
+      "id" : "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263",
+      "links" : {
+        "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263"
+      },
+      "relationships" : {
+        "dashboard" : {
+          "data" : {
+            "id" : "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
+            "type" : "ui-module/dashboard"
+          },
+          "links" : {
+            "related" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c",
+            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263/relationships/dashboard"
+          }
+        },
+        "widgets" : {
+          "data" : [],
+          "links" : {
+            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263/relationships/widgets"
+          }
+        }
+      },
+      "type" : "ui-module/group"
+    },
+    {
+      "attributes" : {
+        "comment" : null,
+        "name" : "Main lights",
+        "params" : [],
+        "priority" : 0
+      },
+      "id" : "d721529e-dec6-47c8-8035-a3484070142b",
+      "links" : {
+        "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/d721529e-dec6-47c8-8035-a3484070142b"
+      },
+      "relationships" : {
+        "dashboard" : {
+          "data" : {
+            "id" : "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
+            "type" : "ui-module/dashboard"
+          },
+          "links" : {
+            "related" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c",
+            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/d721529e-dec6-47c8-8035-a3484070142b/relationships/dashboard"
+          }
+        },
+        "widgets" : {
+          "data" : [],
+          "links" : {
+            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/d721529e-dec6-47c8-8035-a3484070142b/relationships/widgets"
+          }
+        }
+      },
+      "type" : "ui-module/group"
+    }
+  ],
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}

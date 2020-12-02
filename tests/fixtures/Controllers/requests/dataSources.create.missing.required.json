@@ -1,0 +1,17 @@
+{
+  "data" : {
+    "id" : "0c96af0b-d5be-4e1b-81e6-0d02415b4d1b",
+    "type" : "ui-module/widget-channel-data-source",
+    "attributes" : {
+      "property" : "action-property"
+    },
+    "relationships" : {
+      "widget" : {
+        "data" : {
+          "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+          "type" : "ui-module/widget-analog-sensor"
+        }
+      }
+    }
+  }
+}

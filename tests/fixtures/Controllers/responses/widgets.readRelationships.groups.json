@@ -1,0 +1,18 @@
+{
+  "data" : [
+    {
+      "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+      "type" : "ui-module/group"
+    }
+  ],
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}

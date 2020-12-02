@@ -1,0 +1,17 @@
+{
+  "data" : {
+    "id" : "467e6d4d-3545-481b-b613-53be7e9aa641",
+    "type" : "ui-module/widget-display-chart-graph"
+  },
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display",
+    "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}

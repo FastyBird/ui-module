@@ -1,0 +1,35 @@
+{
+  "data" : {
+    "attributes" : {
+      "channel" : "channel-two",
+      "property" : "action-property"
+    },
+    "id" : "0c96af0b-d5be-4e1b-81e6-0d02415b4d1b",
+    "links" : {
+      "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/0c96af0b-d5be-4e1b-81e6-0d02415b4d1b"
+    },
+    "relationships" : {
+      "widget" : {
+        "data" : {
+          "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+          "type" : "ui-module/widget-analog-sensor"
+        },
+        "links" : {
+          "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96",
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/widget"
+        }
+      }
+    },
+    "type" : "ui-module/widget-channel-data-source"
+  },
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "data" : {
+    "attributes" : {
+      "name" : "Room temperature",
+      "params" : []
+    },
+    "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+    "links" : {
+      "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96"
+    },
+    "relationships" : {
+      "data-sources" : {
+        "data" : [
+          {
+            "id" : "764937a7-8565-472e-8e12-fe97cd55a377",
+            "type" : "ui-module/widget-channel-data-source"
+          }
+        ],
+        "links" : {
+          "related" : {
+            "href" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources",
+            "meta" : {
+              "count" : 1
+            }
+          },
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources"
+        }
+      },
+      "display" : {
+        "data" : {
+          "id" : "467e6d4d-3545-481b-b613-53be7e9aa641",
+          "type" : "ui-module/widget-display-chart-graph"
+        },
+        "links" : {
+          "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display",
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display"
+        }
+      },
+      "groups" : {
+        "data" : [
+          {
+            "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+            "type" : "ui-module/group"
+          }
+        ],
+        "links" : {
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups"
+        }
+      }
+    },
+    "type" : "ui-module/widget-analog-sensor"
+  },
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}

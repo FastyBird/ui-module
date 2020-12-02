@@ -1,0 +1,218 @@
+{
+  "data" : [
+    {
+      "attributes" : {
+        "name" : "Room temperature",
+        "params" : []
+      },
+      "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+      "links" : {
+        "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96"
+      },
+      "relationships" : {
+        "data-sources" : {
+          "data" : [
+            {
+              "id" : "764937a7-8565-472e-8e12-fe97cd55a377",
+              "type" : "ui-module/widget-channel-data-source"
+            }
+          ],
+          "links" : {
+            "related" : {
+              "href" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources",
+              "meta" : {
+                "count" : 1
+              }
+            },
+            "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources"
+          }
+        },
+        "display" : {
+          "data" : {
+            "id" : "467e6d4d-3545-481b-b613-53be7e9aa641",
+            "type" : "ui-module/widget-display-chart-graph"
+          },
+          "links" : {
+            "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display",
+            "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display"
+          }
+        },
+        "groups" : {
+          "data" : [
+            {
+              "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+              "type" : "ui-module/group"
+            }
+          ],
+          "links" : {
+            "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups"
+          }
+        }
+      },
+      "type" : "ui-module/widget-analog-sensor"
+    },
+    {
+      "attributes" : {
+        "name" : "Ambient light",
+        "params" : []
+      },
+      "id" : "1d600901-54e7-43ee-8f5d-a9e22663ddd7",
+      "links" : {
+        "self" : "/v1/widgets/1d600901-54e7-43ee-8f5d-a9e22663ddd7"
+      },
+      "relationships" : {
+        "data-sources" : {
+          "data" : [
+            {
+              "id" : "32dd50e4-4b66-4dea-9bc5-e835f8543dc4",
+              "type" : "ui-module/widget-channel-data-source"
+            }
+          ],
+          "links" : {
+            "related" : {
+              "href" : "/v1/widgets/1d600901-54e7-43ee-8f5d-a9e22663ddd7/data-sources",
+              "meta" : {
+                "count" : 1
+              }
+            },
+            "self" : "/v1/widgets/1d600901-54e7-43ee-8f5d-a9e22663ddd7/relationships/data-sources"
+          }
+        },
+        "display" : {
+          "data" : {
+            "id" : "56a01a18-8da1-4368-824e-3e1b2e28bdf1",
+            "type" : "ui-module/widget-display-slider"
+          },
+          "links" : {
+            "related" : "/v1/widgets/1d600901-54e7-43ee-8f5d-a9e22663ddd7/display",
+            "self" : "/v1/widgets/1d600901-54e7-43ee-8f5d-a9e22663ddd7/relationships/display"
+          }
+        },
+        "groups" : {
+          "data" : [
+            {
+              "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+              "type" : "ui-module/group"
+            }
+          ],
+          "links" : {
+            "self" : "/v1/widgets/1d600901-54e7-43ee-8f5d-a9e22663ddd7/relationships/groups"
+          }
+        }
+      },
+      "type" : "ui-module/widget-analog-actuator"
+    },
+    {
+      "attributes" : {
+        "name" : "TV light",
+        "params" : []
+      },
+      "id" : "5626e7a1-c42c-4a31-9b5d-848e3cf0e82a",
+      "links" : {
+        "self" : "/v1/widgets/5626e7a1-c42c-4a31-9b5d-848e3cf0e82a"
+      },
+      "relationships" : {
+        "data-sources" : {
+          "data" : [
+            {
+              "id" : "ffe067c8-8c02-4c2c-b8dd-05256a121215",
+              "type" : "ui-module/widget-channel-data-source"
+            }
+          ],
+          "links" : {
+            "related" : {
+              "href" : "/v1/widgets/5626e7a1-c42c-4a31-9b5d-848e3cf0e82a/data-sources",
+              "meta" : {
+                "count" : 1
+              }
+            },
+            "self" : "/v1/widgets/5626e7a1-c42c-4a31-9b5d-848e3cf0e82a/relationships/data-sources"
+          }
+        },
+        "display" : {
+          "data" : {
+            "id" : "2ea64d79-0d7d-43d9-be3b-51f9ade849fc",
+            "type" : "ui-module/widget-display-button"
+          },
+          "links" : {
+            "related" : "/v1/widgets/5626e7a1-c42c-4a31-9b5d-848e3cf0e82a/display",
+            "self" : "/v1/widgets/5626e7a1-c42c-4a31-9b5d-848e3cf0e82a/relationships/display"
+          }
+        },
+        "groups" : {
+          "data" : [
+            {
+              "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+              "type" : "ui-module/group"
+            }
+          ],
+          "links" : {
+            "self" : "/v1/widgets/5626e7a1-c42c-4a31-9b5d-848e3cf0e82a/relationships/groups"
+          }
+        }
+      },
+      "type" : "ui-module/widget-digital-actuator"
+    },
+    {
+      "attributes" : {
+        "name" : "Main light",
+        "params" : []
+      },
+      "id" : "9a914732-98dc-47f6-bfd1-9d81ca9f8cb6",
+      "links" : {
+        "self" : "/v1/widgets/9a914732-98dc-47f6-bfd1-9d81ca9f8cb6"
+      },
+      "relationships" : {
+        "data-sources" : {
+          "data" : [
+            {
+              "id" : "cd96aa91-a0a4-4a6c-9d68-2e0754a0a56d",
+              "type" : "ui-module/widget-channel-data-source"
+            }
+          ],
+          "links" : {
+            "related" : {
+              "href" : "/v1/widgets/9a914732-98dc-47f6-bfd1-9d81ca9f8cb6/data-sources",
+              "meta" : {
+                "count" : 1
+              }
+            },
+            "self" : "/v1/widgets/9a914732-98dc-47f6-bfd1-9d81ca9f8cb6/relationships/data-sources"
+          }
+        },
+        "display" : {
+          "data" : {
+            "id" : "fd47e9af-1120-458f-8f30-adebac933406",
+            "type" : "ui-module/widget-display-button"
+          },
+          "links" : {
+            "related" : "/v1/widgets/9a914732-98dc-47f6-bfd1-9d81ca9f8cb6/display",
+            "self" : "/v1/widgets/9a914732-98dc-47f6-bfd1-9d81ca9f8cb6/relationships/display"
+          }
+        },
+        "groups" : {
+          "data" : [
+            {
+              "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+              "type" : "ui-module/group"
+            }
+          ],
+          "links" : {
+            "self" : "/v1/widgets/9a914732-98dc-47f6-bfd1-9d81ca9f8cb6/relationships/groups"
+          }
+        }
+      },
+      "type" : "ui-module/widget-digital-actuator"
+    }
+  ],
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "self" : "/v1/widgets"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}

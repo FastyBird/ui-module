@@ -1,0 +1,114 @@
+{
+  "data" : {
+    "attributes" : {
+      "name" : "Updated widget",
+      "params" : []
+    },
+    "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+    "links" : {
+      "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96"
+    },
+    "relationships" : {
+      "data-sources" : {
+        "data" : [
+          {
+            "id" : "764937a7-8565-472e-8e12-fe97cd55a377",
+            "type" : "ui-module/widget-channel-data-source"
+          }
+        ],
+        "links" : {
+          "related" : {
+            "href" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources",
+            "meta" : {
+              "count" : 1
+            }
+          },
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/data-sources"
+        }
+      },
+      "display" : {
+        "data" : {
+          "id" : "467e6d4d-3545-481b-b613-53be7e9aa641",
+          "type" : "ui-module/widget-display-chart-graph"
+        },
+        "links" : {
+          "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display",
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/display"
+        }
+      },
+      "groups" : {
+        "data" : [
+          {
+            "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+            "type" : "ui-module/group"
+          }
+        ],
+        "links" : {
+          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/relationships/groups"
+        }
+      }
+    },
+    "type" : "ui-module/widget-analog-sensor"
+  },
+  "included" : [
+    {
+      "attributes" : {
+        "enable_min_max" : false,
+        "maximum_value" : 40,
+        "minimum_value" : 5,
+        "precision" : 0,
+        "step_value" : 0.1
+      },
+      "id" : "467e6d4d-3545-481b-b613-53be7e9aa641",
+      "links" : {
+        "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display"
+      },
+      "relationships" : {
+        "widget" : {
+          "data" : {
+            "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+            "type" : "ui-module/widget-analog-sensor"
+          },
+          "links" : {
+            "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96",
+            "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/widget"
+          }
+        }
+      },
+      "type" : "ui-module/widget-display-chart-graph"
+    },
+    {
+      "attributes" : {
+        "channel" : "channel-one",
+        "property" : "action-property"
+      },
+      "id" : "764937a7-8565-472e-8e12-fe97cd55a377",
+      "links" : {
+        "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377"
+      },
+      "relationships" : {
+        "widget" : {
+          "data" : {
+            "id" : "15553443-4564-454d-af04-0dfeef08aa96",
+            "type" : "ui-module/widget-analog-sensor"
+          },
+          "links" : {
+            "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96",
+            "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/widget"
+          }
+        }
+      },
+      "type" : "ui-module/widget-channel-data-source"
+    }
+  ],
+  "jsonapi" : {
+    "version" : "1.1"
+  },
+  "links" : {
+    "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96?include=display,data-sources"
+  },
+  "meta" : {
+    "author" : "FastyBird dev team",
+    "copyright" : "FastyBird s.r.o"
+  }
+}
