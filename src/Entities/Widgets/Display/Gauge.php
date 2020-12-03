@@ -25,4 +25,5 @@ class Gauge extends Display implements IGauge
 {
 
 	use Entities\Widgets\Display\Parameters\TPrecision;
+
 }

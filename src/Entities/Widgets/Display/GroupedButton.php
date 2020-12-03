@@ -25,4 +25,5 @@ class GroupedButton extends Display implements IGroupedButton
 {
 
 	use Entities\Widgets\Display\Parameters\TIcon;
+
 }
