@@ -116,8 +116,7 @@ class Router extends Routing\Router
 				$route->setName('dashboard.relationship');
 			});
 
-			$group->group('/dashboards/{' . self::URL_DASHBOARD_ID . '}', function (Routing\RouteCollector $group
-			): void {
+			$group->group('/dashboards/{' . self::URL_DASHBOARD_ID . '}', function (Routing\RouteCollector $group): void {
 				$group->group('/groups', function (Routing\RouteCollector $group): void {
 					/**
 					 * DASHBOARD GROUPS
