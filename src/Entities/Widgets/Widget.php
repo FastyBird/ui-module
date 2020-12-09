@@ -122,17 +122,25 @@ abstract class Widget implements IWidget
 	/**
 	 * {@inheritDoc
 	 */
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+	/**
+	 * {@inheritDoc
+	 */
 	public function setName(string $name): void
 	{
 		$this->name = $name;
 	}
 
 	/**
-	 * {@inheritDoc
+	 * {@inheritDoc}
 	 */
-	public function getName(): string
+	public function getDisplay(): Entities\Widgets\Display\IDisplay
 	{
-		return $this->name;
+		return $this->display;
 	}
 
 	/**
@@ -158,9 +166,21 @@ abstract class Widget implements IWidget
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getDisplay(): Entities\Widgets\Display\IDisplay
+	public function addDataSource(Entities\Widgets\DataSources\IDataSource $dataSource): void
 	{
-		return $this->display;
+		// Check if collection does not contain inserting entity
+		if (!$this->dataSources->contains($dataSource)) {
+			// ...and assign it to collection
+			$this->dataSources->add($dataSource);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getDataSources(): array
+	{
+		return $this->dataSources->toArray();
 	}
 
 	/**
@@ -178,26 +198,6 @@ abstract class Widget implements IWidget
 				$this->dataSources->add($entity);
 			}
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function addDataSource(Entities\Widgets\DataSources\IDataSource $dataSource): void
-	{
-		// Check if collection does not contain inserting entity
-		if (!$this->dataSources->contains($dataSource)) {
-			// ...and assign it to collection
-			$this->dataSources->add($dataSource);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDataSources(): array
-	{
-		return $this->dataSources->toArray();
 	}
 
 	/**
@@ -232,25 +232,6 @@ abstract class Widget implements IWidget
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setGroups(array $groups = []): void
-	{
-		$this->groups = new Common\Collections\ArrayCollection();
-
-		// Process all passed entities...
-		/** @var Entities\Groups\IGroup $entity */
-		foreach ($groups as $entity) {
-			if (!$this->groups->contains($entity)) {
-				$entity->addWidget($this);
-
-				// ...and assign them to collection
-				$this->groups->add($entity);
-			}
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function addGroup(Entities\Groups\IGroup $group): void
 	{
 		$this->groups = new Common\Collections\ArrayCollection();
@@ -270,6 +251,25 @@ abstract class Widget implements IWidget
 	public function getGroups(): array
 	{
 		return $this->groups->toArray();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setGroups(array $groups = []): void
+	{
+		$this->groups = new Common\Collections\ArrayCollection();
+
+		// Process all passed entities...
+		/** @var Entities\Groups\IGroup $entity */
+		foreach ($groups as $entity) {
+			if (!$this->groups->contains($entity)) {
+				$entity->addWidget($this);
+
+				// ...and assign them to collection
+				$this->groups->add($entity);
+			}
+		}
 	}
 
 	/**

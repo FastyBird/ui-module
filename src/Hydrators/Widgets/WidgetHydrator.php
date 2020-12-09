@@ -60,11 +60,11 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		Schemas\Widgets\WidgetSchema::RELATIONSHIPS_DATA_SOURCES => 'dataSources',
 	];
 
-	/** @var Models\Groups\IGroupRepository */
-	private $groupRepository;
-
 	/** @var string */
 	protected $translationDomain = 'module.widgets';
+
+	/** @var Models\Groups\IGroupRepository */
+	private $groupRepository;
 
 	/**
 	 * @param Models\Groups\IGroupRepository $groupRepository
@@ -124,120 +124,6 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		);
 
 		return $result;
-	}
-
-	/**
-	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
-	 *
-	 * @return mixed[]
-	 *
-	 * @throws JsonApiExceptions\IJsonApiException
-	 */
-	protected function hydrateDataSourcesRelationship(
-		JsonAPIDocument\Objects\IRelationship $relationship,
-		?JsonAPIDocument\Objects\IResourceObjectCollection $included
-	): array {
-		if ($included === null) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.missingDataSource.heading'),
-				$this->translator->translate('messages.missingDataSource.message'),
-				[
-					'pointer' => '/data/relationships/data-sources/data/id',
-				]
-			);
-		}
-
-		$dataSources = [];
-
-		foreach ($relationship as $dataSourcesRelation) {
-			/** @var stdClass $dataSourceRelation */
-			foreach ($dataSourcesRelation as $dataSourceRelation) {
-				if ($dataSourceRelation->type === Schemas\Widgets\DataSources\ChannelPropertyDataSourceSchema::SCHEMA_TYPE) {
-					foreach ($included->getAll() as $item) {
-						if ($item->getIdentifier()->getId() === $dataSourceRelation->id) {
-							$dataSources[] = [
-								'entity'   => Entities\Widgets\DataSources\ChannelPropertyDataSource::class,
-								'channel'  => $item->getAttributes()->get('channel'),
-								'property' => $item->getAttributes()->get('property'),
-							];
-						}
-					}
-				}
-			}
-		}
-
-		if ($dataSources === []) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.missingDataSource.heading'),
-				$this->translator->translate('messages.missingDataSource.message'),
-				[
-					'pointer' => '/data/relationships/data-sources/data/id',
-				]
-			);
-		}
-
-		return $dataSources;
-	}
-
-	/**
-	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
-	 *
-	 * @return mixed[]|null
-	 *
-	 * @throws JsonApiExceptions\IJsonApiException
-	 */
-	protected function hydrateGroupsRelationship(
-		JsonAPIDocument\Objects\IRelationship $relationship,
-		?JsonAPIDocument\Objects\IResourceObjectCollection $included
-	): ?array {
-		if (!$relationship->isHasMany()) {
-			return null;
-		}
-
-		$groups = [];
-
-		foreach ($relationship as $groupsRelation) {
-			/** @var stdClass $groupRelation */
-			foreach ($groupsRelation as $groupRelation) {
-				try {
-					$findQuery = new Queries\FindGroupsQuery();
-					$findQuery->byId(Uuid\Uuid::fromString($groupRelation->id));
-
-					$group = $this->groupRepository->findOneBy($findQuery);
-
-					if ($group !== null) {
-						$groups[] = $group;
-					}
-
-				} catch (Uuid\Exception\InvalidUuidStringException $ex) {
-					throw new JsonApiExceptions\JsonApiErrorException(
-						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-						$this->translator->translate('//module.base.messages.invalid.heading'),
-						$this->translator->translate('//module.base.messages.invalid.message'),
-						[
-							'pointer' => '/data/relationships/groups/data/id',
-						]
-					);
-				}
-			}
-		}
-
-		if ($groups === []) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.missingGroups.heading'),
-				$this->translator->translate('messages.missingGroups.message'),
-				[
-					'pointer' => '/data/relationships/groups/data/id',
-				]
-			);
-		}
-
-		return $groups;
 	}
 
 	/**
@@ -367,6 +253,120 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
+	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 *
+	 * @return mixed[]
+	 *
+	 * @throws JsonApiExceptions\IJsonApiException
+	 */
+	protected function hydrateDataSourcesRelationship(
+		JsonAPIDocument\Objects\IRelationship $relationship,
+		?JsonAPIDocument\Objects\IResourceObjectCollection $included
+	): array {
+		if ($included === null) {
+			throw new JsonApiExceptions\JsonApiErrorException(
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				$this->translator->translate('messages.missingDataSource.heading'),
+				$this->translator->translate('messages.missingDataSource.message'),
+				[
+					'pointer' => '/data/relationships/data-sources/data/id',
+				]
+			);
+		}
+
+		$dataSources = [];
+
+		foreach ($relationship as $dataSourcesRelation) {
+			/** @var stdClass $dataSourceRelation */
+			foreach ($dataSourcesRelation as $dataSourceRelation) {
+				if ($dataSourceRelation->type === Schemas\Widgets\DataSources\ChannelPropertyDataSourceSchema::SCHEMA_TYPE) {
+					foreach ($included->getAll() as $item) {
+						if ($item->getIdentifier()->getId() === $dataSourceRelation->id) {
+							$dataSources[] = [
+								'entity'   => Entities\Widgets\DataSources\ChannelPropertyDataSource::class,
+								'channel'  => $item->getAttributes()->get('channel'),
+								'property' => $item->getAttributes()->get('property'),
+							];
+						}
+					}
+				}
+			}
+		}
+
+		if ($dataSources === []) {
+			throw new JsonApiExceptions\JsonApiErrorException(
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				$this->translator->translate('messages.missingDataSource.heading'),
+				$this->translator->translate('messages.missingDataSource.message'),
+				[
+					'pointer' => '/data/relationships/data-sources/data/id',
+				]
+			);
+		}
+
+		return $dataSources;
+	}
+
+	/**
+	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
+	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 *
+	 * @return mixed[]|null
+	 *
+	 * @throws JsonApiExceptions\IJsonApiException
+	 */
+	protected function hydrateGroupsRelationship(
+		JsonAPIDocument\Objects\IRelationship $relationship,
+		?JsonAPIDocument\Objects\IResourceObjectCollection $included
+	): ?array {
+		if (!$relationship->isHasMany()) {
+			return null;
+		}
+
+		$groups = [];
+
+		foreach ($relationship as $groupsRelation) {
+			/** @var stdClass $groupRelation */
+			foreach ($groupsRelation as $groupRelation) {
+				try {
+					$findQuery = new Queries\FindGroupsQuery();
+					$findQuery->byId(Uuid\Uuid::fromString($groupRelation->id));
+
+					$group = $this->groupRepository->findOneBy($findQuery);
+
+					if ($group !== null) {
+						$groups[] = $group;
+					}
+
+				} catch (Uuid\Exception\InvalidUuidStringException $ex) {
+					throw new JsonApiExceptions\JsonApiErrorException(
+						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+						$this->translator->translate('//module.base.messages.invalid.heading'),
+						$this->translator->translate('//module.base.messages.invalid.message'),
+						[
+							'pointer' => '/data/relationships/groups/data/id',
+						]
+					);
+				}
+			}
+		}
+
+		if ($groups === []) {
+			throw new JsonApiExceptions\JsonApiErrorException(
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				$this->translator->translate('messages.missingGroups.heading'),
+				$this->translator->translate('messages.missingGroups.message'),
+				[
+					'pointer' => '/data/relationships/groups/data/id',
+				]
+			);
+		}
+
+		return $groups;
 	}
 
 }

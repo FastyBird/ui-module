@@ -78,11 +78,11 @@ class FindDashboardsQuery extends DoctrineOrmQuery\QueryObject
 	 *
 	 * @phpstan-param ORM\EntityRepository<T> $repository
 	 */
-	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
+	private function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
-		$qb = $this->createBasicDql($repository)->select('COUNT(d.id)');
+		$qb = $repository->createQueryBuilder('d');
 
-		foreach ($this->select as $modifier) {
+		foreach ($this->filter as $modifier) {
 			$modifier($qb);
 		}
 
@@ -96,11 +96,11 @@ class FindDashboardsQuery extends DoctrineOrmQuery\QueryObject
 	 *
 	 * @phpstan-param ORM\EntityRepository<T> $repository
 	 */
-	private function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
+	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
-		$qb = $repository->createQueryBuilder('d');
+		$qb = $this->createBasicDql($repository)->select('COUNT(d.id)');
 
-		foreach ($this->filter as $modifier) {
+		foreach ($this->select as $modifier) {
 			$modifier($qb);
 		}
 

@@ -37,11 +37,11 @@ final class DashboardRepository implements IDashboardRepository
 
 	use Nette\SmartObject;
 
-	/** @var Common\Persistence\ManagerRegistry */
-	private $managerRegistry;
-
 	/** @var Persistence\ObjectRepository<Entities\Dashboards\Dashboard>|null */
 	public $repository = null;
+
+	/** @var Common\Persistence\ManagerRegistry */
+	private $managerRegistry;
 
 	public function __construct(Common\Persistence\ManagerRegistry $managerRegistry)
 	{
@@ -57,6 +57,18 @@ final class DashboardRepository implements IDashboardRepository
 		$dashboard = $queryObject->fetchOne($this->getRepository());
 
 		return $dashboard;
+	}
+
+	/**
+	 * @return Persistence\ObjectRepository<Entities\Dashboards\Dashboard>
+	 */
+	private function getRepository(): Persistence\ObjectRepository
+	{
+		if ($this->repository === null) {
+			$this->repository = $this->managerRegistry->getRepository(Entities\Dashboards\Dashboard::class);
+		}
+
+		return $this->repository;
 	}
 
 	/**
@@ -86,18 +98,6 @@ final class DashboardRepository implements IDashboardRepository
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @return Persistence\ObjectRepository<Entities\Dashboards\Dashboard>
-	 */
-	private function getRepository(): Persistence\ObjectRepository
-	{
-		if ($this->repository === null) {
-			$this->repository = $this->managerRegistry->getRepository(Entities\Dashboards\Dashboard::class);
-		}
-
-		return $this->repository;
 	}
 
 }

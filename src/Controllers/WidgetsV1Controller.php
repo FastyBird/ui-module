@@ -42,6 +42,9 @@ final class WidgetsV1Controller extends BaseV1Controller
 
 	use Controllers\Finders\TWidgetFinder;
 
+	/** @var string */
+	protected $translationDomain = 'module.widgets';
+
 	/** @var Hydrators\Widgets\AnalogActuatorWidgetHydrator */
 	private $analogActuatorHydrator;
 
@@ -59,9 +62,6 @@ final class WidgetsV1Controller extends BaseV1Controller
 
 	/** @var Models\Widgets\IWidgetsManager */
 	private $widgetsManager;
-
-	/** @var string */
-	protected $translationDomain = 'module.widgets';
 
 	/**
 	 * @param Models\Widgets\IWidgetRepository $widgetRepository

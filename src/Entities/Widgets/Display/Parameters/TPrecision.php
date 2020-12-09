@@ -39,6 +39,14 @@ trait TPrecision
 	protected $precision;
 
 	/**
+	 * @return int
+	 */
+	public function getPrecision(): int
+	{
+		return (int) $this->getParam('precision', 2);
+	}
+
+	/**
 	 * @param int|null $precision
 	 *
 	 * @return void
@@ -48,14 +56,6 @@ trait TPrecision
 		$this->precision = $precision;
 
 		$this->setParam('precision', $precision);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getPrecision(): int
-	{
-		return (int) $this->getParam('precision', 2);
 	}
 
 }

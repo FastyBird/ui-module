@@ -48,12 +48,30 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 {
 
 	/**
+	 * @param Nette\Configurator $config
+	 * @param string $extensionName
+	 *
+	 * @return void
+	 */
+	public static function register(
+		Nette\Configurator $config,
+		string $extensionName = 'fbUiModule'
+	): void {
+		$config->onCompile[] = function (
+			Nette\Configurator $config,
+			DI\Compiler $compiler
+		) use ($extensionName): void {
+			$compiler->addExtension($extensionName, new UIModuleExtension());
+		};
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
-			'keys'    => Schema\Expect::string()->default(null),
+			'keys' => Schema\Expect::string()->default(null),
 			'origins' => Schema\Expect::string()->default(null),
 		]);
 	}
@@ -265,7 +283,10 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		$ormAnnotationDriverChainService = $builder->getDefinitionByType(Persistence\Mapping\Driver\MappingDriverChain::class);
 
 		if ($ormAnnotationDriverChainService instanceof DI\Definitions\ServiceDefinition) {
-			$ormAnnotationDriverChainService->addSetup('addDriver', [$ormAnnotationDriverService, 'FastyBird\UIModule\Entities']);
+			$ormAnnotationDriverChainService->addSetup('addDriver', [
+				$ormAnnotationDriverService,
+				'FastyBird\UIModule\Entities',
+			]);
 		}
 
 		/**
@@ -328,24 +349,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		return [
 			__DIR__ . '/../Translations',
 		];
-	}
-
-	/**
-	 * @param Nette\Configurator $config
-	 * @param string $extensionName
-	 *
-	 * @return void
-	 */
-	public static function register(
-		Nette\Configurator $config,
-		string $extensionName = 'fbUiModule'
-	): void {
-		$config->onCompile[] = function (
-			Nette\Configurator $config,
-			DI\Compiler $compiler
-		) use ($extensionName): void {
-			$compiler->addExtension($extensionName, new UIModuleExtension());
-		};
 	}
 
 }

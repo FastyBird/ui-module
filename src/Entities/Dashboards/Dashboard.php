@@ -108,14 +108,6 @@ class Dashboard implements IDashboard
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setName(string $name): void
-	{
-		$this->name = $name;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getName(): string
 	{
 		return $this->name;
@@ -124,9 +116,9 @@ class Dashboard implements IDashboard
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setComment(?string $comment = null): void
+	public function setName(string $name): void
 	{
-		$this->comment = $comment;
+		$this->name = $name;
 	}
 
 	/**
@@ -140,9 +132,9 @@ class Dashboard implements IDashboard
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setPriority(int $priority): void
+	public function setComment(?string $comment = null): void
 	{
-		$this->priority = $priority;
+		$this->comment = $comment;
 	}
 
 	/**
@@ -156,18 +148,9 @@ class Dashboard implements IDashboard
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setGroups(array $groups = []): void
+	public function setPriority(int $priority): void
 	{
-		$this->groups = new Common\Collections\ArrayCollection();
-
-		// Process all passed entities...
-		/** @var Entities\Groups\IGroup $entity */
-		foreach ($groups as $entity) {
-			if (!$this->groups->contains($entity)) {
-				// ...and assign them to collection
-				$this->groups->add($entity);
-			}
-		}
+		$this->priority = $priority;
 	}
 
 	/**
@@ -188,6 +171,23 @@ class Dashboard implements IDashboard
 	public function getGroups(): array
 	{
 		return $this->groups->toArray();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setGroups(array $groups = []): void
+	{
+		$this->groups = new Common\Collections\ArrayCollection();
+
+		// Process all passed entities...
+		/** @var Entities\Groups\IGroup $entity */
+		foreach ($groups as $entity) {
+			if (!$this->groups->contains($entity)) {
+				// ...and assign them to collection
+				$this->groups->add($entity);
+			}
+		}
 	}
 
 	/**

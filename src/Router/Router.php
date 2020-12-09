@@ -109,11 +109,15 @@ class Router extends Routing\Router
 
 				$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->dashboardsV1Controller, 'delete']);
 
-				$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [$this->dashboardsV1Controller, 'readRelationship']);
+				$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [
+					$this->dashboardsV1Controller,
+					'readRelationship',
+				]);
 				$route->setName('dashboard.relationship');
 			});
 
-			$group->group('/dashboards/{' . self::URL_DASHBOARD_ID . '}', function (Routing\RouteCollector $group): void {
+			$group->group('/dashboards/{' . self::URL_DASHBOARD_ID . '}', function (Routing\RouteCollector $group
+			): void {
 				$group->group('/groups', function (Routing\RouteCollector $group): void {
 					/**
 					 * DASHBOARD GROUPS
@@ -130,7 +134,10 @@ class Router extends Routing\Router
 
 					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->groupsV1Controller, 'delete']);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [$this->groupsV1Controller, 'readRelationship']);
+					$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [
+						$this->groupsV1Controller,
+						'readRelationship',
+					]);
 					$route->setName('dashboard.group.relationship');
 				});
 			});
@@ -151,7 +158,10 @@ class Router extends Routing\Router
 
 				$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->widgetsV1Controller, 'delete']);
 
-				$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [$this->widgetsV1Controller, 'readRelationship']);
+				$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [
+					$this->widgetsV1Controller,
+					'readRelationship',
+				]);
 				$route->setName('widget.relationship');
 			});
 
@@ -165,7 +175,10 @@ class Router extends Routing\Router
 
 					$group->patch('', [$this->displayV1Controller, 'update']);
 
-					$route = $group->get('/relationships/{' . self::RELATION_ENTITY . '}', [$this->displayV1Controller, 'readRelationship']);
+					$route = $group->get('/relationships/{' . self::RELATION_ENTITY . '}', [
+						$this->displayV1Controller,
+						'readRelationship',
+					]);
 					$route->setName('widget.display.relationship');
 				});
 
@@ -185,7 +198,10 @@ class Router extends Routing\Router
 
 					$group->delete('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'delete']);
 
-					$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [$this->dataSourceV1Controller, 'readRelationship']);
+					$route = $group->get('/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}', [
+						$this->dataSourceV1Controller,
+						'readRelationship',
+					]);
 					$route->setName('widget.data-source.relationship');
 				});
 			});

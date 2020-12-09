@@ -44,6 +44,12 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 	use Controllers\Finders\TWidgetFinder;
 
+	/** @var Models\Widgets\IWidgetRepository */
+	protected $widgetRepository;
+
+	/** @var string */
+	protected $translationDomain = 'module.dataSources';
+
 	/** @var Models\Widgets\DataSources\IDataSourceRepository */
 	private $dataSourceRepository;
 
@@ -52,12 +58,6 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 	/** @var Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator */
 	private $channelDataSourceHydrator;
-
-	/** @var Models\Widgets\IWidgetRepository */
-	protected $widgetRepository;
-
-	/** @var string */
-	protected $translationDomain = 'module.dataSources';
 
 	/**
 	 * @param Models\Widgets\DataSources\IDataSourceRepository $dataSourceRepository
@@ -120,6 +120,44 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 		return $response
 			->withEntity(WebServerHttp\ScalarEntity::from($dataSource));
+	}
+
+	/**
+	 * @param string $id
+	 * @param Entities\Widgets\IWidget $widget
+	 *
+	 * @return Entities\Widgets\DataSources\IDataSource
+	 *
+	 * @throws JsonApiExceptions\IJsonApiException
+	 */
+	private function findDataSource(
+		string $id,
+		Entities\Widgets\IWidget $widget
+	): Entities\Widgets\DataSources\IDataSource {
+		try {
+			$findQuery = new Queries\FindDataSourcesQuery();
+			$findQuery->byId(Uuid\Uuid::fromString($id));
+			$findQuery->forWidget($widget);
+
+			$dataSource = $this->dataSourceRepository->findOneBy($findQuery);
+
+			if ($dataSource === null) {
+				throw new JsonApiExceptions\JsonApiErrorException(
+					StatusCodeInterface::STATUS_NOT_FOUND,
+					$this->translator->translate('messages.notFound.heading'),
+					$this->translator->translate('messages.notFound.message')
+				);
+			}
+
+		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
+			throw new JsonApiExceptions\JsonApiErrorException(
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				$this->translator->translate('messages.notFound.heading'),
+				$this->translator->translate('messages.notFound.message')
+			);
+		}
+
+		return $dataSource;
 	}
 
 	/**
@@ -384,44 +422,6 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		$this->throwUnknownRelation($relationEntity);
 
 		return $response;
-	}
-
-	/**
-	 * @param string $id
-	 * @param Entities\Widgets\IWidget $widget
-	 *
-	 * @return Entities\Widgets\DataSources\IDataSource
-	 *
-	 * @throws JsonApiExceptions\IJsonApiException
-	 */
-	private function findDataSource(
-		string $id,
-		Entities\Widgets\IWidget $widget
-	): Entities\Widgets\DataSources\IDataSource {
-		try {
-			$findQuery = new Queries\FindDataSourcesQuery();
-			$findQuery->byId(Uuid\Uuid::fromString($id));
-			$findQuery->forWidget($widget);
-
-			$dataSource = $this->dataSourceRepository->findOneBy($findQuery);
-
-			if ($dataSource === null) {
-				throw new JsonApiExceptions\JsonApiErrorException(
-					StatusCodeInterface::STATUS_NOT_FOUND,
-					$this->translator->translate('messages.notFound.heading'),
-					$this->translator->translate('messages.notFound.message')
-				);
-			}
-
-		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_NOT_FOUND,
-				$this->translator->translate('messages.notFound.heading'),
-				$this->translator->translate('messages.notFound.message')
-			);
-		}
-
-		return $dataSource;
 	}
 
 }

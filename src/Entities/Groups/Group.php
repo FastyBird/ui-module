@@ -125,14 +125,6 @@ class Group implements IGroup
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setName(string $name): void
-	{
-		$this->name = $name;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getName(): string
 	{
 		return $this->name;
@@ -141,9 +133,9 @@ class Group implements IGroup
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setComment(?string $comment = null): void
+	public function setName(string $name): void
 	{
-		$this->comment = $comment;
+		$this->name = $name;
 	}
 
 	/**
@@ -157,9 +149,9 @@ class Group implements IGroup
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setPriority(int $priority): void
+	public function setComment(?string $comment = null): void
 	{
-		$this->priority = $priority;
+		$this->comment = $comment;
 	}
 
 	/**
@@ -173,26 +165,17 @@ class Group implements IGroup
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getDashboard(): Entities\Dashboards\IDashboard
+	public function setPriority(int $priority): void
 	{
-		return $this->dashboard;
+		$this->priority = $priority;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setWidgets(array $widgets = []): void
+	public function getDashboard(): Entities\Dashboards\IDashboard
 	{
-		$this->widgets = new Common\Collections\ArrayCollection();
-
-		// Process all passed entities...
-		/** @var Entities\Widgets\IWidget $entity */
-		foreach ($widgets as $entity) {
-			if (!$this->widgets->contains($entity)) {
-				// ...and assign them to collection
-				$this->widgets->add($entity);
-			}
-		}
+		return $this->dashboard;
 	}
 
 	/**
@@ -213,6 +196,23 @@ class Group implements IGroup
 	public function getWidgets(): array
 	{
 		return $this->widgets->toArray();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setWidgets(array $widgets = []): void
+	{
+		$this->widgets = new Common\Collections\ArrayCollection();
+
+		// Process all passed entities...
+		/** @var Entities\Widgets\IWidget $entity */
+		foreach ($widgets as $entity) {
+			if (!$this->widgets->contains($entity)) {
+				// ...and assign them to collection
+				$this->widgets->add($entity);
+			}
+		}
 	}
 
 	/**

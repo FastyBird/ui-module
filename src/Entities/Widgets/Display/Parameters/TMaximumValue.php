@@ -39,6 +39,16 @@ trait TMaximumValue
 	protected $maximumValue;
 
 	/**
+	 * @return float|null
+	 */
+	public function getMaximumValue(): ?float
+	{
+		$value = $this->getParam('maximumValue');
+
+		return $value === null ? null : (float) $value;
+	}
+
+	/**
 	 * @param float|null $maximumValue
 	 *
 	 * @return void
@@ -48,16 +58,6 @@ trait TMaximumValue
 		$this->maximumValue = $maximumValue;
 
 		$this->setParam('maximumValue', $maximumValue);
-	}
-
-	/**
-	 * @return float|null
-	 */
-	public function getMaximumValue(): ?float
-	{
-		$value = $this->getParam('maximumValue');
-
-		return $value === null ? null : (float) $value;
 	}
 
 }

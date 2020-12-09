@@ -44,6 +44,12 @@ final class GroupsV1Controller extends BaseV1Controller
 
 	use Controllers\Finders\TDashboardFinder;
 
+	/** @var Models\Dashboards\IDashboardRepository */
+	protected $dashboardRepository;
+
+	/** @var string */
+	protected $translationDomain = 'module.groups';
+
 	/** @var Hydrators\Groups\GroupHydrator */
 	private $groupsHydrator;
 
@@ -52,12 +58,6 @@ final class GroupsV1Controller extends BaseV1Controller
 
 	/** @var Models\Groups\IGroupsManager */
 	private $groupsManager;
-
-	/** @var Models\Dashboards\IDashboardRepository */
-	protected $dashboardRepository;
-
-	/** @var string */
-	protected $translationDomain = 'module.groups';
 
 	/**
 	 * @param Models\Groups\IGroupRepository $groupRepository
@@ -120,6 +120,44 @@ final class GroupsV1Controller extends BaseV1Controller
 
 		return $response
 			->withEntity(WebServerHttp\ScalarEntity::from($group));
+	}
+
+	/**
+	 * @param string $id
+	 * @param Entities\Dashboards\IDashboard $dashboard
+	 *
+	 * @return Entities\Groups\IGroup
+	 *
+	 * @throws JsonApiExceptions\IJsonApiException
+	 */
+	private function findGroup(
+		string $id,
+		Entities\Dashboards\IDashboard $dashboard
+	): Entities\Groups\IGroup {
+		try {
+			$findQuery = new Queries\FindGroupsQuery();
+			$findQuery->byId(Uuid\Uuid::fromString($id));
+			$findQuery->forDashboard($dashboard);
+
+			$group = $this->groupRepository->findOneBy($findQuery);
+
+			if ($group === null) {
+				throw new JsonApiExceptions\JsonApiErrorException(
+					StatusCodeInterface::STATUS_NOT_FOUND,
+					$this->translator->translate('messages.notFound.heading'),
+					$this->translator->translate('messages.notFound.message')
+				);
+			}
+
+		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
+			throw new JsonApiExceptions\JsonApiErrorException(
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				$this->translator->translate('messages.notFound.heading'),
+				$this->translator->translate('messages.notFound.message')
+			);
+		}
+
+		return $group;
 	}
 
 	/**
@@ -385,44 +423,6 @@ final class GroupsV1Controller extends BaseV1Controller
 		$this->throwUnknownRelation($relationEntity);
 
 		return $response;
-	}
-
-	/**
-	 * @param string $id
-	 * @param Entities\Dashboards\IDashboard $dashboard
-	 *
-	 * @return Entities\Groups\IGroup
-	 *
-	 * @throws JsonApiExceptions\IJsonApiException
-	 */
-	private function findGroup(
-		string $id,
-		Entities\Dashboards\IDashboard $dashboard
-	): Entities\Groups\IGroup {
-		try {
-			$findQuery = new Queries\FindGroupsQuery();
-			$findQuery->byId(Uuid\Uuid::fromString($id));
-			$findQuery->forDashboard($dashboard);
-
-			$group = $this->groupRepository->findOneBy($findQuery);
-
-			if ($group === null) {
-				throw new JsonApiExceptions\JsonApiErrorException(
-					StatusCodeInterface::STATUS_NOT_FOUND,
-					$this->translator->translate('messages.notFound.heading'),
-					$this->translator->translate('messages.notFound.message')
-				);
-			}
-
-		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_NOT_FOUND,
-				$this->translator->translate('messages.notFound.heading'),
-				$this->translator->translate('messages.notFound.message')
-			);
-		}
-
-		return $group;
 	}
 
 }

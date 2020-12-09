@@ -33,14 +33,14 @@ class ClientConnectedHandler
 	use TSecurity;
 	use Nette\SmartObject;
 
+	/** @var Log\LoggerInterface */
+	protected $logger;
+
 	/** @var string[] */
 	private $wsKeys;
 
 	/** @var string[] */
 	private $allowedOrigins;
-
-	/** @var Log\LoggerInterface */
-	protected $logger;
 
 	public function __construct(
 		?Log\LoggerInterface $logger,

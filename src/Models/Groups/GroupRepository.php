@@ -37,11 +37,11 @@ final class GroupRepository implements IGroupRepository
 
 	use Nette\SmartObject;
 
-	/** @var Common\Persistence\ManagerRegistry */
-	private $managerRegistry;
-
 	/** @var Persistence\ObjectRepository<Entities\Groups\Group>|null */
 	public $repository = null;
+
+	/** @var Common\Persistence\ManagerRegistry */
+	private $managerRegistry;
 
 	public function __construct(Common\Persistence\ManagerRegistry $managerRegistry)
 	{
@@ -57,6 +57,18 @@ final class GroupRepository implements IGroupRepository
 		$group = $queryObject->fetchOne($this->getRepository());
 
 		return $group;
+	}
+
+	/**
+	 * @return Persistence\ObjectRepository<Entities\Groups\Group>
+	 */
+	private function getRepository(): Persistence\ObjectRepository
+	{
+		if ($this->repository === null) {
+			$this->repository = $this->managerRegistry->getRepository(Entities\Groups\Group::class);
+		}
+
+		return $this->repository;
 	}
 
 	/**
@@ -86,18 +98,6 @@ final class GroupRepository implements IGroupRepository
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @return Persistence\ObjectRepository<Entities\Groups\Group>
-	 */
-	private function getRepository(): Persistence\ObjectRepository
-	{
-		if ($this->repository === null) {
-			$this->repository = $this->managerRegistry->getRepository(Entities\Groups\Group::class);
-		}
-
-		return $this->repository;
 	}
 
 }

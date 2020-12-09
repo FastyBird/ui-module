@@ -40,6 +40,16 @@ trait TIcon
 	protected $icon;
 
 	/**
+	 * @return Types\WidgetIconType|null
+	 */
+	public function getIcon(): ?Types\WidgetIconType
+	{
+		$value = $this->getParam('icon');
+
+		return $value === null ? null : Types\WidgetIconType::get($value);
+	}
+
+	/**
 	 * @param Types\WidgetIconType|null $icon
 	 *
 	 * @return void
@@ -54,16 +64,6 @@ trait TIcon
 		} else {
 			$this->setParam('icon', null);
 		}
-	}
-
-	/**
-	 * @return Types\WidgetIconType|null
-	 */
-	public function getIcon(): ?Types\WidgetIconType
-	{
-		$value = $this->getParam('icon');
-
-		return $value === null ? null : Types\WidgetIconType::get($value);
 	}
 
 }

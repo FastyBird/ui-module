@@ -42,6 +42,9 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 	use Controllers\Finders\TDashboardFinder;
 
+	/** @var string */
+	protected $translationDomain = 'module.dashboards';
+
 	/** @var Hydrators\Dashboards\DashboardHydrator */
 	private $dashboardHydrator;
 
@@ -53,9 +56,6 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 	/** @var Models\Groups\IGroupsManager */
 	private $groupsManager;
-
-	/** @var string */
-	protected $translationDomain = 'module.dashboards';
 
 	/**
 	 * @param Models\Dashboards\IDashboardRepository $dashboardRepository

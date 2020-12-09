@@ -39,6 +39,16 @@ trait TMinimumValue
 	protected $minimumValue;
 
 	/**
+	 * @return float|null
+	 */
+	public function getMinimumValue(): ?float
+	{
+		$value = $this->getParam('minimumValue');
+
+		return $value === null ? null : (float) $value;
+	}
+
+	/**
 	 * @param float|null $minimumValue
 	 *
 	 * @return void
@@ -48,16 +58,6 @@ trait TMinimumValue
 		$this->minimumValue = $minimumValue;
 
 		$this->setParam('minimumValue', $minimumValue);
-	}
-
-	/**
-	 * @return float|null
-	 */
-	public function getMinimumValue(): ?float
-	{
-		$value = $this->getParam('minimumValue');
-
-		return $value === null ? null : (float) $value;
 	}
 
 }

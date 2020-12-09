@@ -74,14 +74,6 @@ class ChannelPropertyDataSource extends DataSource implements IChannelPropertyDa
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setChannel(string $channel): void
-	{
-		$this->channel = $channel;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getChannel(): string
 	{
 		return $this->channel;
@@ -90,9 +82,9 @@ class ChannelPropertyDataSource extends DataSource implements IChannelPropertyDa
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setProperty(string $property): void
+	public function setChannel(string $channel): void
 	{
-		$this->property = $property;
+		$this->channel = $channel;
 	}
 
 	/**
@@ -101,6 +93,14 @@ class ChannelPropertyDataSource extends DataSource implements IChannelPropertyDa
 	public function getProperty(): string
 	{
 		return $this->property;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setProperty(string $property): void
+	{
+		$this->property = $property;
 	}
 
 }

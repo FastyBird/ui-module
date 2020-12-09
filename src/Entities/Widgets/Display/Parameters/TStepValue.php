@@ -39,6 +39,14 @@ trait TStepValue
 	protected $stepValue;
 
 	/**
+	 * @return float
+	 */
+	public function getStepValue(): float
+	{
+		return (float) $this->getParam('stepValue', 0.1);
+	}
+
+	/**
 	 * @param float|null $stepValue
 	 *
 	 * @return void
@@ -48,14 +56,6 @@ trait TStepValue
 		$this->stepValue = $stepValue;
 
 		$this->setParam('stepValue', $stepValue);
-	}
-
-	/**
-	 * @return float
-	 */
-	public function getStepValue(): float
-	{
-		return (float) $this->getParam('stepValue', 0.1);
 	}
 
 }

@@ -41,6 +41,12 @@ final class DisplayV1Controller extends BaseV1Controller
 
 	use Controllers\Finders\TWidgetFinder;
 
+	/** @var Models\Widgets\IWidgetRepository */
+	protected $widgetRepository;
+
+	/** @var string */
+	protected $translationDomain = 'module.display';
+
 	/** @var Models\Widgets\Displays\IDisplaysManager */
 	private $displaysManager;
 
@@ -64,12 +70,6 @@ final class DisplayV1Controller extends BaseV1Controller
 
 	/** @var Hydrators\Widgets\Displays\SliderHydrator */
 	private $sliderHydrator;
-
-	/** @var Models\Widgets\IWidgetRepository */
-	protected $widgetRepository;
-
-	/** @var string */
-	protected $translationDomain = 'module.display';
 
 	/**
 	 * @param Models\Widgets\Displays\IDisplaysManager $displaysManager
