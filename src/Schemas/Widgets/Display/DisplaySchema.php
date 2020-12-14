@@ -83,8 +83,8 @@ abstract class DisplaySchema extends JsonApiSchemas\JsonApiSchema
 			$this->router->urlFor(
 				'widget.display',
 				[
-					Router\Router::URL_ITEM_ID   => $display->getPlainId(),
-					Router\Router::URL_WIDGET_ID => $display->getWidget()->getPlainId(),
+					Router\Routes::URL_ITEM_ID   => $display->getPlainId(),
+					Router\Routes::URL_WIDGET_ID => $display->getWidget()->getPlainId(),
 				]
 			),
 			false
@@ -130,7 +130,7 @@ abstract class DisplaySchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget',
 					[
-						Router\Router::URL_ITEM_ID => $display->getWidget()->getPlainId(),
+						Router\Routes::URL_ITEM_ID => $display->getWidget()->getPlainId(),
 					]
 				),
 				false
@@ -158,9 +158,9 @@ abstract class DisplaySchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget.display.relationship',
 					[
-						Router\Router::URL_ITEM_ID     => $display->getPlainId(),
-						Router\Router::URL_WIDGET_ID   => $display->getWidget()->getPlainId(),
-						Router\Router::RELATION_ENTITY => $name,
+						Router\Routes::URL_ITEM_ID     => $display->getPlainId(),
+						Router\Routes::URL_WIDGET_ID   => $display->getWidget()->getPlainId(),
+						Router\Routes::RELATION_ENTITY => $name,
 					]
 				),
 				false

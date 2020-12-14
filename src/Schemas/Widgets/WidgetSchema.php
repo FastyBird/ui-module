@@ -89,7 +89,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 			$this->router->urlFor(
 				'widget',
 				[
-					Router\Router::URL_ITEM_ID => $widget->getPlainId(),
+					Router\Routes::URL_ITEM_ID => $widget->getPlainId(),
 				]
 			),
 			false
@@ -145,7 +145,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget.display',
 					[
-						Router\Router::URL_WIDGET_ID => $widget->getPlainId(),
+						Router\Routes::URL_WIDGET_ID => $widget->getPlainId(),
 					]
 				),
 				false
@@ -157,7 +157,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget.data-sources',
 					[
-						Router\Router::URL_WIDGET_ID => $widget->getPlainId(),
+						Router\Routes::URL_WIDGET_ID => $widget->getPlainId(),
 					]
 				),
 				true,
@@ -192,8 +192,8 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget.relationship',
 					[
-						Router\Router::URL_ITEM_ID     => $widget->getPlainId(),
-						Router\Router::RELATION_ENTITY => $name,
+						Router\Routes::URL_ITEM_ID     => $widget->getPlainId(),
+						Router\Routes::RELATION_ENTITY => $name,
 					]
 				),
 				false

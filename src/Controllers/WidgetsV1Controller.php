@@ -117,7 +117,7 @@ final class WidgetsV1Controller extends BaseV1Controller
 		Message\ServerRequestInterface $request,
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_ITEM_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
 		return $response
 			->withEntity(WebServerHttp\ScalarEntity::from($widget));
@@ -249,7 +249,7 @@ final class WidgetsV1Controller extends BaseV1Controller
 	): WebServerHttp\Response {
 		$document = $this->createDocument($request);
 
-		if ($request->getAttribute(Router\Router::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
+		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				$this->translator->translate('//module.base.messages.invalid.heading'),
@@ -257,7 +257,7 @@ final class WidgetsV1Controller extends BaseV1Controller
 			);
 		}
 
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_ITEM_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
 		try {
 			// Start transaction connection to the database
@@ -338,7 +338,7 @@ final class WidgetsV1Controller extends BaseV1Controller
 		Message\ServerRequestInterface $request,
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_ITEM_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
 		try {
 			// Start transaction connection to the database
@@ -387,9 +387,9 @@ final class WidgetsV1Controller extends BaseV1Controller
 		Message\ServerRequestInterface $request,
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_ITEM_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
-		$relationEntity = strtolower($request->getAttribute(Router\Router::RELATION_ENTITY));
+		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Widgets\WidgetSchema::RELATIONSHIPS_GROUPS) {
 			return $response

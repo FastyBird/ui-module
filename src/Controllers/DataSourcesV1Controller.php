@@ -90,7 +90,7 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
 		$findQuery = new Queries\FindDataSourcesQuery();
 		$findQuery->forWidget($widget);
@@ -114,9 +114,9 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
-		$dataSource = $this->findDataSource($request->getAttribute(Router\Router::URL_ITEM_ID), $widget);
+		$dataSource = $this->findDataSource($request->getAttribute(Router\Routes::URL_ITEM_ID), $widget);
 
 		return $response
 			->withEntity(WebServerHttp\ScalarEntity::from($dataSource));
@@ -174,7 +174,7 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
 		$document = $this->createDocument($request);
 
@@ -274,7 +274,7 @@ final class DataSourcesV1Controller extends BaseV1Controller
 	): WebServerHttp\Response {
 		$document = $this->createDocument($request);
 
-		if ($request->getAttribute(Router\Router::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
+		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				$this->translator->translate('//module.base.messages.invalid.heading'),
@@ -283,9 +283,9 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		}
 
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
-		$dataSource = $this->findDataSource($request->getAttribute(Router\Router::URL_ITEM_ID), $widget);
+		$dataSource = $this->findDataSource($request->getAttribute(Router\Routes::URL_ITEM_ID), $widget);
 
 		try {
 			// Start transaction connection to the database
@@ -356,9 +356,9 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
-		$dataSource = $this->findDataSource($request->getAttribute(Router\Router::URL_ITEM_ID), $widget);
+		$dataSource = $this->findDataSource($request->getAttribute(Router\Routes::URL_ITEM_ID), $widget);
 
 		try {
 			// Start transaction connection to the database
@@ -408,11 +408,11 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
-		$dataSource = $this->findDataSource($request->getAttribute(Router\Router::URL_ITEM_ID), $widget);
+		$dataSource = $this->findDataSource($request->getAttribute(Router\Routes::URL_ITEM_ID), $widget);
 
-		$relationEntity = strtolower($request->getAttribute(Router\Router::RELATION_ENTITY));
+		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Widgets\DataSources\DataSourceSchema::RELATIONSHIPS_WIDGET) {
 			return $response

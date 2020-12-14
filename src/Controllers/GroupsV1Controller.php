@@ -90,7 +90,7 @@ final class GroupsV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Router::URL_DASHBOARD_ID));
+		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
 		$findQuery = new Queries\FindGroupsQuery();
 		$findQuery->forDashboard($dashboard);
@@ -114,9 +114,9 @@ final class GroupsV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Router::URL_DASHBOARD_ID));
+		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
-		$group = $this->findGroup($request->getAttribute(Router\Router::URL_ITEM_ID), $dashboard);
+		$group = $this->findGroup($request->getAttribute(Router\Routes::URL_ITEM_ID), $dashboard);
 
 		return $response
 			->withEntity(WebServerHttp\ScalarEntity::from($group));
@@ -174,7 +174,7 @@ final class GroupsV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Router::URL_DASHBOARD_ID));
+		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
 		$document = $this->createDocument($request);
 
@@ -274,7 +274,7 @@ final class GroupsV1Controller extends BaseV1Controller
 	): WebServerHttp\Response {
 		$document = $this->createDocument($request);
 
-		if ($request->getAttribute(Router\Router::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
+		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
 				$this->translator->translate('//module.base.messages.invalid.heading'),
@@ -283,9 +283,9 @@ final class GroupsV1Controller extends BaseV1Controller
 		}
 
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Router::URL_DASHBOARD_ID));
+		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
-		$group = $this->findGroup($request->getAttribute(Router\Router::URL_ITEM_ID), $dashboard);
+		$group = $this->findGroup($request->getAttribute(Router\Routes::URL_ITEM_ID), $dashboard);
 
 		try {
 			// Start transaction connection to the database
@@ -353,9 +353,9 @@ final class GroupsV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Router::URL_DASHBOARD_ID));
+		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
-		$group = $this->findGroup($request->getAttribute(Router\Router::URL_ITEM_ID), $dashboard);
+		$group = $this->findGroup($request->getAttribute(Router\Routes::URL_ITEM_ID), $dashboard);
 
 		try {
 			// Start transaction connection to the database
@@ -405,11 +405,11 @@ final class GroupsV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Router::URL_DASHBOARD_ID));
+		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
-		$group = $this->findGroup($request->getAttribute(Router\Router::URL_ITEM_ID), $dashboard);
+		$group = $this->findGroup($request->getAttribute(Router\Routes::URL_ITEM_ID), $dashboard);
 
-		$relationEntity = strtolower($request->getAttribute(Router\Router::RELATION_ENTITY));
+		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Groups\GroupSchema::RELATIONSHIPS_DASHBOARD) {
 			return $response

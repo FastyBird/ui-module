@@ -83,8 +83,8 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 			$this->router->urlFor(
 				'widget.data-source',
 				[
-					Router\Router::URL_ITEM_ID   => $dataSource->getPlainId(),
-					Router\Router::URL_WIDGET_ID => $dataSource->getWidget()->getPlainId(),
+					Router\Routes::URL_ITEM_ID   => $dataSource->getPlainId(),
+					Router\Routes::URL_WIDGET_ID => $dataSource->getWidget()->getPlainId(),
 				]
 			),
 			false
@@ -130,7 +130,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget',
 					[
-						Router\Router::URL_ITEM_ID => $dataSource->getWidget()->getPlainId(),
+						Router\Routes::URL_ITEM_ID => $dataSource->getWidget()->getPlainId(),
 					]
 				),
 				false
@@ -158,9 +158,9 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'widget.display.relationship',
 					[
-						Router\Router::URL_ITEM_ID     => $dataSource->getPlainId(),
-						Router\Router::URL_WIDGET_ID   => $dataSource->getWidget()->getPlainId(),
-						Router\Router::RELATION_ENTITY => $name,
+						Router\Routes::URL_ITEM_ID     => $dataSource->getPlainId(),
+						Router\Routes::URL_WIDGET_ID   => $dataSource->getWidget()->getPlainId(),
+						Router\Routes::RELATION_ENTITY => $name,
 					]
 				),
 				false

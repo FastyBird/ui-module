@@ -2,9 +2,9 @@
 
 namespace Tests\Cases;
 
-use FastyBird\UIModule\Router;
 use FastyBird\WebServer\Http;
 use Fig\Http\Message\RequestMethodInterface;
+use IPub\SlimRouter;
 use React\Http\Message\ServerRequest;
 use Tester\Assert;
 use Tests\Tools;
@@ -27,8 +27,8 @@ final class DisplayV1ControllerTest extends DbTestCase
 	 */
 	public function testRead(string $url, int $statusCode, string $fixture): void
 	{
-		/** @var Router\Router $router */
-		$router = $this->getContainer()->getByType(Router\Router::class);
+		/** @var SlimRouter\Routing\IRouter $router */
+		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_GET,
@@ -55,8 +55,8 @@ final class DisplayV1ControllerTest extends DbTestCase
 	 */
 	public function testUpdate(string $url, string $body, int $statusCode, string $fixture): void
 	{
-		/** @var Router\Router $router */
-		$router = $this->getContainer()->getByType(Router\Router::class);
+		/** @var SlimRouter\Routing\IRouter $router */
+		$router = $this->getContainer()->getByType(SlimRouter\Routing\IRouter::class);
 
 		$request = new ServerRequest(
 			RequestMethodInterface::METHOD_PATCH,

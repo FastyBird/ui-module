@@ -107,8 +107,8 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 			$this->router->urlFor(
 				'dashboard.group',
 				[
-					Router\Router::URL_ITEM_ID      => $group->getPlainId(),
-					Router\Router::URL_DASHBOARD_ID => $group->getDashboard()->getPlainId(),
+					Router\Routes::URL_ITEM_ID      => $group->getPlainId(),
+					Router\Routes::URL_DASHBOARD_ID => $group->getDashboard()->getPlainId(),
 				]
 			),
 			false
@@ -155,7 +155,7 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'dashboard',
 					[
-						Router\Router::URL_ITEM_ID => $group->getDashboard()->getPlainId(),
+						Router\Routes::URL_ITEM_ID => $group->getDashboard()->getPlainId(),
 					]
 				),
 				false
@@ -186,9 +186,9 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 				$this->router->urlFor(
 					'dashboard.group.relationship',
 					[
-						Router\Router::URL_ITEM_ID      => $group->getPlainId(),
-						Router\Router::URL_DASHBOARD_ID => $group->getDashboard()->getPlainId(),
-						Router\Router::RELATION_ENTITY  => $name,
+						Router\Routes::URL_ITEM_ID      => $group->getPlainId(),
+						Router\Routes::URL_DASHBOARD_ID => $group->getDashboard()->getPlainId(),
+						Router\Routes::RELATION_ENTITY  => $name,
 					]
 				),
 				false

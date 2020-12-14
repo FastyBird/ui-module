@@ -90,8 +90,7 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			->setType(Middleware\AccessMiddleware::class);
 
 		$builder->addDefinition(null)
-			->setType(Router\Router::class)
-			->addSetup('registerRoutes');
+			->setType(Router\Routes::class);
 
 		// Console commands
 		$builder->addDefinition(null)

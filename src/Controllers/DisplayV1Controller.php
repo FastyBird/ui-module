@@ -117,7 +117,7 @@ final class DisplayV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
 		return $response
 			->withEntity(WebServerHttp\ScalarEntity::from($widget->getDisplay()));
@@ -139,7 +139,7 @@ final class DisplayV1Controller extends BaseV1Controller
 		$document = $this->createDocument($request);
 
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
 		$display = $widget->getDisplay();
 
@@ -247,9 +247,9 @@ final class DisplayV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load widget
-		$widget = $this->findWidget($request->getAttribute(Router\Router::URL_WIDGET_ID));
+		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
-		$relationEntity = strtolower($request->getAttribute(Router\Router::RELATION_ENTITY));
+		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Widgets\Display\DisplaySchema::RELATIONSHIPS_WIDGET) {
 			return $response
