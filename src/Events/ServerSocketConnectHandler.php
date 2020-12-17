@@ -17,6 +17,7 @@ namespace FastyBird\UIModule\Events;
 
 use IPub\WebSockets;
 use Nette;
+use Nette\Utils;
 use React\Socket;
 
 /**
@@ -59,9 +60,9 @@ class ServerSocketConnectHandler
 			return;
 		}
 
-		$parsed = parse_url($connection->getLocalAddress());
+		$parsed = Utils\ArrayHash::from((array) parse_url($connection->getLocalAddress()));
 
-		if (isset($parsed['port']) && $parsed['port'] === $this->configuration->getPort()) {
+		if ($parsed->offsetExists('port') && $parsed->offsetGet('port') === $this->configuration->getPort()) {
 			$this->handlers->handleConnect($connection);
 		}
 	}
