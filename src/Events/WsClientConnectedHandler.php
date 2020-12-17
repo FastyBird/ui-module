@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * IncomingMessageHandler.php
+ * WsClientConnectedHandler.php
  *
  * @license        More in license.md
  * @copyright      https://www.fastybird.com
@@ -27,7 +27,7 @@ use Psr\Log;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class IncomingMessageHandler
+class WsClientConnectedHandler
 {
 
 	use TSecurity;

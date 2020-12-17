@@ -33,12 +33,17 @@ class ServerSocketConnectHandler
 	use Nette\SmartObject;
 
 	/** @var WebSockets\Server\Handlers */
-	private $handlers;
+	private WebSockets\Server\Handlers $handlers;
+
+	/** @var WebSockets\Server\Configuration */
+	private WebSockets\Server\Configuration $configuration;
 
 	public function __construct(
-		WebSockets\Server\Handlers $handlers
+		WebSockets\Server\Handlers $handlers,
+		WebSockets\Server\Configuration $configuration
 	) {
 		$this->handlers = $handlers;
+		$this->configuration = $configuration;
 	}
 
 	/**
@@ -50,7 +55,15 @@ class ServerSocketConnectHandler
 	 */
 	public function __invoke(Socket\ConnectionInterface $connection): void
 	{
-		$this->handlers->handleConnect($connection);
+		if ($connection->getLocalAddress() === null) {
+			return;
+		}
+
+		$parsed = parse_url($connection->getLocalAddress());
+
+		if (isset($parsed['port']) && $parsed['port'] === $this->configuration->getPort()) {
+			$this->handlers->handleConnect($connection);
+		}
 	}
 
 }

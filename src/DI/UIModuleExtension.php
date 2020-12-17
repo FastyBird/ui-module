@@ -97,13 +97,13 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			->setType(Commands\InitializeCommand::class);
 
 		// Events
-		$builder->addDefinition($this->prefix('event.clientConnect'))
-			->setType(Events\ClientConnectedHandler::class)
+		$builder->addDefinition($this->prefix('event.wsClientConnect'))
+			->setType(Events\WsClientConnectedHandler::class)
 			->setArgument('wsKeys', $configuration->keys)
 			->setArgument('allowedOrigins', $configuration->origins);
 
-		$builder->addDefinition($this->prefix('event.message'))
-			->setType(Events\IncomingMessageHandler::class)
+		$builder->addDefinition($this->prefix('event.wsMessage'))
+			->setType(Events\WsMessageHandler::class)
 			->setArgument('wsKeys', $configuration->keys)
 			->setArgument('allowedOrigins', $configuration->origins);
 
@@ -309,8 +309,8 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			$socketWrapperService = $builder->getDefinition($socketWrapperServiceName);
 
 			$socketWrapperService
-				->addSetup('$onClientConnected[]', ['@' . $this->prefix('event.clientConnect')])
-				->addSetup('$onIncomingMessage[]', ['@' . $this->prefix('event.message')]);
+				->addSetup('$onClientConnected[]', ['@' . $this->prefix('event.wsClientConnect')])
+				->addSetup('$onIncomingMessage[]', ['@' . $this->prefix('event.wsMessage')]);
 		}
 	}
 

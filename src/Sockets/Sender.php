@@ -82,7 +82,7 @@ final class Sender implements ISender
 			}
 
 		} catch (Nette\Utils\JsonException $ex) {
-			$this->logger->error('[SENDER] Data not be converted to message', [
+			$this->logger->error('[SENDER] Data could not be converted to message', [
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
