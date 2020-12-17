@@ -36,7 +36,7 @@ trait TPrecision
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 */
-	protected ?int $precision;
+	protected ?int $precision = null;
 
 	/**
 	 * @return int

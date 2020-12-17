@@ -29,7 +29,7 @@ final class AnalogValueHydrator extends DisplayHydrator
 {
 
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'precision',
 	];
 

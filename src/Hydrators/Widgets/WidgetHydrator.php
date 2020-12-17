@@ -39,11 +39,8 @@ use stdClass;
 abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 {
 
-	/** @var string */
-	protected $entityIdentifier = self::IDENTIFIER_KEY;
-
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		0 => 'name',
 
 		'minimum_value'  => 'minimumValue',
@@ -54,14 +51,14 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 	];
 
 	/** @var string[] */
-	protected $relationships = [
+	protected array $relationships = [
 		0                                                        => Schemas\Widgets\WidgetSchema::RELATIONSHIPS_DISPLAY,
 		1                                                        => Schemas\Widgets\WidgetSchema::RELATIONSHIPS_GROUPS,
 		Schemas\Widgets\WidgetSchema::RELATIONSHIPS_DATA_SOURCES => 'dataSources',
 	];
 
 	/** @var string */
-	protected $translationDomain = 'ui-module.widgets';
+	protected string $translationDomain = 'ui-module.widgets';
 
 	/** @var Models\Groups\IGroupRepository */
 	private Models\Groups\IGroupRepository $groupRepository;

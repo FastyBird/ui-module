@@ -29,7 +29,7 @@ final class GaugeHydrator extends DisplayHydrator
 {
 
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'precision' => 'precision',
 	];
 

@@ -66,7 +66,7 @@ abstract class Widget implements IWidget
 	 * @ORM\Column(type="uuid_binary", name="widget_id")
 	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
 	 */
-	protected $id;
+	protected Uuid\UuidInterface $id;
 
 	/**
 	 * @var string

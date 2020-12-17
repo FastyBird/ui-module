@@ -50,7 +50,7 @@ class Group implements IGroup
 	 * @ORM\Column(type="uuid_binary", name="group_id")
 	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
 	 */
-	protected $id;
+	protected Uuid\UuidInterface $id;
 
 	/**
 	 * @var string

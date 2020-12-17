@@ -58,7 +58,7 @@ abstract class DataSource implements IDataSource
 	 * @ORM\Column(type="uuid_binary", name="data_source_id")
 	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
 	 */
-	protected $id;
+	protected Uuid\UuidInterface $id;
 
 	/**
 	 * @var Entities\Widgets\IWidget

@@ -31,17 +31,14 @@ use IPub\JsonAPIDocument;
 final class DashboardHydrator extends JsonApiHydrators\Hydrator
 {
 
-	/** @var string */
-	protected $entityIdentifier = self::IDENTIFIER_KEY;
-
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'name',
 		'comment',
 	];
 
 	/** @var string */
-	protected $translationDomain = 'ui-module.dashboards';
+	protected string $translationDomain = 'ui-module.dashboards';
 
 	/**
 	 * {@inheritDoc}

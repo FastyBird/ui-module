@@ -37,7 +37,7 @@ trait TIcon
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 */
-	protected ?Types\WidgetIconType $icon;
+	protected ?Types\WidgetIconType $icon = null;
 
 	/**
 	 * @return Types\WidgetIconType|null

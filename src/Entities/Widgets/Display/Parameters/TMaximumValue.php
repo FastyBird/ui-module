@@ -36,7 +36,7 @@ trait TMaximumValue
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 */
-	protected ?float $maximumValue;
+	protected ?float $maximumValue = null;
 
 	/**
 	 * @return float|null

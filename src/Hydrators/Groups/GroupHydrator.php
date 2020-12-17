@@ -31,22 +31,19 @@ use IPub\JsonAPIDocument;
 final class GroupHydrator extends JsonApiHydrators\Hydrator
 {
 
-	/** @var string */
-	protected $entityIdentifier = self::IDENTIFIER_KEY;
-
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'name',
 		'comment',
 	];
 
 	/** @var string[] */
-	protected $relationships = [
+	protected array $relationships = [
 		Schemas\Groups\GroupSchema::RELATIONSHIPS_DASHBOARD,
 	];
 
 	/** @var string */
-	protected $translationDomain = 'ui-module.groups';
+	protected string $translationDomain = 'ui-module.groups';
 
 	/**
 	 * {@inheritDoc}

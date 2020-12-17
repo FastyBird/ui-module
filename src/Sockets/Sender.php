@@ -72,7 +72,7 @@ final class Sender implements ISender
 			if ($this->topicsStorage->hasTopic($link)) {
 				$topic = $this->topicsStorage->getTopic($link);
 
-				$this->logger->debug('[SENDER] Broadcasting message to topic', [
+				$this->logger->debug('[FB:UI_MODULE:WS_SENDER] Broadcasting message to topic', [
 					'link' => $link,
 				]);
 
@@ -82,7 +82,7 @@ final class Sender implements ISender
 			}
 
 		} catch (Nette\Utils\JsonException $ex) {
-			$this->logger->error('[SENDER] Data could not be converted to message', [
+			$this->logger->error('[FB:UI_MODULE:WS_SENDER] Data could not be converted to message', [
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
@@ -90,7 +90,7 @@ final class Sender implements ISender
 			]);
 
 		} catch (Throwable $ex) {
-			$this->logger->error('[SENDER] Data could not be broadcasts to clients', [
+			$this->logger->error('[FB:UI_MODULE:WS_SENDER] Data could not be broadcasts to clients', [
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),

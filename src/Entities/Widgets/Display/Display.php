@@ -63,7 +63,7 @@ abstract class Display implements IDisplay
 	 * @ORM\Column(type="uuid_binary", name="display_id")
 	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
 	 */
-	protected $id;
+	protected Uuid\UuidInterface $id;
 
 	/**
 	 * @var Entities\Widgets\IWidget

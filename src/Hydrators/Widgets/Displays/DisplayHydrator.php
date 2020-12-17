@@ -32,16 +32,13 @@ use IPub\JsonAPIDocument;
 abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 {
 
-	/** @var string */
-	protected $entityIdentifier = self::IDENTIFIER_KEY;
-
 	/** @var string[] */
-	protected $relationships = [
+	protected array $relationships = [
 		Schemas\Widgets\Display\DisplaySchema::RELATIONSHIPS_WIDGET,
 	];
 
 	/** @var string */
-	protected $translationDomain = 'ui-module.display';
+	protected string $translationDomain = 'ui-module.display';
 
 	/**
 	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes

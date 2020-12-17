@@ -29,7 +29,7 @@ final class ChannelPropertyDataSourceHydrator extends DataSourceHydrator
 {
 
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'channel',
 		'property',
 	];

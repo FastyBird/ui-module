@@ -38,7 +38,7 @@ final class DashboardRepository implements IDashboardRepository
 	use Nette\SmartObject;
 
 	/** @var Persistence\ObjectRepository<Entities\Dashboards\Dashboard>|null */
-	public ?Persistence\ObjectRepository $repository = null;
+	private ?Persistence\ObjectRepository $repository = null;
 
 	/** @var Common\Persistence\ManagerRegistry */
 	private Common\Persistence\ManagerRegistry $managerRegistry;

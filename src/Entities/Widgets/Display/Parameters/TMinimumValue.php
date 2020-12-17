@@ -36,7 +36,7 @@ trait TMinimumValue
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 */
-	protected ?float $minimumValue;
+	protected ?float $minimumValue = null;
 
 	/**
 	 * @return float|null

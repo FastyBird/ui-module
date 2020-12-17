@@ -32,7 +32,7 @@ final class ChartGraphHydrator extends DisplayHydrator
 {
 
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'minimum_value'  => 'minimumValue',
 		'maximum_value'  => 'maximumValue',
 		'precision'      => 'precision',

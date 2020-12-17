@@ -29,7 +29,7 @@ final class SliderHydrator extends DisplayHydrator
 {
 
 	/** @var string[] */
-	protected $attributes = [
+	protected array $attributes = [
 		'minimum_value' => 'minimumValue',
 		'maximum_value' => 'maximumValue',
 		'step_value'    => 'stepValue',

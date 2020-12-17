@@ -30,13 +30,10 @@ abstract class DataSourceHydrator extends JsonApiHydrators\Hydrator
 {
 
 	/** @var string */
-	protected $entityIdentifier = self::IDENTIFIER_KEY;
-
-	/** @var string */
-	protected $translationDomain = 'ui-module.dataSources';
+	protected string $translationDomain = 'ui-module.dataSources';
 
 	/** @var string[] */
-	protected $relationships = [
+	protected array $relationships = [
 		Schemas\Widgets\DataSources\DataSourceSchema::RELATIONSHIPS_WIDGET,
 	];
 

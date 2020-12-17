@@ -44,7 +44,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	private const CHANNEL_CONFIGURATION_SCHEMA_FILENAME = 'data.channel.configuration.json';
 
 	/** @var Sockets\IPublisher|null */
-	private ?Sockets\IPublisher $publisher;
+	private ?Sockets\IPublisher $publisher = null;
 
 	/** @var ModulesMetadataLoaders\ISchemaLoader */
 	private ModulesMetadataLoaders\ISchemaLoader $schemaLoader;
@@ -179,7 +179,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 			return $this->jsonValidator->validate(Utils\Json::encode($data), $schema);
 
 		} catch (Utils\JsonException $ex) {
-			$this->logger->error('[PARSER] Received message could not be validated', [
+			$this->logger->error('[FB:UI_MODULE:CONTROLLER] Received message could not be validated', [
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
@@ -189,7 +189,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 			throw new Exceptions\InvalidArgumentException('Provided data are not valid json format', 0, $ex);
 
 		} catch (ModulesMetadataExceptions\InvalidDataException $ex) {
-			$this->logger->debug('[PARSER] Received message is not valid', [
+			$this->logger->debug('[FB:UI_MODULE:CONTROLLER] Received message is not valid', [
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
@@ -199,7 +199,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 			throw new Exceptions\InvalidArgumentException('Provided data are not in valid structure', 0, $ex);
 
 		} catch (Throwable $ex) {
-			$this->logger->error('[PARSER] Received message is not valid', [
+			$this->logger->error('[FB:UI_MODULE:CONTROLLER] Received message is not valid', [
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),

@@ -53,7 +53,7 @@ class Dashboard implements IDashboard
 	 * @ORM\Column(type="uuid_binary", name="dashboard_id")
 	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
 	 */
-	protected $id;
+	protected Uuid\UuidInterface $id;
 
 	/**
 	 * @var string
