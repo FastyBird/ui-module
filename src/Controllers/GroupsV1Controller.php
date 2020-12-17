@@ -45,19 +45,19 @@ final class GroupsV1Controller extends BaseV1Controller
 	use Controllers\Finders\TDashboardFinder;
 
 	/** @var Models\Dashboards\IDashboardRepository */
-	protected $dashboardRepository;
+	protected Models\Dashboards\IDashboardRepository $dashboardRepository;
 
 	/** @var string */
-	protected $translationDomain = 'module.groups';
+	protected string $translationDomain = 'ui-module.groups';
 
 	/** @var Hydrators\Groups\GroupHydrator */
-	private $groupsHydrator;
+	private Hydrators\Groups\GroupHydrator $groupsHydrator;
 
 	/** @var Models\Groups\IGroupRepository */
-	private $groupRepository;
+	private Models\Groups\IGroupRepository $groupRepository;
 
 	/** @var Models\Groups\IGroupsManager */
-	private $groupsManager;
+	private Models\Groups\IGroupsManager $groupsManager;
 
 	/**
 	 * @param Models\Groups\IGroupRepository $groupRepository
@@ -202,8 +202,8 @@ final class GroupsV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('//module.base.messages.missingRequired.heading'),
-					$this->translator->translate('//module.base.messages.missingRequired.message'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 					[
 						'pointer' => $pointer,
 					]
@@ -215,8 +215,8 @@ final class GroupsV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('//module.base.messages.missingRequired.heading'),
-					$this->translator->translate('//module.base.messages.missingRequired.message'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 					[
 						'pointer' => 'data/attributes/' . $ex->getField(),
 					]
@@ -277,8 +277,8 @@ final class GroupsV1Controller extends BaseV1Controller
 		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//module.base.messages.invalid.heading'),
-				$this->translator->translate('//module.base.messages.invalid.message')
+				$this->translator->translate('//ui-module.base.messages.invalid.heading'),
+				$this->translator->translate('//ui-module.base.messages.invalid.message')
 			);
 		}
 

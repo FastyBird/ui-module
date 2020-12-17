@@ -41,7 +41,7 @@ final class DashboardHydrator extends JsonApiHydrators\Hydrator
 	];
 
 	/** @var string */
-	protected $translationDomain = 'module.dashboards';
+	protected $translationDomain = 'ui-module.dashboards';
 
 	/**
 	 * {@inheritDoc}

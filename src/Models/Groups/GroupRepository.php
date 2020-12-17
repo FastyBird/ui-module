@@ -38,10 +38,10 @@ final class GroupRepository implements IGroupRepository
 	use Nette\SmartObject;
 
 	/** @var Persistence\ObjectRepository<Entities\Groups\Group>|null */
-	public $repository = null;
+	public ?Persistence\ObjectRepository $repository = null;
 
 	/** @var Common\Persistence\ManagerRegistry */
-	private $managerRegistry;
+	private Common\Persistence\ManagerRegistry $managerRegistry;
 
 	public function __construct(Common\Persistence\ManagerRegistry $managerRegistry)
 	{

@@ -46,7 +46,7 @@ final class GroupHydrator extends JsonApiHydrators\Hydrator
 	];
 
 	/** @var string */
-	protected $translationDomain = 'module.groups';
+	protected $translationDomain = 'ui-module.groups';
 
 	/**
 	 * {@inheritDoc}

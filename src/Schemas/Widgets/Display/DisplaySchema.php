@@ -41,7 +41,7 @@ abstract class DisplaySchema extends JsonApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_WIDGET = 'widget';
 
 	/** @var Routing\IRouter */
-	protected $router;
+	protected Routing\IRouter $router;
 
 	/**
 	 * @param Routing\IRouter $router

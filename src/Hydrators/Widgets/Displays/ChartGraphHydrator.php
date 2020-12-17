@@ -60,8 +60,8 @@ final class ChartGraphHydrator extends DisplayHydrator
 		if ($attributes->get('enable_min_max') === null || (string) $attributes->get('enable_min_max') === '') {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => '/data/attributes/enable_min_max',
 				]

@@ -67,7 +67,7 @@ abstract class DataSource implements IDataSource
 	 * @ORM\ManyToOne(targetEntity="FastyBird\UIModule\Entities\Widgets\Widget", inversedBy="dataSources")
 	 * @ORM\JoinColumn(name="widget_id", referencedColumnName="widget_id", onDelete="CASCADE")
 	 */
-	protected $widget;
+	protected Entities\Widgets\IWidget $widget;
 
 	/**
 	 * @param Entities\Widgets\IWidget $widget

@@ -34,13 +34,13 @@ class WsMessageHandler
 	use Nette\SmartObject;
 
 	/** @var Log\LoggerInterface */
-	protected $logger;
+	protected Log\LoggerInterface $logger;
 
 	/** @var string[] */
-	private $wsKeys;
+	private array $wsKeys;
 
 	/** @var string[] */
-	private $allowedOrigins;
+	private array $allowedOrigins;
 
 	public function __construct(
 		?Log\LoggerInterface $logger,

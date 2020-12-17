@@ -43,25 +43,25 @@ final class WidgetsV1Controller extends BaseV1Controller
 	use Controllers\Finders\TWidgetFinder;
 
 	/** @var string */
-	protected $translationDomain = 'module.widgets';
+	protected string $translationDomain = 'ui-module.widgets';
 
 	/** @var Hydrators\Widgets\AnalogActuatorWidgetHydrator */
-	private $analogActuatorHydrator;
+	private Hydrators\Widgets\AnalogActuatorWidgetHydrator $analogActuatorHydrator;
 
 	/** @var Hydrators\Widgets\AnalogSensorWidgetHydrator */
-	private $analogSensorHydrator;
+	private Hydrators\Widgets\AnalogSensorWidgetHydrator $analogSensorHydrator;
 
 	/** @var Hydrators\Widgets\DigitalActuatorWidgetHydrator */
-	private $digitalActuatorHydrator;
+	private Hydrators\Widgets\DigitalActuatorWidgetHydrator $digitalActuatorHydrator;
 
 	/** @var Hydrators\Widgets\DigitalSensorWidgetHydrator */
-	private $digitalSensorHydrator;
+	private Hydrators\Widgets\DigitalSensorWidgetHydrator $digitalSensorHydrator;
 
 	/** @var Models\Widgets\IWidgetRepository */
-	private $widgetRepository;
+	private Models\Widgets\IWidgetRepository $widgetRepository;
 
 	/** @var Models\Widgets\IWidgetsManager */
-	private $widgetsManager;
+	private Models\Widgets\IWidgetsManager $widgetsManager;
 
 	/**
 	 * @param Models\Widgets\IWidgetRepository $widgetRepository
@@ -187,8 +187,8 @@ final class WidgetsV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => $pointer,
 				]
@@ -200,8 +200,8 @@ final class WidgetsV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => 'data/attributes/' . $ex->getField(),
 				]
@@ -252,8 +252,8 @@ final class WidgetsV1Controller extends BaseV1Controller
 		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//module.base.messages.invalid.heading'),
-				$this->translator->translate('//module.base.messages.invalid.message')
+				$this->translator->translate('//ui-module.base.messages.invalid.heading'),
+				$this->translator->translate('//ui-module.base.messages.invalid.message')
 			);
 		}
 

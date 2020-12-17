@@ -36,7 +36,7 @@ final class AccessMiddleware implements MiddlewareInterface
 {
 
 	/** @var Translation\Translator */
-	private $translator;
+	private Translation\Translator $translator;
 
 	public function __construct(
 		Translation\Translator $translator
@@ -61,15 +61,15 @@ final class AccessMiddleware implements MiddlewareInterface
 		} catch (SimpleAuthExceptions\UnauthorizedAccessException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
-				$this->translator->translate('//module.base.messages.notAuthorized.heading'),
-				$this->translator->translate('//module.base.messages.notAuthorized.message')
+				$this->translator->translate('//ui-module.base.messages.notAuthorized.heading'),
+				$this->translator->translate('//ui-module.base.messages.notAuthorized.message')
 			);
 
 		} catch (SimpleAuthExceptions\ForbiddenAccessException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_FORBIDDEN,
-				$this->translator->translate('//module.base.messages.forbidden.heading'),
-				$this->translator->translate('//module.base.messages.forbidden.message')
+				$this->translator->translate('//ui-module.base.messages.forbidden.heading'),
+				$this->translator->translate('//ui-module.base.messages.forbidden.message')
 			);
 		}
 	}

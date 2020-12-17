@@ -74,7 +74,7 @@ abstract class Widget implements IWidget
 	 * @IPubDoctrine\Crud(is={"required", "writable"})
 	 * @ORM\Column(type="string", name="widget_name", length=50, nullable=false)
 	 */
-	protected $name;
+	protected string $name;
 
 	/**
 	 * @var Entities\Widgets\Display\IDisplay
@@ -82,7 +82,7 @@ abstract class Widget implements IWidget
 	 * @IPubDoctrine\Crud(is={"required", "writable"})
 	 * @ORM\OneToOne(targetEntity="FastyBird\UIModule\Entities\Widgets\Display\Display", mappedBy="widget", cascade={"persist", "remove"})
 	 */
-	protected $display;
+	protected Display\IDisplay $display;
 
 	/**
 	 * @var Common\Collections\Collection<int, Entities\Groups\IGroup>
@@ -90,16 +90,15 @@ abstract class Widget implements IWidget
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 * @ORM\ManyToMany(targetEntity="FastyBird\UIModule\Entities\Groups\Group", mappedBy="widgets")
 	 */
-	protected $groups;
+	protected Common\Collections\Collection $groups;
 
 	/**
 	 * @var Common\Collections\Collection<int, Entities\Widgets\DataSources\IDataSource>
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
-	 * @ORM\OneToMany(targetEntity="FastyBird\UIModule\Entities\Widgets\DataSources\DataSource", mappedBy="widget", cascade={"persist", "remove"},
-	 *                                                                                         orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="FastyBird\UIModule\Entities\Widgets\DataSources\DataSource", mappedBy="widget", cascade={"persist", "remove"}, orphanRemoval=true)
 	 */
-	protected $dataSources;
+	protected Common\Collections\Collection $dataSources;
 
 	/**
 	 * @param string $name

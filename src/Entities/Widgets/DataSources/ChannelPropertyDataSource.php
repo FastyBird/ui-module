@@ -41,7 +41,7 @@ class ChannelPropertyDataSource extends DataSource implements IChannelPropertyDa
 	 * @IPubDoctrine\Crud(is={"required", "writable"})
 	 * @ORM\Column(type="string", name="data_source_channel", length=100, nullable=false)
 	 */
-	private $channel;
+	private string $channel;
 
 	/**
 	 * @var string
@@ -49,7 +49,7 @@ class ChannelPropertyDataSource extends DataSource implements IChannelPropertyDa
 	 * @IPubDoctrine\Crud(is={"required", "writable"})
 	 * @ORM\Column(type="string", name="data_source_property", length=100, nullable=false)
 	 */
-	private $property;
+	private string $property;
 
 	/**
 	 * @param string $channel

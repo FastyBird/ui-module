@@ -35,7 +35,7 @@ class ChartGraph extends Display implements IChartGraph
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 */
-	protected $enableMinMax;
+	protected bool $enableMinMax;
 
 	/**
 	 * {@inheritDoc}

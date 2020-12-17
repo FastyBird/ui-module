@@ -44,16 +44,16 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	private const CHANNEL_CONFIGURATION_SCHEMA_FILENAME = 'data.channel.configuration.json';
 
 	/** @var Sockets\IPublisher|null */
-	private $publisher;
+	private ?Sockets\IPublisher $publisher;
 
 	/** @var ModulesMetadataLoaders\ISchemaLoader */
-	private $schemaLoader;
+	private ModulesMetadataLoaders\ISchemaLoader $schemaLoader;
 
 	/** @var ModulesMetadataSchemas\IValidator */
-	private $jsonValidator;
+	private ModulesMetadataSchemas\IValidator $jsonValidator;
 
 	/** @var Log\LoggerInterface */
-	private $logger;
+	private Log\LoggerInterface $logger;
 
 	public function __construct(
 		ModulesMetadataLoaders\ISchemaLoader $schemaLoader,

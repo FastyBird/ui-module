@@ -25,7 +25,7 @@ class DigitalActuator extends Actuator implements IDigitalActuator
 {
 
 	/** @var string[] */
-	protected $allowedDisplay = [
+	protected array $allowedDisplay = [
 		Entities\Widgets\Display\IButton::class,
 	];
 

@@ -25,7 +25,7 @@ class DigitalSensor extends Sensor implements IDigitalSensor
 {
 
 	/** @var string[] */
-	protected $allowedDisplay = [
+	protected array $allowedDisplay = [
 		Entities\Widgets\Display\IDigitalValue::class,
 		Entities\Widgets\Display\IChartGraph::class,
 	];

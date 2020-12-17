@@ -42,34 +42,34 @@ final class DisplayV1Controller extends BaseV1Controller
 	use Controllers\Finders\TWidgetFinder;
 
 	/** @var Models\Widgets\IWidgetRepository */
-	protected $widgetRepository;
+	protected Models\Widgets\IWidgetRepository $widgetRepository;
 
 	/** @var string */
-	protected $translationDomain = 'module.display';
+	protected string $translationDomain = 'ui-module.display';
 
 	/** @var Models\Widgets\Displays\IDisplaysManager */
-	private $displaysManager;
+	private Models\Widgets\Displays\IDisplaysManager $displaysManager;
 
 	/** @var Hydrators\Widgets\Displays\AnalogValueHydrator */
-	private $analogValueHydrator;
+	private Hydrators\Widgets\Displays\AnalogValueHydrator $analogValueHydrator;
 
 	/** @var Hydrators\Widgets\Displays\ButtonHydrator */
-	private $buttonHydrator;
+	private Hydrators\Widgets\Displays\ButtonHydrator $buttonHydrator;
 
 	/** @var Hydrators\Widgets\Displays\ChartGraphHydrator */
-	private $chartGraphHydrator;
+	private Hydrators\Widgets\Displays\ChartGraphHydrator $chartGraphHydrator;
 
 	/** @var Hydrators\Widgets\Displays\DigitalValueHydrator */
-	private $digitalValueHydrator;
+	private Hydrators\Widgets\Displays\DigitalValueHydrator $digitalValueHydrator;
 
 	/** @var Hydrators\Widgets\Displays\GaugeHydrator */
-	private $gaugeHydrator;
+	private Hydrators\Widgets\Displays\GaugeHydrator $gaugeHydrator;
 
 	/** @var Hydrators\Widgets\Displays\GroupedButtonHydrator */
-	private $groupedButtonHydrator;
+	private Hydrators\Widgets\Displays\GroupedButtonHydrator $groupedButtonHydrator;
 
 	/** @var Hydrators\Widgets\Displays\SliderHydrator */
-	private $sliderHydrator;
+	private Hydrators\Widgets\Displays\SliderHydrator $sliderHydrator;
 
 	/**
 	 * @param Models\Widgets\Displays\IDisplaysManager $displaysManager

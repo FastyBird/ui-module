@@ -43,19 +43,19 @@ final class DashboardsV1Controller extends BaseV1Controller
 	use Controllers\Finders\TDashboardFinder;
 
 	/** @var string */
-	protected $translationDomain = 'module.dashboards';
+	protected string $translationDomain = 'ui-module.dashboards';
 
 	/** @var Hydrators\Dashboards\DashboardHydrator */
-	private $dashboardHydrator;
+	private Hydrators\Dashboards\DashboardHydrator $dashboardHydrator;
 
 	/** @var Models\Dashboards\IDashboardRepository */
-	private $dashboardRepository;
+	private Models\Dashboards\IDashboardRepository $dashboardRepository;
 
 	/** @var Models\Dashboards\IDashboardsManager */
-	private $dashboardsManager;
+	private Models\Dashboards\IDashboardsManager $dashboardsManager;
 
 	/** @var Models\Groups\IGroupsManager */
-	private $groupsManager;
+	private Models\Groups\IGroupsManager $groupsManager;
 
 	/**
 	 * @param Models\Dashboards\IDashboardRepository $dashboardRepository
@@ -150,8 +150,8 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('//module.base.messages.missingRequired.heading'),
-					$this->translator->translate('//module.base.messages.missingRequired.message'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 					[
 						'pointer' => $pointer,
 					]
@@ -163,8 +163,8 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('//module.base.messages.missingRequired.heading'),
-					$this->translator->translate('//module.base.messages.missingRequired.message'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 					[
 						'pointer' => 'data/attributes/' . $ex->getField(),
 					]
@@ -225,8 +225,8 @@ final class DashboardsV1Controller extends BaseV1Controller
 		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//module.base.messages.invalid.heading'),
-				$this->translator->translate('//module.base.messages.invalid.message')
+				$this->translator->translate('//ui-module.base.messages.invalid.heading'),
+				$this->translator->translate('//ui-module.base.messages.invalid.message')
 			);
 		}
 

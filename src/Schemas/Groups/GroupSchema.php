@@ -47,7 +47,7 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 	public const RELATIONSHIPS_DASHBOARD = 'dashboard';
 
 	/** @var Routing\IRouter */
-	protected $router;
+	protected Routing\IRouter $router;
 
 	/**
 	 * @param Routing\IRouter $router

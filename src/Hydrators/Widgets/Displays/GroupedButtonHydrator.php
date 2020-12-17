@@ -57,8 +57,8 @@ final class GroupedButtonHydrator extends DisplayHydrator
 		if ($attributes->get('icon') === null || (string) $attributes->get('icon') === '') {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => '/data/attributes/icon',
 				]

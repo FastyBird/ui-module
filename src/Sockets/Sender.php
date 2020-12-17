@@ -35,13 +35,13 @@ final class Sender implements ISender
 	use Nette\SmartObject;
 
 	/** @var WebSockets\Router\LinkGenerator */
-	private $linkGenerator;
+	private WebSockets\Router\LinkGenerator $linkGenerator;
 
 	/** @var WebSocketsWAMP\Topics\IStorage<WebSocketsWAMP\Entities\Topics\Topic> */
-	private $topicsStorage;
+	private WebSocketsWAMP\Topics\IStorage $topicsStorage;
 
 	/** @var Log\LoggerInterface */
-	private $logger;
+	private Log\LoggerInterface $logger;
 
 	/**
 	 * @param WebSockets\Router\LinkGenerator $linkGenerator

@@ -41,7 +41,7 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	];
 
 	/** @var string */
-	protected $translationDomain = 'module.display';
+	protected $translationDomain = 'ui-module.display';
 
 	/**
 	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
@@ -55,8 +55,8 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 		if ($attributes->get('precision') === null || (string) $attributes->get('precision') === '') {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => '/data/attributes/precision',
 				]
@@ -78,8 +78,8 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 		if ($attributes->get('minimum_value') === null || (string) $attributes->get('minimum_value') === '') {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => '/data/attributes/minimum_value',
 				]
@@ -101,8 +101,8 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 		if ($attributes->get('maximum_value') === null || (string) $attributes->get('maximum_value') === '') {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => '/data/attributes/maximum_value',
 				]
@@ -124,8 +124,8 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 		if ($attributes->get('step_value') === null || (string) $attributes->get('step_value') === '') {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('//module.base.messages.missingRequired.heading'),
-				$this->translator->translate('//module.base.messages.missingRequired.message'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+				$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 				[
 					'pointer' => '/data/attributes/step_value',
 				]

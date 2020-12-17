@@ -48,16 +48,16 @@ trait TDashboardFinder
 			if ($dashboard === null) {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_NOT_FOUND,
-					$this->translator->translate('//module.base.messages.dashboardNotFound.heading'),
-					$this->translator->translate('//module.base.messages.dashboardNotFound.message')
+					$this->translator->translate('//ui-module.base.messages.dashboardNotFound.heading'),
+					$this->translator->translate('//ui-module.base.messages.dashboardNotFound.message')
 				);
 			}
 
 		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_NOT_FOUND,
-				$this->translator->translate('//module.base.messages.dashboardNotFound.heading'),
-				$this->translator->translate('//module.base.messages.dashboardNotFound.message')
+				$this->translator->translate('//ui-module.base.messages.dashboardNotFound.heading'),
+				$this->translator->translate('//ui-module.base.messages.dashboardNotFound.message')
 			);
 		}
 

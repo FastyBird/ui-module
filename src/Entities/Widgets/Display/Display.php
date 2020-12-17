@@ -71,7 +71,7 @@ abstract class Display implements IDisplay
 	 * @ORM\OneToOne(targetEntity="FastyBird\UIModule\Entities\Widgets\Widget", inversedBy="display")
 	 * @ORM\JoinColumn(name="widget_id", referencedColumnName="widget_id", unique=true, onDelete="CASCADE", nullable=false)
 	 */
-	protected $widget;
+	protected Entities\Widgets\IWidget $widget;
 
 	/**
 	 * @param Entities\Widgets\IWidget $widget

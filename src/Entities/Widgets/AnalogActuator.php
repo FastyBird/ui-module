@@ -25,7 +25,7 @@ class AnalogActuator extends Actuator implements IAnalogActuator
 {
 
 	/** @var string[] */
-	protected $allowedDisplay = [
+	protected array $allowedDisplay = [
 		Entities\Widgets\Display\ISlider::class,
 	];
 

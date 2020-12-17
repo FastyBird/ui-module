@@ -41,16 +41,16 @@ abstract class BaseV1Controller
 	use Nette\SmartObject;
 
 	/** @var Translation\PrefixedTranslator */
-	protected $translator;
+	protected Translation\PrefixedTranslator $translator;
 
 	/** @var ORM\ManagerRegistry */
-	protected $managerRegistry;
+	protected ORM\ManagerRegistry $managerRegistry;
 
 	/** @var Log\LoggerInterface */
-	protected $logger;
+	protected Log\LoggerInterface $logger;
 
 	/** @var string */
-	protected $translationDomain = '';
+	protected string $translationDomain = '';
 
 	/**
 	 * @param Translation\Translator $translator
@@ -97,15 +97,15 @@ abstract class BaseV1Controller
 		} catch (Utils\JsonException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//module.base.messages.notValidJson.heading'),
-				$this->translator->translate('//module.base.messages.notValidJson.message')
+				$this->translator->translate('//ui-module.base.messages.notValidJson.heading'),
+				$this->translator->translate('//ui-module.base.messages.notValidJson.message')
 			);
 
 		} catch (JsonAPIDocument\Exceptions\RuntimeException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//module.base.messages.notValidJsonApi.heading'),
-				$this->translator->translate('//module.base.messages.notValidJsonApi.message')
+				$this->translator->translate('//ui-module.base.messages.notValidJsonApi.heading'),
+				$this->translator->translate('//ui-module.base.messages.notValidJsonApi.message')
 			);
 		}
 
@@ -122,15 +122,15 @@ abstract class BaseV1Controller
 		if ($relationEntity !== null) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_NOT_FOUND,
-				$this->translator->translate('//module.base.messages.relationNotFound.heading'),
-				$this->translator->translate('//module.base.messages.relationNotFound.message', ['relation' => $relationEntity])
+				$this->translator->translate('//ui-module.base.messages.relationNotFound.heading'),
+				$this->translator->translate('//ui-module.base.messages.relationNotFound.message', ['relation' => $relationEntity])
 			);
 		}
 
 		throw new JsonApiExceptions\JsonApiErrorException(
 			StatusCodeInterface::STATUS_NOT_FOUND,
-			$this->translator->translate('//module.base.messages.unknownRelation.heading'),
-			$this->translator->translate('//module.base.messages.unknownRelation.message')
+			$this->translator->translate('//ui-module.base.messages.unknownRelation.heading'),
+			$this->translator->translate('//ui-module.base.messages.unknownRelation.message')
 		);
 	}
 

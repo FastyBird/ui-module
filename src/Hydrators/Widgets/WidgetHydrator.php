@@ -61,10 +61,10 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 	];
 
 	/** @var string */
-	protected $translationDomain = 'module.widgets';
+	protected $translationDomain = 'ui-module.widgets';
 
 	/** @var Models\Groups\IGroupRepository */
-	private $groupRepository;
+	private Models\Groups\IGroupRepository $groupRepository;
 
 	/**
 	 * @param Models\Groups\IGroupRepository $groupRepository
@@ -345,8 +345,8 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				} catch (Uuid\Exception\InvalidUuidStringException $ex) {
 					throw new JsonApiExceptions\JsonApiErrorException(
 						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-						$this->translator->translate('//module.base.messages.invalid.heading'),
-						$this->translator->translate('//module.base.messages.invalid.message'),
+						$this->translator->translate('//ui-module.base.messages.invalid.heading'),
+						$this->translator->translate('//ui-module.base.messages.invalid.message'),
 						[
 							'pointer' => '/data/relationships/groups/data/id',
 						]

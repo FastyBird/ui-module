@@ -45,19 +45,19 @@ final class DataSourcesV1Controller extends BaseV1Controller
 	use Controllers\Finders\TWidgetFinder;
 
 	/** @var Models\Widgets\IWidgetRepository */
-	protected $widgetRepository;
+	protected Models\Widgets\IWidgetRepository $widgetRepository;
 
 	/** @var string */
-	protected $translationDomain = 'module.dataSources';
+	protected string $translationDomain = 'ui-module.dataSources';
 
 	/** @var Models\Widgets\DataSources\IDataSourceRepository */
-	private $dataSourceRepository;
+	private Models\Widgets\DataSources\IDataSourceRepository $dataSourceRepository;
 
 	/** @var Models\Widgets\DataSources\IDataSourcesManager */
-	private $dataSourcesManager;
+	private Models\Widgets\DataSources\IDataSourcesManager $dataSourcesManager;
 
 	/** @var Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator */
-	private $channelDataSourceHydrator;
+	private Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator $channelDataSourceHydrator;
 
 	/**
 	 * @param Models\Widgets\DataSources\IDataSourceRepository $dataSourceRepository
@@ -202,8 +202,8 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('//module.base.messages.missingRequired.heading'),
-					$this->translator->translate('//module.base.messages.missingRequired.message'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 					[
 						'pointer' => $pointer,
 					]
@@ -215,8 +215,8 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('//module.base.messages.missingRequired.heading'),
-					$this->translator->translate('//module.base.messages.missingRequired.message'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
+					$this->translator->translate('//ui-module.base.messages.missingRequired.message'),
 					[
 						'pointer' => 'data/attributes/' . $ex->getField(),
 					]
@@ -277,8 +277,8 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//module.base.messages.invalid.heading'),
-				$this->translator->translate('//module.base.messages.invalid.message')
+				$this->translator->translate('//ui-module.base.messages.invalid.heading'),
+				$this->translator->translate('//ui-module.base.messages.invalid.message')
 			);
 		}
 

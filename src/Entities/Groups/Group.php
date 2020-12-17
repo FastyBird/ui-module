@@ -58,7 +58,7 @@ class Group implements IGroup
 	 * @IPubDoctrine\Crud(is={"required", "writable"})
 	 * @ORM\Column(type="string", name="group_name", length=50, nullable=false)
 	 */
-	private $name;
+	private string $name;
 
 	/**
 	 * @var string|null
@@ -66,7 +66,7 @@ class Group implements IGroup
 	 * @IPubDoctrine\Crud(is="writable")
 	 * @ORM\Column(type="text", name="group_comment", nullable=true, options={"default": null})
 	 */
-	private $comment = null;
+	private ?string $comment = null;
 
 	/**
 	 * @var int
@@ -74,7 +74,7 @@ class Group implements IGroup
 	 * @IPubDoctrine\Crud(is="writable")
 	 * @ORM\Column(type="integer", name="group_priority", length=15, nullable=false, options={"default" = 0})
 	 */
-	private $priority = 0;
+	private int $priority = 0;
 
 	/**
 	 * @var Common\Collections\Collection<int, Entities\Widgets\IWidget>
@@ -90,7 +90,7 @@ class Group implements IGroup
 	 *    }
 	 * )
 	 */
-	private $widgets;
+	private Common\Collections\Collection $widgets;
 
 	/**
 	 * @var Entities\Dashboards\IDashboard
@@ -99,7 +99,7 @@ class Group implements IGroup
 	 * @ORM\ManyToOne(targetEntity="FastyBird\UIModule\Entities\Dashboards\Dashboard", inversedBy="groups")
 	 * @ORM\JoinColumn(name="dashboard_id", referencedColumnName="dashboard_id", onDelete="CASCADE", nullable=false)
 	 */
-	private $dashboard;
+	private Entities\Dashboards\IDashboard $dashboard;
 
 	/**
 	 * @param Entities\Dashboards\IDashboard $dashboard

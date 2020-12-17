@@ -36,7 +36,7 @@ trait TStepValue
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 */
-	protected $stepValue;
+	protected ?float $stepValue;
 
 	/**
 	 * @return float

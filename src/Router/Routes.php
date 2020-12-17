@@ -40,28 +40,28 @@ class Routes implements WebServerRouter\IRoutes
 	public const RELATION_ENTITY = 'relationEntity';
 
 	/** @var Controllers\DashboardsV1Controller */
-	private $dashboardsV1Controller;
+	private Controllers\DashboardsV1Controller $dashboardsV1Controller;
 
 	/** @var Controllers\GroupsV1Controller */
-	private $groupsV1Controller;
+	private Controllers\GroupsV1Controller $groupsV1Controller;
 
 	/** @var Controllers\WidgetsV1Controller */
-	private $widgetsV1Controller;
+	private Controllers\WidgetsV1Controller $widgetsV1Controller;
 
 	/** @var Controllers\DisplayV1Controller */
-	private $displayV1Controller;
+	private Controllers\DisplayV1Controller $displayV1Controller;
 
 	/** @var Controllers\DataSourcesV1Controller */
-	private $dataSourceV1Controller;
+	private Controllers\DataSourcesV1Controller $dataSourceV1Controller;
 
 	/** @var Middleware\AccessMiddleware */
-	private $uiAccessControlMiddleware;
+	private Middleware\AccessMiddleware $uiAccessControlMiddleware;
 
 	/** @var SimpleAuthMiddleware\AccessMiddleware */
-	private $accessControlMiddleware;
+	private SimpleAuthMiddleware\AccessMiddleware $accessControlMiddleware;
 
 	/** @var SimpleAuthMiddleware\UserMiddleware */
-	private $userMiddleware;
+	private SimpleAuthMiddleware\UserMiddleware $userMiddleware;
 
 	public function __construct(
 		Controllers\DashboardsV1Controller $dashboardsV1Controller,

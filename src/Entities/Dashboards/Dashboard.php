@@ -61,7 +61,7 @@ class Dashboard implements IDashboard
 	 * @IPubDoctrine\Crud(is={"required", "writable"})
 	 * @ORM\Column(type="string", name="dashboard_name", length=50, nullable=false)
 	 */
-	private $name;
+	private string $name;
 
 	/**
 	 * @var string|null
@@ -69,7 +69,7 @@ class Dashboard implements IDashboard
 	 * @IPubDoctrine\Crud(is="writable")
 	 * @ORM\Column(type="text", name="dashboard_comment", nullable=true, options={"default": null})
 	 */
-	private $comment = null;
+	private ?string $comment = null;
 
 	/**
 	 * @var int
@@ -77,7 +77,7 @@ class Dashboard implements IDashboard
 	 * @IPubDoctrine\Crud(is="writable")
 	 * @ORM\Column(type="integer", name="dashboard_priority", length=15, nullable=false, options={"default" = 0})
 	 */
-	private $priority = 0;
+	private int $priority = 0;
 
 	/**
 	 * @var Common\Collections\Collection<int, Entities\Groups\IGroup>
@@ -86,7 +86,7 @@ class Dashboard implements IDashboard
 	 * @ORM\OneToMany(targetEntity="FastyBird\UIModule\Entities\Groups\Group", mappedBy="dashboard", cascade={"persist", "remove"}, orphanRemoval=true)
 	 * @ORM\OrderBy({"priority" = "ASC"})
 	 */
-	private $groups;
+	private Common\Collections\Collection $groups;
 
 	/**
 	 * @param string $name

@@ -48,16 +48,16 @@ trait TWidgetFinder
 			if ($widget === null) {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_NOT_FOUND,
-					$this->translator->translate('//module.base.messages.widgetNotFound.heading'),
-					$this->translator->translate('//module.base.messages.widgetNotFound.message')
+					$this->translator->translate('//ui-module.base.messages.widgetNotFound.heading'),
+					$this->translator->translate('//ui-module.base.messages.widgetNotFound.message')
 				);
 			}
 
 		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_NOT_FOUND,
-				$this->translator->translate('//module.base.messages.widgetNotFound.heading'),
-				$this->translator->translate('//module.base.messages.widgetNotFound.message')
+				$this->translator->translate('//ui-module.base.messages.widgetNotFound.heading'),
+				$this->translator->translate('//ui-module.base.messages.widgetNotFound.message')
 			);
 		}
 
