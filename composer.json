@@ -1,7 +1,7 @@
 {
   "name" : "fastybird/ui-module",
-  "type" : "project",
-  "description" : "FastyBird IOT server UI module for visual components & basic control logic",
+  "type" : "library",
+  "description" : "FastyBird IoT user interface module for visual components & basic control logic",
   "keywords" : [
     "fastybird",
     "fb",
@@ -17,7 +17,7 @@
   "authors" : [
     {
       "name" : "FastyBird s.r.o.",
-      "email" : "info@fastybird.com",
+      "email" : "code@fastybird.com",
       "homepage" : "https://www.fastybird.com/"
     },
     {

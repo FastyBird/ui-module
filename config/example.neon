@@ -37,7 +37,7 @@ extensions:
 	ipubWebSockets						: IPub\WebSockets\DI\WebSocketsExtension
 
 contributteConsole:
-	name: FastyBird:Libraries!
+	name: FastyBird:UIModule!
 	version: '1.0'
 	catchExceptions: true
 	autoExit: true

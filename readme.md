@@ -12,7 +12,7 @@
 
 UI module is a [Nette framework](https://nette.org) extension for managing user interface configuration and exposing it for clients.
 
-[FastyBird](https://www.fastybird.com) UI module is an Apache2 licensed distributed extension, developed in [PHP](https://www.php.net) with [Nette framework](https://nette.org).
+[FastyBird](https://www.fastybird.com) UI module is an [Apache2 licensed](http://www.apache.org/licenses/LICENSE-2.0) distributed extension, developed in [PHP](https://www.php.net) with [Nette framework](https://nette.org).
 
 ## Requirements
 
@@ -42,7 +42,7 @@ This command is to start build in web server & web sockets server which is liste
 
 ## Configuration
 
-This module is dependent on other Nette extension. All this extension have to enabled and configured in NEON configuration file.
+This module is dependent on other Nette extensions. All this extensions have to enabled and configured in NEON configuration file.
 
 Example configuration could be found [here](https://github.com/FastyBird/ui-module/blob/master/config/example.neon)
 
