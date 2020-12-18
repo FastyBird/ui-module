@@ -27,16 +27,6 @@ final class Constants
 {
 
 	/**
-	 * Message bus routing keys
-	 */
-
-	// Data routing keys
-	public const WS_DEVICES_PROPERTIES_DATA_ROUTING_KEY = 'fb.ws.data.device.property';
-	public const WS_DEVICES_CONFIGURATION_DATA_ROUTING_KEY = 'fb.ws.data.device.configuration';
-	public const WS_CHANNELS_PROPERTIES_DATA_ROUTING_KEY = 'fb.ws.data.channel.property';
-	public const WS_CHANNELS_CONFIGURATION_DATA_ROUTING_KEY = 'fb.ws.data.channel.configuration';
-
-	/**
 	 * Service headers
 	 */
 

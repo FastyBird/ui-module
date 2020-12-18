@@ -19,7 +19,6 @@ use FastyBird\ModulesMetadata;
 use FastyBird\ModulesMetadata\Exceptions as ModulesMetadataExceptions;
 use FastyBird\ModulesMetadata\Loaders as ModulesMetadataLoaders;
 use FastyBird\ModulesMetadata\Schemas as ModulesMetadataSchemas;
-use FastyBird\UIModule;
 use FastyBird\UIModule\Exceptions;
 use FastyBird\UIModule\Sockets;
 use IPub\WebSockets;
@@ -84,7 +83,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 		}
 
 		switch ($args['routing_key']) {
-			case UIModule\Constants::WS_DEVICES_PROPERTIES_DATA_ROUTING_KEY:
+			case ModulesMetadata\Constants::MESSAGE_BUS_DEVICES_PROPERTIES_DATA_ROUTING_KEY:
 				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::DEVICE_PROPERTY_SCHEMA_FILENAME);
 
 				$data = $this->parse($args, $schema);
@@ -101,7 +100,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				}
 				break;
 
-			case UIModule\Constants::WS_DEVICES_CONFIGURATION_DATA_ROUTING_KEY:
+			case ModulesMetadata\Constants::MESSAGE_BUS_DEVICES_CONFIGURATION_DATA_ROUTING_KEY:
 				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::DEVICE_CONFIGURATION_SCHEMA_FILENAME);
 
 				$data = $this->parse($args, $schema);
@@ -118,7 +117,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				}
 				break;
 
-			case UIModule\Constants::WS_CHANNELS_PROPERTIES_DATA_ROUTING_KEY:
+			case ModulesMetadata\Constants::MESSAGE_BUS_CHANNELS_PROPERTIES_DATA_ROUTING_KEY:
 				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::CHANNEL_PROPERTY_SCHEMA_FILENAME);
 
 				$data = $this->parse($args, $schema);
@@ -136,7 +135,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				}
 				break;
 
-			case UIModule\Constants::WS_CHANNELS_CONFIGURATION_DATA_ROUTING_KEY:
+			case ModulesMetadata\Constants::MESSAGE_BUS_CHANNELS_CONFIGURATION_DATA_ROUTING_KEY:
 				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::CHANNEL_CONFIGURATION_SCHEMA_FILENAME);
 
 				$data = $this->parse($args, $schema);
