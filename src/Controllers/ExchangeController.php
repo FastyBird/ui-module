@@ -15,12 +15,12 @@
 
 namespace FastyBird\UIModule\Controllers;
 
+use FastyBird\ApplicationExchange\Publisher as ApplicationExchangePublisher;
 use FastyBird\ModulesMetadata;
 use FastyBird\ModulesMetadata\Exceptions as ModulesMetadataExceptions;
 use FastyBird\ModulesMetadata\Loaders as ModulesMetadataLoaders;
 use FastyBird\ModulesMetadata\Schemas as ModulesMetadataSchemas;
 use FastyBird\UIModule\Exceptions;
-use FastyBird\UIModule\Sockets;
 use IPub\WebSockets;
 use Nette\Utils;
 use Psr\Log;
@@ -37,13 +37,8 @@ use Throwable;
 final class ExchangeController extends WebSockets\Application\Controller\Controller
 {
 
-	private const DEVICE_PROPERTY_SCHEMA_FILENAME = 'data.device.property.json';
-	private const DEVICE_CONFIGURATION_SCHEMA_FILENAME = 'data.device.configuration.json';
-	private const CHANNEL_PROPERTY_SCHEMA_FILENAME = 'data.channel.property.json';
-	private const CHANNEL_CONFIGURATION_SCHEMA_FILENAME = 'data.channel.configuration.json';
-
-	/** @var Sockets\IPublisher|null */
-	private ?Sockets\IPublisher $publisher = null;
+	/** @var ApplicationExchangePublisher\IPublisher */
+	private ApplicationExchangePublisher\IPublisher $publisher;
 
 	/** @var ModulesMetadataLoaders\ISchemaLoader */
 	private ModulesMetadataLoaders\ISchemaLoader $schemaLoader;
@@ -57,7 +52,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 	public function __construct(
 		ModulesMetadataLoaders\ISchemaLoader $schemaLoader,
 		ModulesMetadataSchemas\IValidator $jsonValidator,
-		?Sockets\IPublisher $publisher,
+		ApplicationExchangePublisher\IPublisher $publisher,
 		?Log\LoggerInterface $logger
 	) {
 		parent::__construct();
@@ -84,7 +79,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 
 		switch ($args['routing_key']) {
 			case ModulesMetadata\Constants::MESSAGE_BUS_DEVICES_PROPERTIES_DATA_ROUTING_KEY:
-				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::DEVICE_PROPERTY_SCHEMA_FILENAME);
+				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::NOT_SPECIFIED_ORIGIN, $args['routing_key']);
 
 				$data = $this->parse($args, $schema);
 
@@ -101,7 +96,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				break;
 
 			case ModulesMetadata\Constants::MESSAGE_BUS_DEVICES_CONFIGURATION_DATA_ROUTING_KEY:
-				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::DEVICE_CONFIGURATION_SCHEMA_FILENAME);
+				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::NOT_SPECIFIED_ORIGIN, $args['routing_key']);
 
 				$data = $this->parse($args, $schema);
 
@@ -118,7 +113,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				break;
 
 			case ModulesMetadata\Constants::MESSAGE_BUS_CHANNELS_PROPERTIES_DATA_ROUTING_KEY:
-				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::CHANNEL_PROPERTY_SCHEMA_FILENAME);
+				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::NOT_SPECIFIED_ORIGIN, $args['routing_key']);
 
 				$data = $this->parse($args, $schema);
 
@@ -136,7 +131,7 @@ final class ExchangeController extends WebSockets\Application\Controller\Control
 				break;
 
 			case ModulesMetadata\Constants::MESSAGE_BUS_CHANNELS_CONFIGURATION_DATA_ROUTING_KEY:
-				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::RESOURCES_FOLDER . '/schemas/data/' . self::CHANNEL_CONFIGURATION_SCHEMA_FILENAME);
+				$schema = $this->schemaLoader->load(ModulesMetadata\Constants::NOT_SPECIFIED_ORIGIN, $args['routing_key']);
 
 				$data = $this->parse($args, $schema);
 

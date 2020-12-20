@@ -18,6 +18,7 @@ namespace FastyBird\UIModule\DI;
 use Contributte\Translation;
 use Doctrine\Persistence;
 use FastyBird\UIModule\Commands;
+use FastyBird\UIModule\Consumers;
 use FastyBird\UIModule\Controllers;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Events;
@@ -254,6 +255,10 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 
 		$builder->addDefinition(null)
 			->setType(Hydrators\Widgets\Displays\SliderHydrator::class);
+
+		// Bus exchange consumers
+		$builder->addDefinition(null)
+			->setType(Consumers\ModuleMessageConsumer::class);
 
 		// Sockets
 		$builder->addDefinition(null)

@@ -2,6 +2,7 @@
 
 namespace Tests\Cases;
 
+use FastyBird\UIModule\Consumers;
 use FastyBird\UIModule\Controllers;
 use FastyBird\UIModule\DI;
 use FastyBird\UIModule\Events;
@@ -76,6 +77,8 @@ final class ServicesTest extends BaseTestCase
 		Assert::notNull($container->getByType(Hydrators\Widgets\Displays\GroupedButtonHydrator::class));
 		Assert::notNull($container->getByType(Hydrators\Widgets\Displays\SliderHydrator::class));
 		Assert::notNull($container->getByType(Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator::class));
+
+		Assert::notNull($container->getByType(Consumers\ModuleMessageConsumer::class));
 
 		Assert::notNull($container->getByType(Sockets\Sender::class));
 	}

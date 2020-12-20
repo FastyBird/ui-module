@@ -31,17 +31,18 @@
   "minimum-stability" : "dev",
 
   "require" : {
-    "php" : ">=7.4.0",
-    "contributte/translation" : "^0.8",
-    "cweagans/composer-patches" : "^1.6",
-    "fastybird/database" : "@dev",
-    "fastybird/json-api" : "@dev",
-    "fastybird/modules-metadata" : "@dev",
-    "fastybird/simple-auth" : "@dev",
-    "fastybird/web-server" : "@dev",
-    "ipub/doctrine-consistence" : "^0.3",
-    "ipub/doctrine-timestampable" : "^1.4",
-    "ipub/websockets-wamp" : "^1.3"
+    "php": ">=7.4.0",
+    "contributte/translation": "^0.8",
+    "cweagans/composer-patches": "^1.6",
+    "fastybird/application-exchange": "@dev",
+    "fastybird/database": "@dev",
+    "fastybird/json-api": "@dev",
+    "fastybird/modules-metadata": "@dev",
+    "fastybird/simple-auth": "@dev",
+    "fastybird/web-server": "@dev",
+    "ipub/doctrine-consistence": "^0.3",
+    "ipub/doctrine-timestampable": "^1.4",
+    "ipub/websockets-wamp": "^1.3"
   },
 
   "require-dev" : {
