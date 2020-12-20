@@ -111,6 +111,9 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		$builder->addDefinition($this->prefix('event.socketConnect'))
 			->setType(Events\ServerSocketConnectHandler::class);
 
+		$builder->addDefinition($this->prefix('event.serverAfterStart'))
+			->setType(Events\ServerAfterStartHandler::class);
+
 		// Database repositories
 		$builder->addDefinition(null)
 			->setType(Models\Dashboards\DashboardRepository::class);
@@ -304,7 +307,8 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			$serverCommandService = $builder->getDefinition($serverCommandServiceName);
 
 			$serverCommandService
-				->addSetup('$onSocketConnect[]', ['@' . $this->prefix('event.socketConnect')]);
+				->addSetup('$onSocketConnect[]', ['@' . $this->prefix('event.socketConnect')])
+				->addSetup('$onAfterServerStart[]', ['@' . $this->prefix('event.serverAfterStart')]);
 		}
 
 		$socketWrapperServiceName = $builder->getByType(WebSockets\Server\Wrapper::class);

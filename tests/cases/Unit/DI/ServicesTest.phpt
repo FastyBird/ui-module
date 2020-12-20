@@ -28,6 +28,7 @@ final class ServicesTest extends BaseTestCase
 
 		Assert::notNull($container->getByType(Events\WsClientConnectedHandler::class));
 		Assert::notNull($container->getByType(Events\WsMessageHandler::class));
+		Assert::notNull($container->getByType(Events\ServerAfterStartHandler::class));
 		Assert::notNull($container->getByType(Events\ServerSocketConnectHandler::class));
 
 		Assert::notNull($container->getByType(Models\Dashboards\DashboardRepository::class));
