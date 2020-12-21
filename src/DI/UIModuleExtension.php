@@ -87,184 +87,184 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		$configuration = $this->getConfig();
 
 		// Http router
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('middleware.access'))
 			->setType(Middleware\AccessMiddleware::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('router.routes'))
 			->setType(Router\Routes::class);
 
 		// Console commands
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('commands.initialize'))
 			->setType(Commands\InitializeCommand::class);
 
 		// Events
-		$builder->addDefinition($this->prefix('event.wsClientConnect'))
+		$builder->addDefinition($this->prefix('events.wsClientConnect'))
 			->setType(Events\WsClientConnectedHandler::class)
 			->setArgument('wsKeys', $configuration->keys)
 			->setArgument('allowedOrigins', $configuration->origins);
 
-		$builder->addDefinition($this->prefix('event.wsMessage'))
+		$builder->addDefinition($this->prefix('events.wsMessage'))
 			->setType(Events\WsMessageHandler::class)
 			->setArgument('wsKeys', $configuration->keys)
 			->setArgument('allowedOrigins', $configuration->origins);
 
-		$builder->addDefinition($this->prefix('event.socketConnect'))
+		$builder->addDefinition($this->prefix('events.socketConnect'))
 			->setType(Events\ServerSocketConnectHandler::class);
 
-		$builder->addDefinition($this->prefix('event.serverAfterStart'))
+		$builder->addDefinition($this->prefix('events.serverAfterStart'))
 			->setType(Events\ServerAfterStartHandler::class);
 
 		// Database repositories
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('models.dashboardRepository'))
 			->setType(Models\Dashboards\DashboardRepository::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('models.groupRepository'))
 			->setType(Models\Groups\GroupRepository::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('models.widgetRepository'))
 			->setType(Models\Widgets\WidgetRepository::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('models.dataSourceRepository'))
 			->setType(Models\Widgets\DataSources\DataSourceRepository::class);
 
 		// Database managers
-		$builder->addDefinition($this->prefix('doctrine.dashboardsManager'))
+		$builder->addDefinition($this->prefix('models.dashboardsManager'))
 			->setType(Models\Dashboards\DashboardsManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('doctrine.groupsManager'))
+		$builder->addDefinition($this->prefix('models.groupsManager'))
 			->setType(Models\Groups\GroupsManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('doctrine.widgetsManager'))
+		$builder->addDefinition($this->prefix('models.widgetsManager'))
 			->setType(Models\Widgets\WidgetsManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('doctrine.dataSourcesManager'))
+		$builder->addDefinition($this->prefix('models.dataSourcesManager'))
 			->setType(Models\Widgets\DataSources\DataSourcesManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('doctrine.displaysManager'))
+		$builder->addDefinition($this->prefix('models.displaysManager'))
 			->setType(Models\Widgets\Displays\DisplaysManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
+		// Message bus consumers
+		$builder->addDefinition($this->prefix('consumers.modules'))
+			->setType(Consumers\ModuleMessageConsumer::class);
+
 		// API controllers
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('controllers.dashboards'))
 			->setType(Controllers\DashboardsV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('controllers.groups'))
 			->setType(Controllers\GroupsV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('controllers.widgets'))
 			->setType(Controllers\WidgetsV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('controllers.dataSources'))
 			->setType(Controllers\DataSourcesV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('controllers.display'))
 			->setType(Controllers\DisplayV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('controllers.exchange'))
 			->setType(Controllers\ExchangeController::class)
 			->addTag('nette.inject');
 
 		// API schemas
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.dashboard'))
 			->setType(Schemas\Dashboards\DashboardSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.group'))
 			->setType(Schemas\Groups\GroupSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.widgets.analogActuator'))
 			->setType(Schemas\Widgets\AnalogActuatorSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.widgets.analogSensor'))
 			->setType(Schemas\Widgets\AnalogSensorSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.widgets.digitalActuator'))
 			->setType(Schemas\Widgets\DigitalActuatorSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.widgets.digitalSensor'))
 			->setType(Schemas\Widgets\DigitalSensorSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.dataSources.channelProperty'))
 			->setType(Schemas\Widgets\DataSources\ChannelPropertyDataSourceSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.analogValue'))
 			->setType(Schemas\Widgets\Display\AnalogValueSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.button'))
 			->setType(Schemas\Widgets\Display\ButtonSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.chartGraph'))
 			->setType(Schemas\Widgets\Display\ChartGraphSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.digitalValue'))
 			->setType(Schemas\Widgets\Display\DigitalValueSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.gauge'))
 			->setType(Schemas\Widgets\Display\GaugeSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.groupedButton'))
 			->setType(Schemas\Widgets\Display\GroupedButtonSchema::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('schemas.display.slider'))
 			->setType(Schemas\Widgets\Display\SliderSchema::class);
 
 		// API hydrators
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.dashboard'))
 			->setType(Hydrators\Dashboards\DashboardHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.group'))
 			->setType(Hydrators\Groups\GroupHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogActuator'))
 			->setType(Hydrators\Widgets\AnalogActuatorWidgetHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogSensor'))
 			->setType(Hydrators\Widgets\AnalogSensorWidgetHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.digitalActuator'))
 			->setType(Hydrators\Widgets\DigitalActuatorWidgetHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.digitalSensor'))
 			->setType(Hydrators\Widgets\DigitalSensorWidgetHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.dataSources.channelProperty'))
 			->setType(Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogValue'))
 			->setType(Hydrators\Widgets\Displays\AnalogValueHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.button'))
 			->setType(Hydrators\Widgets\Displays\ButtonHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.chartGraph'))
 			->setType(Hydrators\Widgets\Displays\ChartGraphHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.digitalValue'))
 			->setType(Hydrators\Widgets\Displays\DigitalValueHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.gauge'))
 			->setType(Hydrators\Widgets\Displays\GaugeHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.groupedButton'))
 			->setType(Hydrators\Widgets\Displays\GroupedButtonHydrator::class);
 
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('hydrators.widgets.slider'))
 			->setType(Hydrators\Widgets\Displays\SliderHydrator::class);
 
-		// Bus exchange consumers
-		$builder->addDefinition(null)
-			->setType(Consumers\ModuleMessageConsumer::class);
-
 		// Sockets
-		$builder->addDefinition(null)
+		$builder->addDefinition($this->prefix('sockets.sender'))
 			->setType(Sockets\Sender::class);
 	}
 
@@ -307,8 +307,8 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			$serverCommandService = $builder->getDefinition($serverCommandServiceName);
 
 			$serverCommandService
-				->addSetup('$onSocketConnect[]', ['@' . $this->prefix('event.socketConnect')])
-				->addSetup('$onAfterServerStart[]', ['@' . $this->prefix('event.serverAfterStart')]);
+				->addSetup('$onSocketConnect[]', ['@' . $this->prefix('events.socketConnect')])
+				->addSetup('$onAfterServerStart[]', ['@' . $this->prefix('events.serverAfterStart')]);
 		}
 
 		$socketWrapperServiceName = $builder->getByType(WebSockets\Server\Wrapper::class);
@@ -318,8 +318,8 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			$socketWrapperService = $builder->getDefinition($socketWrapperServiceName);
 
 			$socketWrapperService
-				->addSetup('$onClientConnected[]', ['@' . $this->prefix('event.wsClientConnect')])
-				->addSetup('$onIncomingMessage[]', ['@' . $this->prefix('event.wsMessage')]);
+				->addSetup('$onClientConnected[]', ['@' . $this->prefix('events.wsClientConnect')])
+				->addSetup('$onIncomingMessage[]', ['@' . $this->prefix('events.wsMessage')]);
 		}
 	}
 
@@ -333,19 +333,19 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 
 		$entityFactoryServiceName = $builder->getByType(DoctrineCrud\Crud\IEntityCrudFactory::class, true);
 
-		$dashboardsManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__doctrine__dashboardsManager');
+		$dashboardsManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__models__dashboardsManager');
 		$dashboardsManagerService->setBody('return new ' . Models\Dashboards\DashboardsManager::class . '($this->getService(\'' . $entityFactoryServiceName . '\')->create(\'' . Entities\Dashboards\Dashboard::class . '\'));');
 
-		$groupsManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__doctrine__groupsManager');
+		$groupsManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__models__groupsManager');
 		$groupsManagerService->setBody('return new ' . Models\Groups\GroupsManager::class . '($this->getService(\'' . $entityFactoryServiceName . '\')->create(\'' . Entities\Groups\Group::class . '\'));');
 
-		$widgetsManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__doctrine__widgetsManager');
+		$widgetsManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__models__widgetsManager');
 		$widgetsManagerService->setBody('return new ' . Models\Widgets\WidgetsManager::class . '($this->getService(\'' . $entityFactoryServiceName . '\')->create(\'' . Entities\Widgets\Widget::class . '\'));');
 
-		$dataSourcesManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__doctrine__dataSourcesManager');
+		$dataSourcesManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__models__dataSourcesManager');
 		$dataSourcesManagerService->setBody('return new ' . Models\Widgets\DataSources\DataSourcesManager::class . '($this->getService(\'' . $entityFactoryServiceName . '\')->create(\'' . Entities\Widgets\DataSources\DataSource::class . '\'));');
 
-		$displaysManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__doctrine__displaysManager');
+		$displaysManagerService = $class->getMethod('createService' . ucfirst($this->name) . '__models__displaysManager');
 		$displaysManagerService->setBody('return new ' . Models\Widgets\Displays\DisplaysManager::class . '($this->getService(\'' . $entityFactoryServiceName . '\')->create(\'' . Entities\Widgets\Display\Display::class . '\'));');
 	}
 
