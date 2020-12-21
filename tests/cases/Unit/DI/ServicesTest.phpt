@@ -10,6 +10,7 @@ use FastyBird\UIModule\Hydrators;
 use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Schemas;
 use FastyBird\UIModule\Sockets;
+use FastyBird\UIModule\Subscribers;
 use Nette;
 use Ninjify\Nunjuck\TestCase\BaseTestCase;
 use Tester\Assert;
@@ -26,10 +27,10 @@ final class ServicesTest extends BaseTestCase
 	{
 		$container = $this->createContainer();
 
+		Assert::notNull($container->getByType(Subscribers\ApplicationSubscriber::class));
+
 		Assert::notNull($container->getByType(Events\WsClientConnectedHandler::class));
 		Assert::notNull($container->getByType(Events\WsMessageHandler::class));
-		Assert::notNull($container->getByType(Events\ServerAfterStartHandler::class));
-		Assert::notNull($container->getByType(Events\ServerSocketConnectHandler::class));
 
 		Assert::notNull($container->getByType(Models\Dashboards\DashboardRepository::class));
 		Assert::notNull($container->getByType(Models\Groups\GroupRepository::class));

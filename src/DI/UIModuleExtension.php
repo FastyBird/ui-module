@@ -28,7 +28,7 @@ use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Router;
 use FastyBird\UIModule\Schemas;
 use FastyBird\UIModule\Sockets;
-use FastyBird\WebServer\Commands as WebServerCommands;
+use FastyBird\UIModule\Subscribers;
 use IPub\DoctrineCrud;
 use IPub\WebSockets;
 use Nette;
@@ -97,6 +97,10 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		$builder->addDefinition($this->prefix('commands.initialize'))
 			->setType(Commands\InitializeCommand::class);
 
+		// Subscribers
+		$builder->addDefinition($this->prefix('subscribers.initialize'))
+			->setType(Subscribers\ApplicationSubscriber::class);
+
 		// Events
 		$builder->addDefinition($this->prefix('events.wsClientConnect'))
 			->setType(Events\WsClientConnectedHandler::class)
@@ -107,12 +111,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			->setType(Events\WsMessageHandler::class)
 			->setArgument('wsKeys', $configuration->keys)
 			->setArgument('allowedOrigins', $configuration->origins);
-
-		$builder->addDefinition($this->prefix('events.socketConnect'))
-			->setType(Events\ServerSocketConnectHandler::class);
-
-		$builder->addDefinition($this->prefix('events.serverAfterStart'))
-			->setType(Events\ServerAfterStartHandler::class);
 
 		// Database repositories
 		$builder->addDefinition($this->prefix('models.dashboardRepository'))
@@ -297,19 +295,8 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		}
 
 		/**
-		 * SERVER EVENTS
+		 * WS SERVER EVENTS
 		 */
-
-		$serverCommandServiceName = $builder->getByType(WebServerCommands\HttpServerCommand::class);
-
-		if ($serverCommandServiceName !== null) {
-			/** @var DI\Definitions\ServiceDefinition $serverCommandService */
-			$serverCommandService = $builder->getDefinition($serverCommandServiceName);
-
-			$serverCommandService
-				->addSetup('$onSocketConnect[]', ['@' . $this->prefix('events.socketConnect')])
-				->addSetup('$onAfterServerStart[]', ['@' . $this->prefix('events.serverAfterStart')]);
-		}
 
 		$socketWrapperServiceName = $builder->getByType(WebSockets\Server\Wrapper::class);
 

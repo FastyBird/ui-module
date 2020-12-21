@@ -1,45 +1,48 @@
 <?php declare(strict_types = 1);
 
 /**
- * ServerAfterStartHandler.php
+ * ApplicationSubscriber.php
  *
  * @license        More in license.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
- * @subpackage     Events
+ * @subpackage     Subscribers
  * @since          0.1.0
  *
- * @date           26.07.20
+ * @date           21.12.20
  */
 
-namespace FastyBird\UIModule\Events;
+namespace FastyBird\UIModule\Subscribers;
 
+use FastyBird\ApplicationEvents\Events as ApplicationEventsEvents;
 use IPub\WebSockets;
-use Nette;
+use Nette\Utils;
 use Psr\Log;
 use React\EventLoop;
 use React\Socket;
+use Symfony\Component\EventDispatcher;
 use Throwable;
 
 /**
- * Http server start handler
+ * Server startup subscriber
  *
  * @package         FastyBird:UIModule!
- * @subpackage      Events
+ * @subpackage      Subscribers
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ServerAfterStartHandler
+class ApplicationSubscriber implements EventDispatcher\EventSubscriberInterface
 {
 
-	use Nette\SmartObject;
-
-	/** @var WebSockets\Server\Handlers */
-	private WebSockets\Server\Handlers $handlers;
+	/** @var Socket\Server */
+	private Socket\Server $socketServer;
 
 	/** @var EventLoop\LoopInterface */
 	private EventLoop\LoopInterface $loop;
+
+	/** @var WebSockets\Server\Handlers */
+	private WebSockets\Server\Handlers $handlers;
 
 	/** @var WebSockets\Server\Configuration */
 	private WebSockets\Server\Configuration $configuration;
@@ -47,26 +50,35 @@ class ServerAfterStartHandler
 	/** @var Log\LoggerInterface */
 	private Log\LoggerInterface $logger;
 
+	/**
+	 * @return string[]
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			ApplicationEventsEvents\StartupEvent::class  => 'initialize',
+		];
+	}
+
 	public function __construct(
-		WebSockets\Server\Handlers $handlers,
 		EventLoop\LoopInterface $loop,
+		Socket\Server $socketServer,
+		WebSockets\Server\Handlers $handlers,
 		WebSockets\Server\Configuration $configuration,
 		?Log\LoggerInterface $logger = null
 	) {
 		$this->loop = $loop;
-
-		$this->configuration = $configuration;
+		$this->socketServer = $socketServer;
 		$this->handlers = $handlers;
+		$this->configuration = $configuration;
 
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
 	/**
 	 * @return void
-	 *
-	 * @throws Throwable
 	 */
-	public function __invoke(): void
+	public function initialize(): void
 	{
 		$client = $this->configuration->getAddress() . ':' . $this->configuration->getPort();
 		$socket = new Socket\Server($client, $this->loop);
@@ -80,6 +92,18 @@ class ServerAfterStartHandler
 		});
 
 		$this->logger->debug(sprintf('Launching WebSockets WS Server on: %s:%s', $this->configuration->getAddress(), $this->configuration->getPort()));
+
+		$this->socketServer->on('connection', function (Socket\ConnectionInterface $connection): void {
+			if ($connection->getLocalAddress() === null) {
+				return;
+			}
+
+			$parsed = Utils\ArrayHash::from((array) parse_url($connection->getLocalAddress()));
+
+			if ($parsed->offsetExists('port') && $parsed->offsetGet('port') === $this->configuration->getPort()) {
+				$this->handlers->handleConnect($connection);
+			}
+		});
 	}
 
 }
