@@ -109,8 +109,8 @@ final class ModuleMessageConsumer implements ApplicationExchangeConsumer\IConsum
 	 * {@inheritDoc}
 	 */
 	public function consume(
-		string $routingKey,
 		string $origin,
+		string $routingKey,
 		Utils\ArrayHash $message
 	): void {
 		if (!in_array($routingKey, self::ROUTING_KEYS, true)) {
