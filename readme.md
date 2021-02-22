@@ -1,11 +1,11 @@
 # FastyBird UI module
 
-[![Build Status](https://img.shields.io/travis/com/FastyBird/ui-module.svg?style=flat-square)](https://travis-ci.com/FastyBird/ui-module)
-[![Code coverage](https://img.shields.io/coveralls/FastyBird/ui-module.svg?style=flat-square)](https://coveralls.io/r/FastyBird/ui-module)
-![PHP](https://img.shields.io/packagist/php-v/fastybird/ui-module?style=flat-square)
-[![Licence](https://img.shields.io/packagist/l/FastyBird/ui-module.svg?style=flat-square)](https://packagist.org/packages/FastyBird/ui-module)
-[![Downloads total](https://img.shields.io/packagist/dt/FastyBird/ui-module.svg?style=flat-square)](https://packagist.org/packages/FastyBird/ui-module)
-[![Latest stable](https://img.shields.io/packagist/v/FastyBird/ui-module.svg?style=flat-square)](https://packagist.org/packages/FastyBird/ui-module)
+[![Build Status](https://badgen.net/github/checks/FastyBird/application-events/master?cache=300&style=flast-square)](https://github.com/FastyBird/ui-module/actions)
+[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/ui-module?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/ui-module)
+![PHP](https://badgen.net/packagist/php/FastyBird/ui-module?cache=300&style=flast-square)
+[![Licence](https://badgen.net/packagist/license/FastyBird/ui-module?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/ui-module)
+[![Downloads total](https://badgen.net/packagist/dt/FastyBird/ui-module?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/ui-module)
+[![Latest stable](https://badgen.net/packagist/v/FastyBird/ui-module/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/ui-module)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
 ## What is FastyBird UI module?
