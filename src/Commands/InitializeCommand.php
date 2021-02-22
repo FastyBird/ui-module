@@ -129,7 +129,7 @@ class InitializeCommand extends Console\Command\Command
 
 		$io->newLine(3);
 
-		$io->success('Devices module has been successfully initialized and can be now started.');
+		$io->success('UI module has been successfully initialized and can be now started.');
 
 		return 0;
 	}

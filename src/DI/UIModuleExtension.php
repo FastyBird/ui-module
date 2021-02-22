@@ -18,24 +18,17 @@ namespace FastyBird\UIModule\DI;
 use Contributte\Translation;
 use Doctrine\Persistence;
 use FastyBird\UIModule\Commands;
-use FastyBird\UIModule\Consumers;
 use FastyBird\UIModule\Controllers;
 use FastyBird\UIModule\Entities;
-use FastyBird\UIModule\Events;
 use FastyBird\UIModule\Hydrators;
 use FastyBird\UIModule\Middleware;
 use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Router;
 use FastyBird\UIModule\Schemas;
-use FastyBird\UIModule\Sockets;
-use FastyBird\UIModule\Subscribers;
 use IPub\DoctrineCrud;
-use IPub\WebSockets;
 use Nette;
 use Nette\DI;
 use Nette\PhpGenerator;
-use Nette\Schema;
-use stdClass;
 
 /**
  * UI module extension container
@@ -67,24 +60,11 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 	}
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public function getConfigSchema(): Schema\Schema
-	{
-		return Schema\Expect::structure([
-			'keys' => Schema\Expect::string()->default(null),
-			'origins' => Schema\Expect::string()->default(null),
-		]);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
-		/** @var stdClass $configuration */
-		$configuration = $this->getConfig();
 
 		// Http router
 		$builder->addDefinition($this->prefix('middleware.access'))
@@ -96,21 +76,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		// Console commands
 		$builder->addDefinition($this->prefix('commands.initialize'))
 			->setType(Commands\InitializeCommand::class);
-
-		// Subscribers
-		$builder->addDefinition($this->prefix('subscribers.initialize'))
-			->setType(Subscribers\ApplicationSubscriber::class);
-
-		// Events
-		$builder->addDefinition($this->prefix('events.wsClientConnect'))
-			->setType(Events\WsClientConnectedHandler::class)
-			->setArgument('wsKeys', $configuration->keys)
-			->setArgument('allowedOrigins', $configuration->origins);
-
-		$builder->addDefinition($this->prefix('events.wsMessage'))
-			->setType(Events\WsMessageHandler::class)
-			->setArgument('wsKeys', $configuration->keys)
-			->setArgument('allowedOrigins', $configuration->origins);
 
 		// Database repositories
 		$builder->addDefinition($this->prefix('models.dashboardRepository'))
@@ -146,10 +111,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			->setType(Models\Widgets\Displays\DisplaysManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		// Message bus consumers
-		$builder->addDefinition($this->prefix('consumers.modules'))
-			->setType(Consumers\ModuleMessageConsumer::class);
-
 		// API controllers
 		$builder->addDefinition($this->prefix('controllers.dashboards'))
 			->setType(Controllers\DashboardsV1Controller::class)
@@ -169,10 +130,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 
 		$builder->addDefinition($this->prefix('controllers.display'))
 			->setType(Controllers\DisplayV1Controller::class)
-			->addTag('nette.inject');
-
-		$builder->addDefinition($this->prefix('controllers.exchange'))
-			->setType(Controllers\ExchangeController::class)
 			->addTag('nette.inject');
 
 		// API schemas
@@ -260,10 +217,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 
 		$builder->addDefinition($this->prefix('hydrators.widgets.slider'))
 			->setType(Hydrators\Widgets\Displays\SliderHydrator::class);
-
-		// Sockets
-		$builder->addDefinition($this->prefix('sockets.sender'))
-			->setType(Sockets\Sender::class);
 	}
 
 	/**
@@ -292,21 +245,6 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 				$ormAnnotationDriverService,
 				'FastyBird\UIModule\Entities',
 			]);
-		}
-
-		/**
-		 * WS SERVER EVENTS
-		 */
-
-		$socketWrapperServiceName = $builder->getByType(WebSockets\Server\Wrapper::class);
-
-		if ($socketWrapperServiceName !== null) {
-			/** @var DI\Definitions\ServiceDefinition $socketWrapperService */
-			$socketWrapperService = $builder->getDefinition($socketWrapperServiceName);
-
-			$socketWrapperService
-				->addSetup('$onClientConnected[]', ['@' . $this->prefix('events.wsClientConnect')])
-				->addSetup('$onIncomingMessage[]', ['@' . $this->prefix('events.wsMessage')]);
 		}
 	}
 

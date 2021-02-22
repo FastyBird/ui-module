@@ -2,15 +2,11 @@
 
 namespace Tests\Cases;
 
-use FastyBird\UIModule\Consumers;
 use FastyBird\UIModule\Controllers;
 use FastyBird\UIModule\DI;
-use FastyBird\UIModule\Events;
 use FastyBird\UIModule\Hydrators;
 use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Schemas;
-use FastyBird\UIModule\Sockets;
-use FastyBird\UIModule\Subscribers;
 use Nette;
 use Ninjify\Nunjuck\TestCase\BaseTestCase;
 use Tester\Assert;
@@ -26,11 +22,6 @@ final class ServicesTest extends BaseTestCase
 	public function testServicesRegistration(): void
 	{
 		$container = $this->createContainer();
-
-		Assert::notNull($container->getByType(Subscribers\ApplicationSubscriber::class));
-
-		Assert::notNull($container->getByType(Events\WsClientConnectedHandler::class));
-		Assert::notNull($container->getByType(Events\WsMessageHandler::class));
 
 		Assert::notNull($container->getByType(Models\Dashboards\DashboardRepository::class));
 		Assert::notNull($container->getByType(Models\Groups\GroupRepository::class));
@@ -48,7 +39,6 @@ final class ServicesTest extends BaseTestCase
 		Assert::notNull($container->getByType(Controllers\WidgetsV1Controller::class));
 		Assert::notNull($container->getByType(Controllers\DisplayV1Controller::class));
 		Assert::notNull($container->getByType(Controllers\DataSourcesV1Controller::class));
-		Assert::notNull($container->getByType(Controllers\ExchangeController::class));
 
 		Assert::notNull($container->getByType(Schemas\Dashboards\DashboardSchema::class));
 		Assert::notNull($container->getByType(Schemas\Groups\GroupSchema::class));
@@ -79,10 +69,6 @@ final class ServicesTest extends BaseTestCase
 		Assert::notNull($container->getByType(Hydrators\Widgets\Displays\GroupedButtonHydrator::class));
 		Assert::notNull($container->getByType(Hydrators\Widgets\Displays\SliderHydrator::class));
 		Assert::notNull($container->getByType(Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator::class));
-
-		Assert::notNull($container->getByType(Consumers\ModuleMessageConsumer::class));
-
-		Assert::notNull($container->getByType(Sockets\Sender::class));
 	}
 
 	/**

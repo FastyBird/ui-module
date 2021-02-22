@@ -35,8 +35,6 @@ extensions:
 	fbSimpleAuth						: FastyBird\SimpleAuth\DI\SimpleAuthExtension
 	fbWebServer							: FastyBird\WebServer\DI\WebServerExtension
 	fbModulesMetadata					: FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
-	ipubWebSocketsWAMP					: IPub\WebSocketsWAMP\DI\WebSocketsWAMPExtension
-	ipubWebSockets						: IPub\WebSockets\DI\WebSocketsExtension
 
 contributteConsole:
 	name: FastyBird:UIModule!
@@ -97,10 +95,6 @@ nettrineOrm:
 
 nettrineOrmAnnotations:
 	mapping: []
-
-ipubWebSockets:
-	routes:
-		'/io/exchange' : 'ExchangeController:'
 
 fbSimpleAuth:
 	token:
