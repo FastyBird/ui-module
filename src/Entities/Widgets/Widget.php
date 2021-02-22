@@ -213,7 +213,7 @@ abstract class Widget implements IWidget
 				return false;
 			});
 
-		return $found->isEmpty() || $found->first() === false ? null : $found->first();
+		return $found->isEmpty() ? null : $found->first();
 	}
 
 	/**
@@ -281,7 +281,7 @@ abstract class Widget implements IWidget
 				return $id === $row->getPlainId();
 			});
 
-		return $found->isEmpty() || $found->first() === false ? null : $found->first();
+		return $found->isEmpty() ? null : $found->first();
 	}
 
 	/**

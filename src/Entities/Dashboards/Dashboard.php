@@ -200,7 +200,7 @@ class Dashboard implements IDashboard
 				return $id === $row->getPlainId();
 			});
 
-		return $found->isEmpty() || $found->first() === false ? null : $found->first();
+		return $found->isEmpty() ? null : $found->first();
 	}
 
 	/**
