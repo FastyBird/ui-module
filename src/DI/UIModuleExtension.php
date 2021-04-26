@@ -29,6 +29,8 @@ use IPub\DoctrineCrud;
 use Nette;
 use Nette\DI;
 use Nette\PhpGenerator;
+use Nette\Schema;
+use stdClass;
 
 /**
  * UI module extension container
@@ -60,18 +62,31 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function getConfigSchema(): Schema\Schema
+	{
+		return Schema\Expect::structure([
+			'apiPrefix' => Schema\Expect::bool(false),
+		]);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
+		/** @var stdClass $configuration */
+		$configuration = $this->getConfig();
 
 		// Http router
 		$builder->addDefinition($this->prefix('middleware.access'))
 			->setType(Middleware\AccessMiddleware::class);
 
 		$builder->addDefinition($this->prefix('router.routes'))
-			->setType(Router\Routes::class);
+			->setType(Router\Routes::class)
+			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
 		// Console commands
 		$builder->addDefinition($this->prefix('commands.initialize'))

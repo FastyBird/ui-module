@@ -26,8 +26,7 @@ use Neomerx\JsonApi;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\Display\IAnalogValue
- * @phpstan-extends DisplaySchema<T>
+ * @phpstan-extends DisplaySchema<Entities\Widgets\Display\IAnalogValue>
  */
 final class AnalogValueSchema extends DisplaySchema
 {

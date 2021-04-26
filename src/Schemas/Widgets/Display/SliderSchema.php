@@ -26,8 +26,7 @@ use Neomerx\JsonApi;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\Display\ISlider
- * @phpstan-extends DisplaySchema<T>
+ * @phpstan-extends DisplaySchema<Entities\Widgets\Display\ISlider>
  */
 final class SliderSchema extends DisplaySchema
 {

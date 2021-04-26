@@ -26,8 +26,7 @@ use Neomerx\JsonApi;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\DataSources\IChannelPropertyDataSource
- * @phpstan-extends DataSourceSchema<T>
+ * @phpstan-extends DataSourceSchema<Entities\Widgets\DataSources\IChannelPropertyDataSource>
  */
 final class ChannelPropertyDataSourceSchema extends DataSourceSchema
 {

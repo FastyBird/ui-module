@@ -29,8 +29,7 @@ use Neomerx\JsonApi;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Dashboards\IDashboard
- * @phpstan-extends  JsonApiSchemas\JsonApiSchema<T>
+ * @phpstan-extends  JsonApiSchemas\JsonApiSchema<Entities\Dashboards\IDashboard>
  */
 final class DashboardSchema extends JsonApiSchemas\JsonApiSchema
 {
@@ -166,8 +165,6 @@ final class DashboardSchema extends JsonApiSchemas\JsonApiSchema
 	 * @param string $name
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
-	 *
-	 * @phpstan-param T $dashboard
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */

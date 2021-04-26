@@ -26,8 +26,7 @@ use Neomerx\JsonApi;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\Display\IChartGraph
- * @phpstan-extends DisplaySchema<T>
+ * @phpstan-extends DisplaySchema<Entities\Widgets\Display\IChartGraph>
  */
 final class ChartGraphSchema extends DisplaySchema
 {

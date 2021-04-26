@@ -29,8 +29,7 @@ use Neomerx\JsonApi;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Groups\IGroup
- * @phpstan-extends  JsonApiSchemas\JsonApiSchema<T>
+ * @phpstan-extends  JsonApiSchemas\JsonApiSchema<Entities\Groups\IGroup>
  */
 final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 {
@@ -170,8 +169,6 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 	 * @param string $name
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
-	 *
-	 * @phpstan-param T $group
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
