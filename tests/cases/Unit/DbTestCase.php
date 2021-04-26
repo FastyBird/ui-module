@@ -115,7 +115,7 @@ abstract class DbTestCase extends BaseMockeryTestCase
 			$config->addConfig($neonFile);
 		}
 
-		DI\UiModuleExtension::register($config);
+		DI\UIModuleExtension::register($config);
 
 		$this->container = $config->createContainer();
 
