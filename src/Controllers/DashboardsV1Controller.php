@@ -174,7 +174,7 @@ final class DashboardsV1Controller extends BaseV1Controller
 				// Revert all changes when error occur
 				$this->getOrmConnection()->rollBack();
 
-				// Log catched exception
+				// Log caught exception
 				$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
 					'exception' => [
 						'message' => $ex->getMessage(),
@@ -265,7 +265,7 @@ final class DashboardsV1Controller extends BaseV1Controller
 			// Revert all changes when error occur
 			$this->getOrmConnection()->rollBack();
 
-			// Log catched exception
+			// Log caught exception
 			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
 				'exception' => [
 					'message' => $ex->getMessage(),
@@ -315,7 +315,7 @@ final class DashboardsV1Controller extends BaseV1Controller
 			$this->getOrmConnection()->commit();
 
 		} catch (Throwable $ex) {
-			// Log catched exception
+			// Log caught exception
 			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
 				'exception' => [
 					'message' => $ex->getMessage(),

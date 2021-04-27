@@ -174,7 +174,7 @@ final class GroupsV1Controller extends BaseV1Controller
 		WebServerHttp\Response $response
 	): WebServerHttp\Response {
 		// At first, try to load dashboard
-		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
+		$this->findDashboard($request->getAttribute(Router\Routes::URL_DASHBOARD_ID));
 
 		$document = $this->createDocument($request);
 
@@ -226,7 +226,7 @@ final class GroupsV1Controller extends BaseV1Controller
 				// Revert all changes when error occur
 				$this->getOrmConnection()->rollBack();
 
-				// Log catched exception
+				// Log caught exception
 				$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
 					'exception' => [
 						'message' => $ex->getMessage(),
@@ -320,7 +320,7 @@ final class GroupsV1Controller extends BaseV1Controller
 			// Revert all changes when error occur
 			$this->getOrmConnection()->rollBack();
 
-			// Log catched exception
+			// Log caught exception
 			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
 				'exception' => [
 					'message' => $ex->getMessage(),
@@ -368,7 +368,7 @@ final class GroupsV1Controller extends BaseV1Controller
 			$this->getOrmConnection()->commit();
 
 		} catch (Throwable $ex) {
-			// Log catched exception
+			// Log caught exception
 			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
 				'exception' => [
 					'message' => $ex->getMessage(),

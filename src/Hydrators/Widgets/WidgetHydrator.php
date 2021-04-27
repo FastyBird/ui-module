@@ -95,7 +95,6 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		}
 
 		if ($included !== null) {
-			/** @var JsonAPIDocument\Objects\IResourceObject<mixed> $item */
 			foreach ($included->getAll() as $item) {
 				if (
 					$relationship->getIdentifier() !== null

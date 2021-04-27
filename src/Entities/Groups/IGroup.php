@@ -45,7 +45,7 @@ interface IGroup extends DatabaseEntities\IEntity,
 	public function getName(): string;
 
 	/**
-	 * @param string|string $comment
+	 * @param string|null $comment
 	 *
 	 * @return void
 	 */

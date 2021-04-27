@@ -61,7 +61,7 @@ interface IDataSourceRepository
 	): array;
 
 	/**
-	 * @param Queries\FindGroupsQuery $queryObject
+	 * @param Queries\FindDataSourcesQuery $queryObject
 	 * @param string $type
 	 *
 	 * @return DoctrineOrmQuery\ResultSet
