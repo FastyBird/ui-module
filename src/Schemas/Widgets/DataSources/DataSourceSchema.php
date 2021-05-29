@@ -16,6 +16,7 @@
 namespace FastyBird\UIModule\Schemas\Widgets\DataSources;
 
 use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\UIModule;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Router;
 use IPub\SlimRouter\Routing;
@@ -81,7 +82,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				'widget.data-source',
+				UIModule\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE,
 				[
 					Router\Routes::URL_ITEM_ID   => $dataSource->getPlainId(),
 					Router\Routes::URL_WIDGET_ID => $dataSource->getWidget()->getPlainId(),
@@ -128,7 +129,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'widget',
+					UIModule\Constants::ROUTE_NAME_WIDGET,
 					[
 						Router\Routes::URL_ITEM_ID => $dataSource->getWidget()->getPlainId(),
 					]
@@ -156,7 +157,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'widget.display.relationship',
+					UIModule\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP,
 					[
 						Router\Routes::URL_ITEM_ID     => $dataSource->getPlainId(),
 						Router\Routes::URL_WIDGET_ID   => $dataSource->getWidget()->getPlainId(),

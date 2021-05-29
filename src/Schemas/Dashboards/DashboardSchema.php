@@ -16,6 +16,7 @@
 namespace FastyBird\UIModule\Schemas\Dashboards;
 
 use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\UIModule;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Router;
 use IPub\SlimRouter\Routing;
@@ -103,7 +104,7 @@ final class DashboardSchema extends JsonApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				'dashboard',
+				UIModule\Constants::ROUTE_NAME_DASHBOARD,
 				[
 					Router\Routes::URL_ITEM_ID => $dashboard->getPlainId(),
 				]
@@ -145,7 +146,7 @@ final class DashboardSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'dashboard.groups',
+					UIModule\Constants::ROUTE_NAME_DASHBOARD_GROUPS,
 					[
 						Router\Routes::URL_DASHBOARD_ID => $dashboard->getPlainId(),
 					]
@@ -174,7 +175,7 @@ final class DashboardSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'dashboard.relationship',
+					UIModule\Constants::ROUTE_NAME_DASHBOARD_RELATIONSHIP,
 					[
 						Router\Routes::URL_ITEM_ID     => $dashboard->getPlainId(),
 						Router\Routes::RELATION_ENTITY => $name,

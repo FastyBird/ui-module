@@ -17,6 +17,7 @@ namespace FastyBird\UIModule\Router;
 
 use FastyBird\ModulesMetadata;
 use FastyBird\SimpleAuth\Middleware as SimpleAuthMiddleware;
+use FastyBird\UIModule;
 use FastyBird\UIModule\Controllers;
 use FastyBird\UIModule\Middleware;
 use FastyBird\WebServer\Router as WebServerRouter;
@@ -125,10 +126,10 @@ class Routes implements WebServerRouter\IRoutes
 				 * DASHBOARDS
 				 */
 				$route = $group->get('', [$this->dashboardsV1Controller, 'index']);
-				$route->setName('dashboards');
+				$route->setName(UIModule\Constants::ROUTE_NAME_DASHBOARDS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->dashboardsV1Controller, 'read']);
-				$route->setName('dashboard');
+				$route->setName(UIModule\Constants::ROUTE_NAME_DASHBOARD);
 
 				$group->post('', [$this->dashboardsV1Controller, 'create']);
 
@@ -140,7 +141,7 @@ class Routes implements WebServerRouter\IRoutes
 					$this->dashboardsV1Controller,
 					'readRelationship',
 				]);
-				$route->setName('dashboard.relationship');
+				$route->setName(UIModule\Constants::ROUTE_NAME_DASHBOARD_RELATIONSHIP);
 			});
 
 			$group->group('/dashboards/{' . self::URL_DASHBOARD_ID . '}', function (Routing\RouteCollector $group): void {
@@ -149,10 +150,10 @@ class Routes implements WebServerRouter\IRoutes
 					 * DASHBOARD GROUPS
 					 */
 					$route = $group->get('', [$this->groupsV1Controller, 'index']);
-					$route->setName('dashboard.groups');
+					$route->setName(UIModule\Constants::ROUTE_NAME_DASHBOARD_GROUPS);
 
 					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->groupsV1Controller, 'read']);
-					$route->setName('dashboard.group');
+					$route->setName(UIModule\Constants::ROUTE_NAME_DASHBOARD_GROUP);
 
 					$group->post('', [$this->groupsV1Controller, 'create']);
 
@@ -164,7 +165,7 @@ class Routes implements WebServerRouter\IRoutes
 						$this->groupsV1Controller,
 						'readRelationship',
 					]);
-					$route->setName('dashboard.group.relationship');
+					$route->setName(UIModule\Constants::ROUTE_NAME_DASHBOARD_GROUP_RELATIONSHIP);
 				});
 			});
 
@@ -173,10 +174,10 @@ class Routes implements WebServerRouter\IRoutes
 				 * WIDGETS
 				 */
 				$route = $group->get('', [$this->widgetsV1Controller, 'index']);
-				$route->setName('widgets');
+				$route->setName(UIModule\Constants::ROUTE_NAME_WIDGETS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->widgetsV1Controller, 'read']);
-				$route->setName('widget');
+				$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET);
 
 				$group->post('', [$this->widgetsV1Controller, 'create']);
 
@@ -188,7 +189,7 @@ class Routes implements WebServerRouter\IRoutes
 					$this->widgetsV1Controller,
 					'readRelationship',
 				]);
-				$route->setName('widget.relationship');
+				$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET_RELATIONSHIP);
 			});
 
 			$group->group('/widgets/{' . self::URL_WIDGET_ID . '}', function (Routing\RouteCollector $group): void {
@@ -197,7 +198,7 @@ class Routes implements WebServerRouter\IRoutes
 					 * WIDGET DISPLAY
 					 */
 					$route = $group->get('', [$this->displayV1Controller, 'read']);
-					$route->setName('widget.display');
+					$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET_DISPLAY);
 
 					$group->patch('', [$this->displayV1Controller, 'update']);
 
@@ -205,7 +206,7 @@ class Routes implements WebServerRouter\IRoutes
 						$this->displayV1Controller,
 						'readRelationship',
 					]);
-					$route->setName('widget.display.relationship');
+					$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP);
 				});
 
 				$group->group('/data-sources', function (Routing\RouteCollector $group): void {
@@ -213,10 +214,10 @@ class Routes implements WebServerRouter\IRoutes
 					 * WIDGET DATA SOURCES
 					 */
 					$route = $group->get('', [$this->dataSourceV1Controller, 'index']);
-					$route->setName('widget.data-sources');
+					$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET_DATA_SOURCES);
 
 					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'read']);
-					$route->setName('widget.data-source');
+					$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE);
 
 					$group->post('', [$this->dataSourceV1Controller, 'create']);
 
@@ -228,7 +229,7 @@ class Routes implements WebServerRouter\IRoutes
 						$this->dataSourceV1Controller,
 						'readRelationship',
 					]);
-					$route->setName('widget.data-source.relationship');
+					$route->setName(UIModule\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP);
 				});
 			});
 		});

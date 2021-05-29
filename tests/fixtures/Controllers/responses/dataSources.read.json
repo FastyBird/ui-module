@@ -16,7 +16,7 @@
         },
         "links" : {
           "related" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96",
-          "self" : "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/widget"
+          "self": "/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377/relationships/widget"
         }
       }
     },

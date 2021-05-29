@@ -16,6 +16,7 @@
 namespace FastyBird\UIModule\Schemas\Widgets;
 
 use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\UIModule;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Router;
 use IPub\SlimRouter\Routing;
@@ -87,7 +88,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				'widget',
+				UIModule\Constants::ROUTE_NAME_WIDGET,
 				[
 					Router\Routes::URL_ITEM_ID => $widget->getPlainId(),
 				]
@@ -143,7 +144,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'widget.display',
+					UIModule\Constants::ROUTE_NAME_WIDGET_DISPLAY,
 					[
 						Router\Routes::URL_WIDGET_ID => $widget->getPlainId(),
 					]
@@ -155,7 +156,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'widget.data-sources',
+					UIModule\Constants::ROUTE_NAME_WIDGET_DATA_SOURCES,
 					[
 						Router\Routes::URL_WIDGET_ID => $widget->getPlainId(),
 					]
@@ -190,7 +191,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'widget.relationship',
+					UIModule\Constants::ROUTE_NAME_WIDGET_RELATIONSHIP,
 					[
 						Router\Routes::URL_ITEM_ID     => $widget->getPlainId(),
 						Router\Routes::RELATION_ENTITY => $name,

@@ -16,6 +16,7 @@
 namespace FastyBird\UIModule\Schemas\Groups;
 
 use FastyBird\JsonApi\Schemas as JsonApiSchemas;
+use FastyBird\UIModule;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Router;
 use IPub\SlimRouter\Routing;
@@ -104,7 +105,7 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				'dashboard.group',
+				UIModule\Constants::ROUTE_NAME_DASHBOARD_GROUP,
 				[
 					Router\Routes::URL_ITEM_ID      => $group->getPlainId(),
 					Router\Routes::URL_DASHBOARD_ID => $group->getDashboard()->getPlainId(),
@@ -152,7 +153,7 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'dashboard',
+					UIModule\Constants::ROUTE_NAME_DASHBOARD,
 					[
 						Router\Routes::URL_ITEM_ID => $group->getDashboard()->getPlainId(),
 					]
@@ -181,7 +182,7 @@ final class GroupSchema extends JsonApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					'dashboard.group.relationship',
+					UIModule\Constants::ROUTE_NAME_DASHBOARD_GROUP_RELATIONSHIP,
 					[
 						Router\Routes::URL_ITEM_ID      => $group->getPlainId(),
 						Router\Routes::URL_DASHBOARD_ID => $group->getDashboard()->getPlainId(),
