@@ -25,8 +25,7 @@ use FastyBird\UIModule\Entities;
  *
  * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\IDigitalActuator
- * @phpstan-extends WidgetSchema<T>
+ * @phpstan-extends WidgetSchema<Entities\Widgets\IDigitalActuator>
  */
 final class DigitalActuatorSchema extends WidgetSchema
 {

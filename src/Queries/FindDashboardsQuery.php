@@ -29,8 +29,7 @@ use Ramsey\Uuid;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Dashboards\Dashboard
- * @phpstan-extends  DoctrineOrmQuery\QueryObject<T>
+ * @phpstan-extends DoctrineOrmQuery\QueryObject<Entities\Dashboards\IDashboard>
  */
 class FindDashboardsQuery extends DoctrineOrmQuery\QueryObject
 {
@@ -54,11 +53,11 @@ class FindDashboardsQuery extends DoctrineOrmQuery\QueryObject
 	}
 
 	/**
-	 * @param ORM\EntityRepository<Entities\Dashboards\Dashboard> $repository
+	 * @param ORM\EntityRepository $repository
 	 *
 	 * @return ORM\QueryBuilder
 	 *
-	 * @phpstan-param ORM\EntityRepository<T> $repository
+	 * @phpstan-param ORM\EntityRepository<Entities\Dashboards\IDashboard> $repository
 	 */
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
@@ -72,11 +71,11 @@ class FindDashboardsQuery extends DoctrineOrmQuery\QueryObject
 	}
 
 	/**
-	 * @param ORM\EntityRepository<Entities\Dashboards\Dashboard> $repository
+	 * @param ORM\EntityRepository $repository
 	 *
 	 * @return ORM\QueryBuilder
 	 *
-	 * @phpstan-param ORM\EntityRepository<T> $repository
+	 * @phpstan-param ORM\EntityRepository<Entities\Dashboards\IDashboard> $repository
 	 */
 	private function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
@@ -90,11 +89,11 @@ class FindDashboardsQuery extends DoctrineOrmQuery\QueryObject
 	}
 
 	/**
-	 * @param ORM\EntityRepository<Entities\Dashboards\Dashboard> $repository
+	 * @param ORM\EntityRepository $repository
 	 *
 	 * @return ORM\QueryBuilder
 	 *
-	 * @phpstan-param ORM\EntityRepository<T> $repository
+	 * @phpstan-param ORM\EntityRepository<Entities\Dashboards\IDashboard> $repository
 	 */
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{

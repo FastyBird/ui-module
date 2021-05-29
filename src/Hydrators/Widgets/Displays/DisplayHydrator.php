@@ -17,6 +17,7 @@ namespace FastyBird\UIModule\Hydrators\Widgets\Displays;
 
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;
@@ -28,6 +29,9 @@ use IPub\JsonAPIDocument;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-template  TEntityClass of Entities\Widgets\Display\IDisplay
+ * @phpstan-extends   JsonApiHydrators\Hydrator<TEntityClass>
  */
 abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 {
@@ -41,7 +45,7 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	protected string $translationDomain = 'ui-module.display';
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return int
 	 *
@@ -49,7 +53,10 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	 */
 	protected function hydratePrecisionAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): int
 	{
-		if ($attributes->get('precision') === null || (string) $attributes->get('precision') === '') {
+		if (
+			!is_scalar($attributes->get('precision'))
+			|| (string) $attributes->get('precision') === ''
+		) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
@@ -64,7 +71,7 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return float
 	 *
@@ -72,7 +79,10 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	 */
 	protected function hydrateMinimumValueAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): float
 	{
-		if ($attributes->get('minimum_value') === null || (string) $attributes->get('minimum_value') === '') {
+		if (
+			!is_scalar($attributes->get('minimum_value'))
+			|| (string) $attributes->get('minimum_value') === ''
+		) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
@@ -87,7 +97,7 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return float
 	 *
@@ -95,7 +105,10 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	 */
 	protected function hydrateMaximumValueAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): float
 	{
-		if ($attributes->get('maximum_value') === null || (string) $attributes->get('maximum_value') === '') {
+		if (
+			!is_scalar($attributes->get('maximum_value'))
+			|| (string) $attributes->get('maximum_value') === ''
+		) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),
@@ -110,7 +123,7 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return float
 	 *
@@ -118,7 +131,10 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 	 */
 	protected function hydrateStepValueAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): float
 	{
-		if ($attributes->get('step_value') === null || (string) $attributes->get('step_value') === '') {
+		if (
+			!is_scalar($attributes->get('step_value'))
+			|| (string) $attributes->get('step_value') === ''
+		) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),

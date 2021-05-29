@@ -138,6 +138,8 @@ final class DisplayV1Controller extends BaseV1Controller
 	): WebServerHttp\Response {
 		$document = $this->createDocument($request);
 
+		$this->validateIdentifier($request, $document);
+
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 

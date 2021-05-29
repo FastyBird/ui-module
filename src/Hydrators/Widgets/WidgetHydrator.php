@@ -16,7 +16,7 @@
 namespace FastyBird\UIModule\Hydrators\Widgets;
 
 use Contributte\Translation;
-use Doctrine\Common;
+use Doctrine\Persistence;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
 use FastyBird\UIModule\Entities;
@@ -26,7 +26,6 @@ use FastyBird\UIModule\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;
 use Ramsey\Uuid;
-use stdClass;
 
 /**
  * Widget entity hydrator
@@ -35,6 +34,9 @@ use stdClass;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-template  TEntityClass of Entities\Widgets\IWidget
+ * @phpstan-extends   JsonApiHydrators\Hydrator<TEntityClass>
  */
 abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 {
@@ -65,14 +67,12 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 
 	/**
 	 * @param Models\Groups\IGroupRepository $groupRepository
-	 * @param Common\Persistence\ManagerRegistry $managerRegistry
+	 * @param Persistence\ManagerRegistry $managerRegistry
 	 * @param Translation\Translator $translator
-	 *
-	 * @throws Common\Annotations\AnnotationException
 	 */
 	public function __construct(
 		Models\Groups\IGroupRepository $groupRepository,
-		Common\Persistence\ManagerRegistry $managerRegistry,
+		Persistence\ManagerRegistry $managerRegistry,
 		Translation\Translator $translator
 	) {
 		parent::__construct($managerRegistry, $translator);
@@ -81,13 +81,13 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 * @param JsonAPIDocument\Objects\IRelationshipObject $relationship
+	 * @param JsonAPIDocument\Objects\IResourceObjectCollection|null $included
 	 *
 	 * @return mixed[]|null
 	 */
 	protected function hydrateDisplayRelationship(
-		JsonAPIDocument\Objects\IRelationship $relationship,
+		JsonAPIDocument\Objects\IRelationshipObject $relationship,
 		?JsonAPIDocument\Objects\IResourceObjectCollection $included
 	): ?array {
 		if (!$relationship->isHasOne()) {
@@ -98,9 +98,9 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 			foreach ($included->getAll() as $item) {
 				if (
 					$relationship->getIdentifier() !== null
-					&& $item->getIdentifier()->getId() === $relationship->getIdentifier()->getId()
+					&& $item->getId() === $relationship->getIdentifier()->getId()
 				) {
-					$result = $this->buildDisplay($item->getType(), $item->getAttributes(), $item->getIdentifier()->getId());
+					$result = $this->buildDisplay($item->getType(), $item->getAttributes(), $item->getId());
 
 					if ($result !== null) {
 						return $result;
@@ -109,22 +109,12 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 			}
 		}
 
-		if (!$relationship->getData() instanceof JsonAPIDocument\Objects\IResourceIdentifier) {
-			return null;
-		}
-
-		$result = $this->buildDisplay(
-			$relationship->getData()->getType(),
-			$relationship,
-			$relationship->getIdentifier() !== null ? $relationship->getIdentifier()->getId() : null
-		);
-
-		return $result;
+		return null;
 	}
 
 	/**
 	 * @param string $type
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 * @param string|null $identifier
 	 *
 	 * @return mixed[]|null
@@ -252,15 +242,15 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 * @param JsonAPIDocument\Objects\IRelationshipObject $relationship
+	 * @param JsonAPIDocument\Objects\IResourceObjectCollection|null $included
 	 *
 	 * @return mixed[]
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	protected function hydrateDataSourcesRelationship(
-		JsonAPIDocument\Objects\IRelationship $relationship,
+		JsonAPIDocument\Objects\IRelationshipObject $relationship,
 		?JsonAPIDocument\Objects\IResourceObjectCollection $included
 	): array {
 		if ($included === null) {
@@ -276,18 +266,15 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 
 		$dataSources = [];
 
-		foreach ($relationship as $dataSourcesRelation) {
-			/** @var stdClass $dataSourceRelation */
-			foreach ($dataSourcesRelation as $dataSourceRelation) {
-				if ($dataSourceRelation->type === Schemas\Widgets\DataSources\ChannelPropertyDataSourceSchema::SCHEMA_TYPE) {
-					foreach ($included->getAll() as $item) {
-						if ($item->getIdentifier()->getId() === $dataSourceRelation->id) {
-							$dataSources[] = [
-								'entity'   => Entities\Widgets\DataSources\ChannelPropertyDataSource::class,
-								'channel'  => $item->getAttributes()->get('channel'),
-								'property' => $item->getAttributes()->get('property'),
-							];
-						}
+		foreach ($relationship->getIdentifiers() as $dataSourceRelationIdentifier) {
+			if ($dataSourceRelationIdentifier->getType() === Schemas\Widgets\DataSources\ChannelPropertyDataSourceSchema::SCHEMA_TYPE) {
+				foreach ($included->getAll() as $item) {
+					if ($item->getId() === $dataSourceRelationIdentifier->getId()) {
+						$dataSources[] = [
+							'entity'   => Entities\Widgets\DataSources\ChannelPropertyDataSource::class,
+							'channel'  => $item->getAttributes()->get('channel'),
+							'property' => $item->getAttributes()->get('property'),
+						];
 					}
 				}
 			}
@@ -308,15 +295,15 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IRelationship<mixed> $relationship
-	 * @param JsonAPIDocument\Objects\IResourceObjectCollection<JsonAPIDocument\Objects\IResourceObject>|null $included
+	 * @param JsonAPIDocument\Objects\IRelationshipObject $relationship
+	 * @param JsonAPIDocument\Objects\IResourceObjectCollection|null $included
 	 *
 	 * @return mixed[]|null
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	protected function hydrateGroupsRelationship(
-		JsonAPIDocument\Objects\IRelationship $relationship,
+		JsonAPIDocument\Objects\IRelationshipObject $relationship,
 		?JsonAPIDocument\Objects\IResourceObjectCollection $included
 	): ?array {
 		if (!$relationship->isHasMany()) {
@@ -325,29 +312,28 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 
 		$groups = [];
 
-		foreach ($relationship as $groupsRelation) {
-			/** @var stdClass $groupRelation */
-			foreach ($groupsRelation as $groupRelation) {
-				try {
+		foreach ($relationship->getIdentifiers() as $groupRelationIdentifier) {
+			try {
+				if ($groupRelationIdentifier->getId() !== null) {
 					$findQuery = new Queries\FindGroupsQuery();
-					$findQuery->byId(Uuid\Uuid::fromString($groupRelation->id));
+					$findQuery->byId(Uuid\Uuid::fromString($groupRelationIdentifier->getId()));
 
 					$group = $this->groupRepository->findOneBy($findQuery);
 
 					if ($group !== null) {
 						$groups[] = $group;
 					}
-
-				} catch (Uuid\Exception\InvalidUuidStringException $ex) {
-					throw new JsonApiExceptions\JsonApiErrorException(
-						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-						$this->translator->translate('//ui-module.base.messages.invalid.heading'),
-						$this->translator->translate('//ui-module.base.messages.invalid.message'),
-						[
-							'pointer' => '/data/relationships/groups/data/id',
-						]
-					);
 				}
+
+			} catch (Uuid\Exception\InvalidUuidStringException $ex) {
+				throw new JsonApiExceptions\JsonApiErrorException(
+					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+					$this->translator->translate('//ui-module.base.messages.invalidIdentifier.heading'),
+					$this->translator->translate('//ui-module.base.messages.invalidIdentifier.message'),
+					[
+						'pointer' => '/data/relationships/groups/data/id',
+					]
+				);
 			}
 		}
 

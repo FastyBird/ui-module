@@ -27,6 +27,8 @@ use IPub\JsonAPIDocument;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-extends JsonApiHydrators\Hydrator<Entities\Dashboards\IDashboard>
  */
 final class DashboardHydrator extends JsonApiHydrators\Hydrator
 {
@@ -49,13 +51,16 @@ final class DashboardHydrator extends JsonApiHydrators\Hydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return string|null
 	 */
 	protected function hydrateCommentAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): ?string
 	{
-		if ($attributes->get('comment') === null || (string) $attributes->get('comment') === '') {
+		if (
+			!is_scalar($attributes->get('comment'))
+			|| (string) $attributes->get('comment') === ''
+		) {
 			return null;
 		}
 

@@ -29,8 +29,7 @@ use Ramsey\Uuid;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\DataSources\DataSource
- * @phpstan-extends  DoctrineOrmQuery\QueryObject<T>
+ * @phpstan-extends DoctrineOrmQuery\QueryObject<Entities\Widgets\DataSources\IDataSource>
  */
 class FindDataSourcesQuery extends DoctrineOrmQuery\QueryObject
 {
@@ -70,11 +69,11 @@ class FindDataSourcesQuery extends DoctrineOrmQuery\QueryObject
 	}
 
 	/**
-	 * @param ORM\EntityRepository<Entities\Widgets\DataSources\DataSource> $repository
+	 * @param ORM\EntityRepository $repository
 	 *
 	 * @return ORM\QueryBuilder
 	 *
-	 * @phpstan-param ORM\EntityRepository<T> $repository
+	 * @phpstan-param ORM\EntityRepository<Entities\Widgets\DataSources\IDataSource> $repository
 	 */
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
@@ -88,11 +87,11 @@ class FindDataSourcesQuery extends DoctrineOrmQuery\QueryObject
 	}
 
 	/**
-	 * @param ORM\EntityRepository<Entities\Widgets\DataSources\DataSource> $repository
+	 * @param ORM\EntityRepository $repository
 	 *
 	 * @return ORM\QueryBuilder
 	 *
-	 * @phpstan-param ORM\EntityRepository<T> $repository
+	 * @phpstan-param ORM\EntityRepository<Entities\Widgets\DataSources\IDataSource> $repository
 	 */
 	private function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
@@ -106,11 +105,11 @@ class FindDataSourcesQuery extends DoctrineOrmQuery\QueryObject
 	}
 
 	/**
-	 * @param ORM\EntityRepository<Entities\Widgets\DataSources\DataSource> $repository
+	 * @param ORM\EntityRepository $repository
 	 *
 	 * @return ORM\QueryBuilder
 	 *
-	 * @phpstan-param ORM\EntityRepository<T> $repository
+	 * @phpstan-param ORM\EntityRepository<Entities\Widgets\DataSources\IDataSource> $repository
 	 */
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{

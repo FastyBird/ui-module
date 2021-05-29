@@ -36,9 +36,7 @@ interface IDataSourceRepository
 	 *
 	 * @return Entities\Widgets\DataSources\IDataSource|null
 	 *
-	 * @phpstan-template T of Entities\Widgets\DataSources\DataSource
-	 * @phpstan-param    Queries\FindDataSourcesQuery<T> $queryObject
-	 * @phpstan-param    class-string<T> $type
+	 * @phpstan-param class-string $type
 	 */
 	public function findOneBy(
 		Queries\FindDataSourcesQuery $queryObject,
@@ -51,9 +49,7 @@ interface IDataSourceRepository
 	 *
 	 * @return Entities\Widgets\DataSources\IDataSource[]
 	 *
-	 * @phpstan-template T of Entities\Widgets\DataSources\DataSource
-	 * @phpstan-param    Queries\FindDataSourcesQuery<T> $queryObject
-	 * @phpstan-param    class-string<T> $type
+	 * @phpstan-param class-string $type
 	 */
 	public function findAllBy(
 		Queries\FindDataSourcesQuery $queryObject,
@@ -66,10 +62,9 @@ interface IDataSourceRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet
 	 *
-	 * @phpstan-template T of Entities\Widgets\DataSources\DataSource
-	 * @phpstan-param    Queries\FindDataSourcesQuery<T> $queryObject
-	 * @phpstan-param    class-string<T> $type
-	 * @phpstan-return   DoctrineOrmQuery\ResultSet<T>
+	 * @phpstan-param class-string $type
+	 *
+	 * @phpstan-return DoctrineOrmQuery\ResultSet<Entities\Widgets\DataSources\IDataSource>
 	 */
 	public function getResultSet(
 		Queries\FindDataSourcesQuery $queryObject,

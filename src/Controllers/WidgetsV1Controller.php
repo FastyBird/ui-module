@@ -18,6 +18,10 @@ namespace FastyBird\UIModule\Controllers;
 use Doctrine;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\UIModule\Controllers;
+use FastyBird\UIModule\Entities\Widgets\IAnalogActuator;
+use FastyBird\UIModule\Entities\Widgets\IAnalogSensor;
+use FastyBird\UIModule\Entities\Widgets\IDigitalActuator;
+use FastyBird\UIModule\Entities\Widgets\IDigitalSensor;
 use FastyBird\UIModule\Hydrators;
 use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Queries;
@@ -249,13 +253,7 @@ final class WidgetsV1Controller extends BaseV1Controller
 	): WebServerHttp\Response {
 		$document = $this->createDocument($request);
 
-		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//ui-module.base.messages.invalid.heading'),
-				$this->translator->translate('//ui-module.base.messages.invalid.message')
-			);
-		}
+		$this->validateIdentifier($request, $document);
 
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
@@ -263,32 +261,39 @@ final class WidgetsV1Controller extends BaseV1Controller
 			// Start transaction connection to the database
 			$this->getOrmConnection()->beginTransaction();
 
-			switch ($document->getResource()->getType()) {
-				case Schemas\Widgets\AnalogActuatorSchema::SCHEMA_TYPE:
-					$updateWidgetData = $this->analogActuatorHydrator->hydrate($document, $widget);
-					break;
+			if (
+				$document->getResource()->getType() === Schemas\Widgets\AnalogActuatorSchema::SCHEMA_TYPE
+				 && $widget instanceof IAnalogActuator
+			) {
+				$updateWidgetData = $this->analogActuatorHydrator->hydrate($document, $widget);
 
-				case Schemas\Widgets\DigitalActuatorSchema::SCHEMA_TYPE:
-					$updateWidgetData = $this->digitalActuatorHydrator->hydrate($document, $widget);
-					break;
+			} elseif (
+				$document->getResource()->getType() === Schemas\Widgets\DigitalActuatorSchema::SCHEMA_TYPE
+				&& $widget instanceof IDigitalActuator
+			) {
+				$updateWidgetData = $this->digitalActuatorHydrator->hydrate($document, $widget);
 
-				case Schemas\Widgets\AnalogSensorSchema::SCHEMA_TYPE:
-					$updateWidgetData = $this->analogSensorHydrator->hydrate($document, $widget);
-					break;
+			} elseif (
+				$document->getResource()->getType() === Schemas\Widgets\AnalogSensorSchema::SCHEMA_TYPE
+				&& $widget instanceof IAnalogSensor
+			) {
+				$updateWidgetData = $this->analogSensorHydrator->hydrate($document, $widget);
 
-				case Schemas\Widgets\DigitalSensorSchema::SCHEMA_TYPE:
-					$updateWidgetData = $this->digitalSensorHydrator->hydrate($document, $widget);
-					break;
+			} elseif (
+				$document->getResource()->getType() === Schemas\Widgets\DigitalSensorSchema::SCHEMA_TYPE
+				&& $widget instanceof IDigitalSensor
+			) {
+				$updateWidgetData = $this->digitalSensorHydrator->hydrate($document, $widget);
 
-				default:
-					throw new JsonApiExceptions\JsonApiErrorException(
-						StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-						$this->translator->translate('messages.invalidType.heading'),
-						$this->translator->translate('messages.invalidType.message'),
-						[
-							'pointer' => '/data/type',
-						]
-					);
+			} else {
+				throw new JsonApiExceptions\JsonApiErrorException(
+					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+					$this->translator->translate('messages.invalidType.heading'),
+					$this->translator->translate('messages.invalidType.message'),
+					[
+						'pointer' => '/data/type',
+					]
+				);
 			}
 
 			$widget = $this->widgetsManager->update($widget, $updateWidgetData);

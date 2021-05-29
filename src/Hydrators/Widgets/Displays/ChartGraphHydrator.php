@@ -27,6 +27,8 @@ use IPub\JsonAPIDocument;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-extends DisplayHydrator<Entities\Widgets\Display\IChartGraph>
  */
 final class ChartGraphHydrator extends DisplayHydrator
 {
@@ -49,7 +51,7 @@ final class ChartGraphHydrator extends DisplayHydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return bool
 	 *
@@ -57,7 +59,10 @@ final class ChartGraphHydrator extends DisplayHydrator
 	 */
 	protected function hydrateEnableMinMaxAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): bool
 	{
-		if ($attributes->get('enable_min_max') === null || (string) $attributes->get('enable_min_max') === '') {
+		if (
+			!is_scalar($attributes->get('enable_min_max'))
+			|| (string) $attributes->get('enable_min_max') === ''
+		) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),

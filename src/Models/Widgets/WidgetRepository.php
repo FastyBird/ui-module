@@ -15,7 +15,7 @@
 
 namespace FastyBird\UIModule\Models\Widgets;
 
-use Doctrine\Common;
+use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Exceptions;
@@ -37,13 +37,17 @@ final class WidgetRepository implements IWidgetRepository
 
 	use Nette\SmartObject;
 
-	/** @var Common\Persistence\ManagerRegistry */
-	private Common\Persistence\ManagerRegistry $managerRegistry;
-
-	/** @var Persistence\ObjectRepository<Entities\Widgets\Widget>[] */
+	/**
+	 * @var ORM\EntityRepository[]
+	 *
+	 * @phpstan-var ORM\EntityRepository<Entities\Widgets\IWidget>[]
+	 */
 	private array $repository = [];
 
-	public function __construct(Common\Persistence\ManagerRegistry $managerRegistry)
+	/** @var Persistence\ManagerRegistry */
+	private Persistence\ManagerRegistry $managerRegistry;
+
+	public function __construct(Persistence\ManagerRegistry $managerRegistry)
 	{
 		$this->managerRegistry = $managerRegistry;
 	}
@@ -59,23 +63,6 @@ final class WidgetRepository implements IWidgetRepository
 		$widget = $queryObject->fetchOne($this->getRepository($type));
 
 		return $widget;
-	}
-
-	/**
-	 * @param string $type
-	 *
-	 * @return Persistence\ObjectRepository<Entities\Widgets\Widget>
-	 *
-	 * @phpstan-template T of Entities\Widgets\Widget
-	 * @phpstan-param    class-string<T> $type
-	 */
-	private function getRepository(string $type): Persistence\ObjectRepository
-	{
-		if (!isset($this->repository[$type])) {
-			$this->repository[$type] = $this->managerRegistry->getRepository($type);
-		}
-
-		return $this->repository[$type];
 	}
 
 	/**
@@ -108,6 +95,30 @@ final class WidgetRepository implements IWidgetRepository
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @param string $type
+	 *
+	 * @return ORM\EntityRepository
+	 *
+	 * @phpstan-param class-string $type
+	 *
+	 * @phpstan-return ORM\EntityRepository<Entities\Widgets\IWidget>
+	 */
+	private function getRepository(string $type): ORM\EntityRepository
+	{
+		if (!isset($this->repository[$type])) {
+			$repository = $this->managerRegistry->getRepository($type);
+
+			if (!$repository instanceof ORM\EntityRepository) {
+				throw new Exceptions\InvalidStateException('Entity repository could not be loaded');
+			}
+
+			$this->repository[$type] = $repository;
+		}
+
+		return $this->repository[$type];
 	}
 
 }

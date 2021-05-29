@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * IDataSource.php
+ * TEntity.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
@@ -13,27 +13,37 @@
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\DataSources;
+namespace FastyBird\UIModule\Entities;
 
-use FastyBird\UIModule\Entities;
-use IPub\DoctrineTimestampable;
+use Ramsey\Uuid;
 
 /**
- * Widget data source entity interface
+ * Entity base trait
  *
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @property-read Uuid\UuidInterface $id
  */
-interface IDataSource extends Entities\IEntity,
-	Entities\IEntityParams,
-	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
+trait TEntity
 {
 
 	/**
-	 * @return Entities\Widgets\IWidget
+	 * @return Uuid\UuidInterface
 	 */
-	public function getWidget(): Entities\Widgets\IWidget;
+	public function getId(): Uuid\UuidInterface
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPlainId(): string
+	{
+		return $this->id->toString();
+	}
 
 }

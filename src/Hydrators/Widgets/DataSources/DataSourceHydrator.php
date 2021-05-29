@@ -16,6 +16,7 @@
 namespace FastyBird\UIModule\Hydrators\Widgets\DataSources;
 
 use FastyBird\JsonApi\Hydrators as JsonApiHydrators;
+use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Schemas;
 
 /**
@@ -25,6 +26,9 @@ use FastyBird\UIModule\Schemas;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-template  TEntityClass of Entities\Widgets\DataSources\IDataSource
+ * @phpstan-extends   JsonApiHydrators\Hydrator<TEntityClass>
  */
 abstract class DataSourceHydrator extends JsonApiHydrators\Hydrator
 {

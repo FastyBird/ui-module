@@ -34,9 +34,16 @@ final class WidgetsManager implements IWidgetsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud */
+	/**
+	 * @var Crud\IEntityCrud
+	 *
+	 * @phpstan-var Crud\IEntityCrud<Entities\Widgets\IWidget>
+	 */
 	private Crud\IEntityCrud $entityCrud;
 
+	/**
+	 * @phpstan-param Crud\IEntityCrud<Entities\Widgets\IWidget> $entityCrud
+	 */
 	public function __construct(
 		Crud\IEntityCrud $entityCrud
 	) {

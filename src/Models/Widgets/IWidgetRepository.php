@@ -36,9 +36,7 @@ interface IWidgetRepository
 	 *
 	 * @return Entities\Widgets\IWidget|null
 	 *
-	 * @phpstan-template T of Entities\Widgets\Widget
-	 * @phpstan-param    Queries\FindWidgetsQuery<T> $queryObject
-	 * @phpstan-param    class-string<T> $type
+	 * @phpstan-param class-string $type
 	 */
 	public function findOneBy(
 		Queries\FindWidgetsQuery $queryObject,
@@ -51,9 +49,7 @@ interface IWidgetRepository
 	 *
 	 * @return Entities\Widgets\IWidget[]
 	 *
-	 * @phpstan-template T of Entities\Widgets\Widget
-	 * @phpstan-param    Queries\FindWidgetsQuery<T> $queryObject
-	 * @phpstan-param    class-string<T> $type
+	 * @phpstan-param class-string $type
 	 */
 	public function findAllBy(
 		Queries\FindWidgetsQuery $queryObject,
@@ -66,10 +62,9 @@ interface IWidgetRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet
 	 *
-	 * @phpstan-template T of Entities\Widgets\Widget
-	 * @phpstan-param    Queries\FindWidgetsQuery<T> $queryObject
-	 * @phpstan-param    class-string<T> $type
-	 * @phpstan-return   DoctrineOrmQuery\ResultSet<T>
+	 * @phpstan-param class-string $type
+	 *
+	 * @phpstan-return DoctrineOrmQuery\ResultSet<Entities\Widgets\IWidget>
 	 */
 	public function getResultSet(
 		Queries\FindWidgetsQuery $queryObject,

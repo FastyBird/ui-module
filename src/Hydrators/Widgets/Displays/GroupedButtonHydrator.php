@@ -28,6 +28,8 @@ use IPub\JsonAPIDocument;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-extends DisplayHydrator<Entities\Widgets\Display\IGroupedButton>
  */
 final class GroupedButtonHydrator extends DisplayHydrator
 {
@@ -46,7 +48,7 @@ final class GroupedButtonHydrator extends DisplayHydrator
 	}
 
 	/**
-	 * @param JsonAPIDocument\Objects\IStandardObject<mixed> $attributes
+	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *
 	 * @return Types\WidgetIconType
 	 *
@@ -54,7 +56,10 @@ final class GroupedButtonHydrator extends DisplayHydrator
 	 */
 	protected function hydrateIconAttribute(JsonAPIDocument\Objects\IStandardObject $attributes): Types\WidgetIconType
 	{
-		if ($attributes->get('icon') === null || (string) $attributes->get('icon') === '') {
+		if (
+			!is_scalar($attributes->get('icon'))
+			|| (string) $attributes->get('icon') === ''
+		) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				$this->translator->translate('//ui-module.base.messages.missingRequired.heading'),

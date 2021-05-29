@@ -34,9 +34,16 @@ final class DashboardsManager implements IDashboardsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud */
+	/**
+	 * @var Crud\IEntityCrud
+	 *
+	 * @phpstan-var Crud\IEntityCrud<Entities\Dashboards\IDashboard>
+	 */
 	private Crud\IEntityCrud $entityCrud;
 
+	/**
+	 * @phpstan-param Crud\IEntityCrud<Entities\Dashboards\IDashboard> $entityCrud
+	 */
 	public function __construct(
 		Crud\IEntityCrud $entityCrud
 	) {

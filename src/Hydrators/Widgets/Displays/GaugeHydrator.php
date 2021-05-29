@@ -24,6 +24,8 @@ use FastyBird\UIModule\Entities;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-extends DisplayHydrator<Entities\Widgets\Display\IGauge>
  */
 final class GaugeHydrator extends DisplayHydrator
 {

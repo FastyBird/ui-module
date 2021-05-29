@@ -17,7 +17,6 @@ namespace FastyBird\UIModule\Entities\Dashboards;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Database\Entities as DatabaseEntities;
 use FastyBird\UIModule\Entities;
 use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
 use IPub\DoctrineTimestampable;
@@ -41,8 +40,8 @@ use Throwable;
 class Dashboard implements IDashboard
 {
 
-	use DatabaseEntities\TEntity;
-	use DatabaseEntities\TEntityParams;
+	use Entities\TEntity;
+	use Entities\TEntityParams;
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 

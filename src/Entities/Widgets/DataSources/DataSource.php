@@ -16,7 +16,6 @@
 namespace FastyBird\UIModule\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Database\Entities as DatabaseEntities;
 use FastyBird\UIModule\Entities;
 use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
 use IPub\DoctrineTimestampable;
@@ -46,8 +45,8 @@ use Throwable;
 abstract class DataSource implements IDataSource
 {
 
-	use DatabaseEntities\TEntity;
-	use DatabaseEntities\TEntityParams;
+	use Entities\TEntity;
+	use Entities\TEntityParams;
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 

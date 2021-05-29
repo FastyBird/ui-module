@@ -34,9 +34,6 @@ interface IDashboardRepository
 	 * @param Queries\FindDashboardsQuery $queryObject
 	 *
 	 * @return Entities\Dashboards\IDashboard|null
-	 *
-	 * @phpstan-template T of Entities\Dashboards\Dashboard
-	 * @phpstan-param    Queries\FindDashboardsQuery<T> $queryObject
 	 */
 	public function findOneBy(Queries\FindDashboardsQuery $queryObject): ?Entities\Dashboards\IDashboard;
 
@@ -44,9 +41,6 @@ interface IDashboardRepository
 	 * @param Queries\FindDashboardsQuery $queryObject
 	 *
 	 * @return Entities\Dashboards\IDashboard[]
-	 *
-	 * @phpstan-template T of Entities\Dashboards\Dashboard
-	 * @phpstan-param    Queries\FindDashboardsQuery<T> $queryObject
 	 */
 	public function findAllBy(Queries\FindDashboardsQuery $queryObject): array;
 
@@ -55,9 +49,7 @@ interface IDashboardRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet
 	 *
-	 * @phpstan-template T of Entities\Dashboards\Dashboard
-	 * @phpstan-param    Queries\FindDashboardsQuery<T> $queryObject
-	 * @phpstan-return   DoctrineOrmQuery\ResultSet<T>
+	 * @phpstan-return DoctrineOrmQuery\ResultSet<Entities\Dashboards\IDashboard>
 	 */
 	public function getResultSet(Queries\FindDashboardsQuery $queryObject): DoctrineOrmQuery\ResultSet;
 

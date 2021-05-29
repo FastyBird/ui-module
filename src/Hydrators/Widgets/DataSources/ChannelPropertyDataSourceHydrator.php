@@ -24,6 +24,8 @@ use FastyBird\UIModule\Entities;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-extends DataSourceHydrator<Entities\Widgets\DataSources\IChannelPropertyDataSource>
  */
 final class ChannelPropertyDataSourceHydrator extends DataSourceHydrator
 {

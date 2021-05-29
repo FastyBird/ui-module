@@ -15,7 +15,6 @@
 
 namespace FastyBird\UIModule\Entities\Groups;
 
-use FastyBird\Database\Entities as DatabaseEntities;
 use FastyBird\UIModule\Entities;
 use IPub\DoctrineTimestampable;
 
@@ -27,8 +26,8 @@ use IPub\DoctrineTimestampable;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-interface IGroup extends DatabaseEntities\IEntity,
-	DatabaseEntities\IEntityParams,
+interface IGroup extends Entities\IEntity,
+	Entities\IEntityParams,
 	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
 {
 

@@ -34,9 +34,16 @@ class DataSourcesManager implements IDataSourcesManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud */
+	/**
+	 * @var Crud\IEntityCrud
+	 *
+	 * @phpstan-var Crud\IEntityCrud<Entities\Widgets\DataSources\IDataSource>
+	 */
 	private Crud\IEntityCrud $entityCrud;
 
+	/**
+	 * @phpstan-param Crud\IEntityCrud<Entities\Widgets\DataSources\IDataSource> $entityCrud
+	 */
 	public function __construct(
 		Crud\IEntityCrud $entityCrud
 	) {

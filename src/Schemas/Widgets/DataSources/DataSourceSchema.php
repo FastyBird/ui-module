@@ -29,8 +29,8 @@ use Neomerx\JsonApi;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\DataSources\IDataSource
- * @phpstan-extends  JsonApiSchemas\JsonApiSchema<T>
+ * @phpstan-template  TEntityClass of Entities\Widgets\DataSources\IDataSource
+ * @phpstan-extends   JsonApiSchemas\JsonApiSchema<TEntityClass>
  */
 abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 {
@@ -58,7 +58,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return iterable<string, mixed>
 	 *
-	 * @phpstan-param T $dataSource
+	 * @phpstan-param TEntityClass $dataSource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -72,7 +72,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
 	 *
-	 * @phpstan-param T $dataSource
+	 * @phpstan-param TEntityClass $dataSource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -97,7 +97,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return iterable<string, mixed>
 	 *
-	 * @phpstan-param T $dataSource
+	 * @phpstan-param TEntityClass $dataSource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -118,7 +118,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
 	 *
-	 * @phpstan-param T $dataSource
+	 * @phpstan-param TEntityClass $dataSource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -146,7 +146,7 @@ abstract class DataSourceSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
 	 *
-	 * @phpstan-param T $dataSource
+	 * @phpstan-param TEntityClass $dataSource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */

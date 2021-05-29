@@ -15,7 +15,7 @@
 
 namespace FastyBird\UIModule\Models\Dashboards;
 
-use Doctrine\Common;
+use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Exceptions;
@@ -37,13 +37,17 @@ final class DashboardRepository implements IDashboardRepository
 
 	use Nette\SmartObject;
 
-	/** @var Persistence\ObjectRepository<Entities\Dashboards\Dashboard>|null */
-	private ?Persistence\ObjectRepository $repository = null;
+	/**
+	 * @var ORM\EntityRepository|null
+	 *
+	 * @phpstan-var ORM\EntityRepository<Entities\Dashboards\IDashboard>|null
+	 */
+	private ?ORM\EntityRepository $repository = null;
 
-	/** @var Common\Persistence\ManagerRegistry */
-	private Common\Persistence\ManagerRegistry $managerRegistry;
+	/** @var Persistence\ManagerRegistry */
+	private Persistence\ManagerRegistry $managerRegistry;
 
-	public function __construct(Common\Persistence\ManagerRegistry $managerRegistry)
+	public function __construct(Persistence\ManagerRegistry $managerRegistry)
 	{
 		$this->managerRegistry = $managerRegistry;
 	}
@@ -57,18 +61,6 @@ final class DashboardRepository implements IDashboardRepository
 		$dashboard = $queryObject->fetchOne($this->getRepository());
 
 		return $dashboard;
-	}
-
-	/**
-	 * @return Persistence\ObjectRepository<Entities\Dashboards\Dashboard>
-	 */
-	private function getRepository(): Persistence\ObjectRepository
-	{
-		if ($this->repository === null) {
-			$this->repository = $this->managerRegistry->getRepository(Entities\Dashboards\Dashboard::class);
-		}
-
-		return $this->repository;
 	}
 
 	/**
@@ -98,6 +90,30 @@ final class DashboardRepository implements IDashboardRepository
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @param string $type
+	 *
+	 * @return ORM\EntityRepository
+	 *
+	 * @phpstan-param class-string $type
+	 *
+	 * @phpstan-return ORM\EntityRepository<Entities\Dashboards\IDashboard>
+	 */
+	private function getRepository(string $type = Entities\Dashboards\Dashboard::class): ORM\EntityRepository
+	{
+		if ($this->repository === null) {
+			$repository = $this->managerRegistry->getRepository($type);
+
+			if (!$repository instanceof ORM\EntityRepository) {
+				throw new Exceptions\InvalidStateException('Entity repository could not be loaded');
+			}
+
+			$this->repository = $repository;
+		}
+
+		return $this->repository;
 	}
 
 }

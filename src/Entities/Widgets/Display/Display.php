@@ -16,7 +16,6 @@
 namespace FastyBird\UIModule\Entities\Widgets\Display;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Database\Entities as DatabaseEntities;
 use FastyBird\UIModule\Entities;
 use IPub\DoctrineTimestampable;
 use Ramsey\Uuid;
@@ -51,8 +50,8 @@ use Throwable;
 abstract class Display implements IDisplay
 {
 
-	use DatabaseEntities\TEntity;
-	use DatabaseEntities\TEntityParams;
+	use Entities\TEntity;
+	use Entities\TEntityParams;
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 

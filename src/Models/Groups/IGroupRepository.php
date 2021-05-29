@@ -34,9 +34,6 @@ interface IGroupRepository
 	 * @param Queries\FindGroupsQuery $queryObject
 	 *
 	 * @return Entities\Groups\IGroup|null
-	 *
-	 * @phpstan-template T of Entities\Groups\Group
-	 * @phpstan-param    Queries\FindGroupsQuery<T> $queryObject
 	 */
 	public function findOneBy(Queries\FindGroupsQuery $queryObject): ?Entities\Groups\IGroup;
 
@@ -44,9 +41,6 @@ interface IGroupRepository
 	 * @param Queries\FindGroupsQuery $queryObject
 	 *
 	 * @return Entities\Groups\IGroup[]
-	 *
-	 * @phpstan-template T of Entities\Groups\Group
-	 * @phpstan-param    Queries\FindGroupsQuery<T> $queryObject
 	 */
 	public function findAllBy(Queries\FindGroupsQuery $queryObject): array;
 
@@ -55,9 +49,7 @@ interface IGroupRepository
 	 *
 	 * @return DoctrineOrmQuery\ResultSet
 	 *
-	 * @phpstan-template T of Entities\Groups\Group
-	 * @phpstan-param    Queries\FindGroupsQuery<T> $queryObject
-	 * @phpstan-return   DoctrineOrmQuery\ResultSet<T>
+	 * @phpstan-return DoctrineOrmQuery\ResultSet<Entities\Groups\IGroup>
 	 */
 	public function getResultSet(Queries\FindGroupsQuery $queryObject): DoctrineOrmQuery\ResultSet;
 

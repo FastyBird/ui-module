@@ -29,8 +29,8 @@ use Neomerx\JsonApi;
  *
  * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  *
- * @phpstan-template T of Entities\Widgets\IWidget
- * @phpstan-extends  JsonApiSchemas\JsonApiSchema<T>
+ * @phpstan-template  TEntityClass of Entities\Widgets\IWidget
+ * @phpstan-extends   JsonApiSchemas\JsonApiSchema<TEntityClass>
  */
 abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 {
@@ -60,7 +60,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return iterable<string, mixed>
 	 *
-	 * @phpstan-param T $widget
+	 * @phpstan-param TEntityClass $widget
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -78,7 +78,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
 	 *
-	 * @phpstan-param T $widget
+	 * @phpstan-param TEntityClass $widget
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -102,7 +102,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return iterable<string, mixed>
 	 *
-	 * @phpstan-param T $widget
+	 * @phpstan-param TEntityClass $widget
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -133,7 +133,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
 	 *
-	 * @phpstan-param T $widget
+	 * @phpstan-param TEntityClass $widget
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
@@ -176,7 +176,7 @@ abstract class WidgetSchema extends JsonApiSchemas\JsonApiSchema
 	 *
 	 * @return JsonApi\Contracts\Schema\LinkInterface
 	 *
-	 * @phpstan-param T $widget
+	 * @phpstan-param TEntityClass $widget
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */

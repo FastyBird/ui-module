@@ -17,14 +17,16 @@ namespace FastyBird\UIModule\Controllers;
 
 use Contributte\Translation;
 use Doctrine\DBAL\Connection;
+use Doctrine\Persistence;
 use FastyBird\JsonApi\Exceptions as JsonApiExceptions;
 use FastyBird\UIModule\Exceptions;
+use FastyBird\UIModule\Router;
+use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\JsonAPIDocument;
 use Nette;
 use Nette\Utils;
-use Nettrine\ORM;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message;
 use Psr\Log;
 
 /**
@@ -43,8 +45,8 @@ abstract class BaseV1Controller
 	/** @var Translation\PrefixedTranslator */
 	protected Translation\PrefixedTranslator $translator;
 
-	/** @var ORM\ManagerRegistry */
-	protected ORM\ManagerRegistry $managerRegistry;
+	/** @var Persistence\ManagerRegistry */
+	protected Persistence\ManagerRegistry $managerRegistry;
 
 	/** @var Log\LoggerInterface */
 	protected Log\LoggerInterface $logger;
@@ -63,11 +65,11 @@ abstract class BaseV1Controller
 	}
 
 	/**
-	 * @param ORM\ManagerRegistry $managerRegistry
+	 * @param Persistence\ManagerRegistry $managerRegistry
 	 *
 	 * @return void
 	 */
-	public function injectManagerRegistry(ORM\ManagerRegistry $managerRegistry): void
+	public function injectManagerRegistry(Persistence\ManagerRegistry $managerRegistry): void
 	{
 		$this->managerRegistry = $managerRegistry;
 	}
@@ -83,13 +85,13 @@ abstract class BaseV1Controller
 	}
 
 	/**
-	 * @param ServerRequestInterface $request
+	 * @param Message\ServerRequestInterface $request
 	 *
-	 * @return JsonAPIDocument\IDocument<JsonAPIDocument\Objects\StandardObject>
+	 * @return JsonAPIDocument\IDocument
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
-	protected function createDocument(ServerRequestInterface $request): JsonAPIDocument\IDocument
+	protected function createDocument(Message\ServerRequestInterface $request): JsonAPIDocument\IDocument
 	{
 		try {
 			$document = new JsonAPIDocument\Document(Utils\Json::decode($request->getBody()->getContents()));
@@ -97,15 +99,15 @@ abstract class BaseV1Controller
 		} catch (Utils\JsonException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//ui-module.base.messages.notValidJson.heading'),
-				$this->translator->translate('//ui-module.base.messages.notValidJson.message')
+				$this->translator->translate('//devices-module.base.messages.notValidJson.heading'),
+				$this->translator->translate('//devices-module.base.messages.notValidJson.message')
 			);
 
 		} catch (JsonAPIDocument\Exceptions\RuntimeException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//ui-module.base.messages.notValidJsonApi.heading'),
-				$this->translator->translate('//ui-module.base.messages.notValidJsonApi.message')
+				$this->translator->translate('//devices-module.base.messages.notValidJsonApi.heading'),
+				$this->translator->translate('//devices-module.base.messages.notValidJsonApi.message')
 			);
 		}
 
@@ -132,6 +134,36 @@ abstract class BaseV1Controller
 			$this->translator->translate('//ui-module.base.messages.unknownRelation.heading'),
 			$this->translator->translate('//ui-module.base.messages.unknownRelation.message')
 		);
+	}
+
+	/**
+	 * @param Message\ServerRequestInterface $request
+	 * @param JsonAPIDocument\IDocument $document
+	 *
+	 * @return bool
+	 *
+	 * @throws JsonApiExceptions\JsonApiErrorException
+	 */
+	protected function validateIdentifier(
+		Message\ServerRequestInterface $request,
+		JsonAPIDocument\IDocument $document
+	): bool {
+		if (
+			in_array(strtoupper($request->getMethod()), [
+				RequestMethodInterface::METHOD_POST,
+				RequestMethodInterface::METHOD_PATCH,
+			], true)
+			&& $request->getAttribute(Router\Routes::URL_ITEM_ID) !== null
+			&& $request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getId()
+		) {
+			throw new JsonApiExceptions\JsonApiErrorException(
+				StatusCodeInterface::STATUS_BAD_REQUEST,
+				$this->translator->translate('//ui-module.base.messages.invalidIdentifier.heading'),
+				$this->translator->translate('//ui-module.base.messages.invalidIdentifier.message')
+			);
+		}
+
+		return true;
 	}
 
 	/**

@@ -24,6 +24,8 @@ use FastyBird\UIModule\Entities;
  * @subpackage     Hydrators
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
+ *
+ * @phpstan-extends WidgetHydrator<Entities\Widgets\IAnalogActuator>
  */
 final class AnalogActuatorWidgetHydrator extends WidgetHydrator
 {

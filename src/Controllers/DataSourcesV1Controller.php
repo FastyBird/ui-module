@@ -274,13 +274,7 @@ final class DataSourcesV1Controller extends BaseV1Controller
 	): WebServerHttp\Response {
 		$document = $this->createDocument($request);
 
-		if ($request->getAttribute(Router\Routes::URL_ITEM_ID) !== $document->getResource()->getIdentifier()->getId()) {
-			throw new JsonApiExceptions\JsonApiErrorException(
-				StatusCodeInterface::STATUS_BAD_REQUEST,
-				$this->translator->translate('//ui-module.base.messages.invalid.heading'),
-				$this->translator->translate('//ui-module.base.messages.invalid.message')
-			);
-		}
+		$this->validateIdentifier($request, $document);
 
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));

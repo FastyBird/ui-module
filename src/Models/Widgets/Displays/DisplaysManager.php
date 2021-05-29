@@ -34,9 +34,16 @@ class DisplaysManager implements IDisplaysManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud */
+	/**
+	 * @var Crud\IEntityCrud
+	 *
+	 * @phpstan-var Crud\IEntityCrud<Entities\Widgets\Display\IDisplay>
+	 */
 	private Crud\IEntityCrud $entityCrud;
 
+	/**
+	 * @phpstan-param Crud\IEntityCrud<Entities\Widgets\Display\IDisplay> $entityCrud
+	 */
 	public function __construct(
 		Crud\IEntityCrud $entityCrud
 	) {

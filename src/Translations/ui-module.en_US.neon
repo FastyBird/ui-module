@@ -30,7 +30,7 @@ base:
 		missingRequired:
 			heading	: "Missing required attribute"
 			message	: "Provided request is missing required attribute or relation"
-		invalid:
+		invalidIdentifier:
 			heading	: "Bad request"
 			message	: "Request resource identifier is invalid"
 		dashboardNotFound:

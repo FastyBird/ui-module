@@ -17,7 +17,6 @@ namespace FastyBird\UIModule\Entities\Widgets;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Database\Entities as DatabaseEntities;
 use FastyBird\UIModule\Entities;
 use FastyBird\UIModule\Exceptions;
 use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
@@ -53,8 +52,8 @@ use Throwable;
 abstract class Widget implements IWidget
 {
 
-	use DatabaseEntities\TEntity;
-	use DatabaseEntities\TEntityParams;
+	use Entities\TEntity;
+	use Entities\TEntityParams;
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 

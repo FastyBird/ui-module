@@ -34,9 +34,16 @@ final class GroupsManager implements IGroupsManager
 
 	use Nette\SmartObject;
 
-	/** @var Crud\IEntityCrud */
+	/**
+	 * @var Crud\IEntityCrud
+	 *
+	 * @phpstan-var Crud\IEntityCrud<Entities\Groups\IGroup>
+	 */
 	private Crud\IEntityCrud $entityCrud;
 
+	/**
+	 * @phpstan-param Crud\IEntityCrud<Entities\Groups\IGroup> $entityCrud
+	 */
 	public function __construct(
 		Crud\IEntityCrud $entityCrud
 	) {
