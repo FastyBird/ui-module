@@ -148,7 +148,6 @@ final class GroupsV1Controller extends BaseV1Controller
 					$this->translator->translate('messages.notFound.message')
 				);
 			}
-
 		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_NOT_FOUND,

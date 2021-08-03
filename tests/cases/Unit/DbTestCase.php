@@ -204,7 +204,6 @@ abstract class DbTestCase extends BaseMockeryTestCase
 
 				if (substr($s, 0, 10) === 'DELIMITER ') {
 					$delimiter = substr($s, 10);
-
 				} elseif (substr($s, -strlen($delimiter)) === $delimiter) {
 					$sql .= substr($s, 0, -strlen($delimiter));
 
@@ -216,7 +215,6 @@ abstract class DbTestCase extends BaseMockeryTestCase
 					} catch (DBAL\DBALException $ex) {
 						// File could not be loaded
 					}
-
 				} else {
 					$sql .= $s . "\n";
 				}

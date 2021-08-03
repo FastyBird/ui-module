@@ -1,12 +1,13 @@
 # FastyBird IoT UI module
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/ui-module/master?cache=300&style=flast-square)](https://github.com/FastyBird/ui-module/actions)
-[![Code coverage](https://badgen.net/coveralls/c/github/FastyBird/ui-module?cache=300&style=flast-square)](https://coveralls.io/r/FastyBird/ui-module)
-![PHP](https://badgen.net/packagist/php/FastyBird/ui-module?cache=300&style=flast-square)
-[![Licence](https://badgen.net/packagist/license/FastyBird/ui-module?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/ui-module)
-[![Downloads total](https://badgen.net/packagist/dt/FastyBird/ui-module?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/ui-module)
-[![Latest stable](https://badgen.net/packagist/v/FastyBird/ui-module/latest?cache=300&style=flast-square)](https://packagist.org/packages/FastyBird/ui-module)
-[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+[![Build Status](https://badgen.net/github/checks/FastyBird/ui-module/master?cache=300&style=flat-square)](https://github.com/FastyBird/ui-module/actions)
+[![Licence](https://badgen.net/github/license/FastyBird/ui-module?cache=300&style=flat-square)](https://github.com/FastyBird/ui-module/blob/master/LICENSE.md)
+
+![PHP](https://badgen.net/packagist/php/FastyBird/ui-module?cache=300&style=flat-square)
+[![PHP code coverage](https://badgen.net/coveralls/c/github/FastyBird/ui-module?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/ui-module)
+[![PHP latest stable](https://badgen.net/packagist/v/FastyBird/ui-module/latest?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/ui-module)
+[![PHP downloads total](https://badgen.net/packagist/dt/FastyBird/ui-module?cache=300&style=flat-square)](https://packagist.org/packages/FastyBird/ui-module)
+[![PHPStan](https://img.shields.io/badge/phpstan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
 ## What is FastyBird IoT UI module?
 

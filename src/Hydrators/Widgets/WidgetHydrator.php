@@ -324,7 +324,6 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 						$groups[] = $group;
 					}
 				}
-
 			} catch (Uuid\Exception\InvalidUuidStringException $ex) {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
