@@ -31,7 +31,7 @@ trait TDashboardFinder
 {
 
 	/**
-	 * @param string $id
+	 * @param non-empty-string $id
 	 *
 	 * @return Entities\Dashboards\IDashboard
 	 *

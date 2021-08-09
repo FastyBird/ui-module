@@ -123,7 +123,7 @@ final class GroupsV1Controller extends BaseV1Controller
 	}
 
 	/**
-	 * @param string $id
+	 * @param non-empty-string $id
 	 * @param Entities\Dashboards\IDashboard $dashboard
 	 *
 	 * @return Entities\Groups\IGroup

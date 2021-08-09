@@ -137,7 +137,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\AnalogValue::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 
@@ -153,7 +153,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\Button::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 
@@ -169,7 +169,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\ChartGraph::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 
@@ -185,7 +185,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\DigitalValue::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 
@@ -201,7 +201,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\Gauge::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 
@@ -217,7 +217,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\GroupedButton::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 
@@ -233,7 +233,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 				);
 
 				$display['entity'] = Entities\Widgets\Display\Slider::class;
-				$display[self::IDENTIFIER_KEY] = $identifier !== null ? Uuid\Uuid::fromString($identifier) : $identifier;
+				$display[self::IDENTIFIER_KEY] = $identifier !== null && $identifier !== '' ? Uuid\Uuid::fromString($identifier) : $identifier;
 
 				return $display;
 		}
@@ -314,7 +314,7 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 
 		foreach ($relationship->getIdentifiers() as $groupRelationIdentifier) {
 			try {
-				if ($groupRelationIdentifier->getId() !== null) {
+				if ($groupRelationIdentifier->getId() !== null && $groupRelationIdentifier->getId() !== '') {
 					$findQuery = new Queries\FindGroupsQuery();
 					$findQuery->byId(Uuid\Uuid::fromString($groupRelationIdentifier->getId()));
 
