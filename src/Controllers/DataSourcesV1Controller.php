@@ -123,7 +123,7 @@ final class DataSourcesV1Controller extends BaseV1Controller
 	}
 
 	/**
-	 * @param non-empty-string $id
+	 * @param string $id
 	 * @param Entities\Widgets\IWidget $widget
 	 *
 	 * @return Entities\Widgets\DataSources\IDataSource

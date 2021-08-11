@@ -31,7 +31,7 @@ trait TWidgetFinder
 {
 
 	/**
-	 * @param non-empty-string $id
+	 * @param string $id
 	 *
 	 * @return Entities\Widgets\IWidget
 	 *
