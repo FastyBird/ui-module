@@ -81,156 +81,156 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 		$configuration = $this->getConfig();
 
 		// Http router
-		$builder->addDefinition($this->prefix('middleware.access'))
+		$builder->addDefinition($this->prefix('middleware.access'), new DI\Definitions\ServiceDefinition())
 			->setType(Middleware\AccessMiddleware::class);
 
-		$builder->addDefinition($this->prefix('router.routes'))
+		$builder->addDefinition($this->prefix('router.routes'), new DI\Definitions\ServiceDefinition())
 			->setType(Router\Routes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
 		// Console commands
-		$builder->addDefinition($this->prefix('commands.initialize'))
+		$builder->addDefinition($this->prefix('commands.initialize'), new DI\Definitions\ServiceDefinition())
 			->setType(Commands\InitializeCommand::class);
 
 		// Database repositories
-		$builder->addDefinition($this->prefix('models.dashboardRepository'))
+		$builder->addDefinition($this->prefix('models.dashboardRepository'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Dashboards\DashboardRepository::class);
 
-		$builder->addDefinition($this->prefix('models.groupRepository'))
+		$builder->addDefinition($this->prefix('models.groupRepository'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Groups\GroupRepository::class);
 
-		$builder->addDefinition($this->prefix('models.widgetRepository'))
+		$builder->addDefinition($this->prefix('models.widgetRepository'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Widgets\WidgetRepository::class);
 
-		$builder->addDefinition($this->prefix('models.dataSourceRepository'))
+		$builder->addDefinition($this->prefix('models.dataSourceRepository'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Widgets\DataSources\DataSourceRepository::class);
 
 		// Database managers
-		$builder->addDefinition($this->prefix('models.dashboardsManager'))
+		$builder->addDefinition($this->prefix('models.dashboardsManager'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Dashboards\DashboardsManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('models.groupsManager'))
+		$builder->addDefinition($this->prefix('models.groupsManager'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Groups\GroupsManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('models.widgetsManager'))
+		$builder->addDefinition($this->prefix('models.widgetsManager'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Widgets\WidgetsManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('models.dataSourcesManager'))
+		$builder->addDefinition($this->prefix('models.dataSourcesManager'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Widgets\DataSources\DataSourcesManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
-		$builder->addDefinition($this->prefix('models.displaysManager'))
+		$builder->addDefinition($this->prefix('models.displaysManager'), new DI\Definitions\ServiceDefinition())
 			->setType(Models\Widgets\Displays\DisplaysManager::class)
 			->setArgument('entityCrud', '__placeholder__');
 
 		// API controllers
-		$builder->addDefinition($this->prefix('controllers.dashboards'))
+		$builder->addDefinition($this->prefix('controllers.dashboards'), new DI\Definitions\ServiceDefinition())
 			->setType(Controllers\DashboardsV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.groups'))
+		$builder->addDefinition($this->prefix('controllers.groups'), new DI\Definitions\ServiceDefinition())
 			->setType(Controllers\GroupsV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.widgets'))
+		$builder->addDefinition($this->prefix('controllers.widgets'), new DI\Definitions\ServiceDefinition())
 			->setType(Controllers\WidgetsV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.dataSources'))
+		$builder->addDefinition($this->prefix('controllers.dataSources'), new DI\Definitions\ServiceDefinition())
 			->setType(Controllers\DataSourcesV1Controller::class)
 			->addTag('nette.inject');
 
-		$builder->addDefinition($this->prefix('controllers.display'))
+		$builder->addDefinition($this->prefix('controllers.display'), new DI\Definitions\ServiceDefinition())
 			->setType(Controllers\DisplayV1Controller::class)
 			->addTag('nette.inject');
 
 		// API schemas
-		$builder->addDefinition($this->prefix('schemas.dashboard'))
+		$builder->addDefinition($this->prefix('schemas.dashboard'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Dashboards\DashboardSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.group'))
+		$builder->addDefinition($this->prefix('schemas.group'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Groups\GroupSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.analogActuator'))
+		$builder->addDefinition($this->prefix('schemas.widgets.analogActuator'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\AnalogActuatorSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.analogSensor'))
+		$builder->addDefinition($this->prefix('schemas.widgets.analogSensor'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\AnalogSensorSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.digitalActuator'))
+		$builder->addDefinition($this->prefix('schemas.widgets.digitalActuator'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\DigitalActuatorSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.widgets.digitalSensor'))
+		$builder->addDefinition($this->prefix('schemas.widgets.digitalSensor'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\DigitalSensorSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.dataSources.channelProperty'))
+		$builder->addDefinition($this->prefix('schemas.dataSources.channelProperty'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\DataSources\ChannelPropertyDataSourceSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.analogValue'))
+		$builder->addDefinition($this->prefix('schemas.display.analogValue'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\AnalogValueSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.button'))
+		$builder->addDefinition($this->prefix('schemas.display.button'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\ButtonSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.chartGraph'))
+		$builder->addDefinition($this->prefix('schemas.display.chartGraph'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\ChartGraphSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.digitalValue'))
+		$builder->addDefinition($this->prefix('schemas.display.digitalValue'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\DigitalValueSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.gauge'))
+		$builder->addDefinition($this->prefix('schemas.display.gauge'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\GaugeSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.groupedButton'))
+		$builder->addDefinition($this->prefix('schemas.display.groupedButton'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\GroupedButtonSchema::class);
 
-		$builder->addDefinition($this->prefix('schemas.display.slider'))
+		$builder->addDefinition($this->prefix('schemas.display.slider'), new DI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\SliderSchema::class);
 
 		// API hydrators
-		$builder->addDefinition($this->prefix('hydrators.dashboard'))
+		$builder->addDefinition($this->prefix('hydrators.dashboard'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Dashboards\DashboardHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.group'))
+		$builder->addDefinition($this->prefix('hydrators.group'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Groups\GroupHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.analogActuator'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogActuator'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\AnalogActuatorWidgetHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.analogSensor'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogSensor'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\AnalogSensorWidgetHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.digitalActuator'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.digitalActuator'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\DigitalActuatorWidgetHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.digitalSensor'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.digitalSensor'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\DigitalSensorWidgetHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.dataSources.channelProperty'))
+		$builder->addDefinition($this->prefix('hydrators.dataSources.channelProperty'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\DataSources\ChannelPropertyDataSourceHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.analogValue'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.analogValue'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\AnalogValueHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.button'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.button'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\ButtonHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.chartGraph'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.chartGraph'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\ChartGraphHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.digitalValue'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.digitalValue'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\DigitalValueHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.gauge'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.gauge'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\GaugeHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.groupedButton'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.groupedButton'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\GroupedButtonHydrator::class);
 
-		$builder->addDefinition($this->prefix('hydrators.widgets.slider'))
+		$builder->addDefinition($this->prefix('hydrators.widgets.slider'), new DI\Definitions\ServiceDefinition())
 			->setType(Hydrators\Widgets\Displays\SliderHydrator::class);
 	}
 
