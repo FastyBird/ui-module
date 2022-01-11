@@ -33,7 +33,7 @@ final class DigitalSensorWidgetHydrator extends WidgetHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\DigitalSensor::class;
 	}

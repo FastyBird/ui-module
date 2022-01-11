@@ -59,9 +59,6 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		Schemas\Widgets\WidgetSchema::RELATIONSHIPS_DATA_SOURCES => 'dataSources',
 	];
 
-	/** @var string */
-	protected string $translationDomain = 'ui-module.widgets';
-
 	/** @var Models\Groups\IGroupRepository */
 	private Models\Groups\IGroupRepository $groupRepository;
 
@@ -256,8 +253,8 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		if ($included === null) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.missingDataSource.heading'),
-				$this->translator->translate('messages.missingDataSource.message'),
+				$this->translator->translate('//ui-module.widgets.messages.missingDataSource.heading'),
+				$this->translator->translate('//ui-module.widgets.messages.missingDataSource.message'),
 				[
 					'pointer' => '/data/relationships/data-sources/data/id',
 				]
@@ -283,8 +280,8 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		if ($dataSources === []) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.missingDataSource.heading'),
-				$this->translator->translate('messages.missingDataSource.message'),
+				$this->translator->translate('//ui-module.widgets.messages.missingDataSource.heading'),
+				$this->translator->translate('//ui-module.widgets.messages.missingDataSource.message'),
 				[
 					'pointer' => '/data/relationships/data-sources/data/id',
 				]
@@ -339,8 +336,8 @@ abstract class WidgetHydrator extends JsonApiHydrators\Hydrator
 		if ($groups === []) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.missingGroups.heading'),
-				$this->translator->translate('messages.missingGroups.message'),
+				$this->translator->translate('//ui-module.widgets.messages.missingGroups.heading'),
+				$this->translator->translate('//ui-module.widgets.messages.missingGroups.message'),
 				[
 					'pointer' => '/data/relationships/groups/data/id',
 				]

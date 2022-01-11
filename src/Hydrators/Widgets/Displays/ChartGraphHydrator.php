@@ -45,7 +45,7 @@ final class ChartGraphHydrator extends DisplayHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\Display\ChartGraph::class;
 	}

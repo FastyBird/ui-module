@@ -33,7 +33,7 @@ final class ButtonHydrator extends DisplayHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\Display\Button::class;
 	}

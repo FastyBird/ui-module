@@ -38,7 +38,7 @@ final class GaugeHydrator extends DisplayHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\Display\Gauge::class;
 	}

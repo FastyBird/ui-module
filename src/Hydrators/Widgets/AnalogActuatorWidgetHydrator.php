@@ -33,7 +33,7 @@ final class AnalogActuatorWidgetHydrator extends WidgetHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\AnalogActuator::class;
 	}

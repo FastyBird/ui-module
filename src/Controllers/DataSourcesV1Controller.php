@@ -24,7 +24,6 @@ use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Queries;
 use FastyBird\UIModule\Router;
 use FastyBird\UIModule\Schemas;
-use FastyBird\WebServer\Http as WebServerHttp;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Psr\Http\Message;
@@ -46,9 +45,6 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 	/** @var Models\Widgets\IWidgetRepository */
 	protected Models\Widgets\IWidgetRepository $widgetRepository;
-
-	/** @var string */
-	protected string $translationDomain = 'ui-module.dataSources';
 
 	/** @var Models\Widgets\DataSources\IDataSourceRepository */
 	private Models\Widgets\DataSources\IDataSourceRepository $dataSourceRepository;
@@ -79,16 +75,16 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
@@ -97,29 +93,28 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 		$dataSources = $this->dataSourceRepository->getResultSet($findQuery);
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($dataSources));
+		// @phpstan-ignore-next-line
+		return $this->buildResponse($request, $response, $dataSources);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
 		$dataSource = $this->findDataSource($request->getAttribute(Router\Routes::URL_ITEM_ID), $widget);
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($dataSource));
+		return $this->buildResponse($request, $response, $dataSource);
 	}
 
 	/**
@@ -144,15 +139,15 @@ final class DataSourcesV1Controller extends BaseV1Controller
 			if ($dataSource === null) {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_NOT_FOUND,
-					$this->translator->translate('messages.notFound.heading'),
-					$this->translator->translate('messages.notFound.message')
+					$this->translator->translate('//ui-module.dataSources.messages.notFound.heading'),
+					$this->translator->translate('//ui-module.dataSources.messages.notFound.message')
 				);
 			}
 		} catch (Uuid\Exception\InvalidUuidStringException $ex) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_NOT_FOUND,
-				$this->translator->translate('messages.notFound.heading'),
-				$this->translator->translate('messages.notFound.message')
+				$this->translator->translate('//ui-module.dataSources.messages.notFound.heading'),
+				$this->translator->translate('//ui-module.dataSources.messages.notFound.message')
 			);
 		}
 
@@ -161,17 +156,17 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function create(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
@@ -235,23 +230,19 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('messages.notCreated.heading'),
-					$this->translator->translate('messages.notCreated.message')
+					$this->translator->translate('//ui-module.dataSources.messages.notCreated.heading'),
+					$this->translator->translate('//ui-module.dataSources.messages.notCreated.message')
 				);
 			}
 
-			/** @var WebServerHttp\Response $response */
-			$response = $response
-				->withEntity(WebServerHttp\ScalarEntity::from($dataSource))
-				->withStatus(StatusCodeInterface::STATUS_CREATED);
-
-			return $response;
+			$response = $this->buildResponse($request, $response, $dataSource);
+			return $response->withStatus(StatusCodeInterface::STATUS_CREATED);
 		}
 
 		throw new JsonApiExceptions\JsonApiErrorException(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-			$this->translator->translate('messages.invalidType.heading'),
-			$this->translator->translate('messages.invalidType.message'),
+			$this->translator->translate('//ui-module.dataSources.messages.invalidType.heading'),
+			$this->translator->translate('//ui-module.dataSources.messages.invalidType.message'),
 			[
 				'pointer' => '/data/type',
 			]
@@ -260,17 +251,17 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function update(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$document = $this->createDocument($request);
 
 		$this->validateIdentifier($request, $document);
@@ -293,8 +284,8 @@ final class DataSourcesV1Controller extends BaseV1Controller
 			} else {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('messages.invalidType.heading'),
-					$this->translator->translate('messages.invalidType.message'),
+					$this->translator->translate('//ui-module.dataSources.messages.invalidType.heading'),
+					$this->translator->translate('//ui-module.dataSources.messages.invalidType.message'),
 					[
 						'pointer' => '/data/type',
 					]
@@ -326,28 +317,27 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.notUpdated.heading'),
-				$this->translator->translate('messages.notUpdated.message')
+				$this->translator->translate('//ui-module.dataSources.messages.notUpdated.heading'),
+				$this->translator->translate('//ui-module.dataSources.messages.notUpdated.message')
 			);
 		}
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($dataSource));
+		return $this->buildResponse($request, $response, $dataSource);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function delete(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
@@ -377,29 +367,26 @@ final class DataSourcesV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.notDeleted.heading'),
-				$this->translator->translate('messages.notDeleted.message')
+				$this->translator->translate('//ui-module.dataSources.messages.notDeleted.heading'),
+				$this->translator->translate('//ui-module.dataSources.messages.notDeleted.message')
 			);
 		}
 
-		/** @var WebServerHttp\Response $response */
-		$response = $response->withStatus(StatusCodeInterface::STATUS_NO_CONTENT);
-
-		return $response;
+		return $response->withStatus(StatusCodeInterface::STATUS_NO_CONTENT);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
@@ -408,13 +395,10 @@ final class DataSourcesV1Controller extends BaseV1Controller
 		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Widgets\DataSources\DataSourceSchema::RELATIONSHIPS_WIDGET) {
-			return $response
-				->withEntity(WebServerHttp\ScalarEntity::from($dataSource->getWidget()));
+			return $this->buildResponse($request, $response, $dataSource->getWidget());
 		}
 
-		$this->throwUnknownRelation($relationEntity);
-
-		return $response;
+		return parent::readRelationship($request, $response);
 	}
 
 }

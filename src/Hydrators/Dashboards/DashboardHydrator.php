@@ -39,13 +39,10 @@ final class DashboardHydrator extends JsonApiHydrators\Hydrator
 		'comment',
 	];
 
-	/** @var string */
-	protected string $translationDomain = 'ui-module.dashboards';
-
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Dashboards\Dashboard::class;
 	}

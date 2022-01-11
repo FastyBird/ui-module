@@ -88,6 +88,9 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 			->setType(Router\Routes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
+		$builder->addDefinition($this->prefix('router.validator'), new DI\Definitions\ServiceDefinition())
+			->setType(Router\Validator::class);
+
 		// Console commands
 		$builder->addDefinition($this->prefix('commands.initialize'), new DI\Definitions\ServiceDefinition())
 			->setType(Commands\InitializeCommand::class);

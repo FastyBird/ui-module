@@ -39,7 +39,7 @@ final class ChannelPropertyDataSourceHydrator extends DataSourceHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\DataSources\ChannelPropertyDataSource::class;
 	}

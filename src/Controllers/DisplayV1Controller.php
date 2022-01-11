@@ -23,7 +23,6 @@ use FastyBird\UIModule\Hydrators;
 use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Router;
 use FastyBird\UIModule\Schemas;
-use FastyBird\WebServer\Http as WebServerHttp;
 use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message;
 use Throwable;
@@ -43,9 +42,6 @@ final class DisplayV1Controller extends BaseV1Controller
 
 	/** @var Models\Widgets\IWidgetRepository */
 	protected Models\Widgets\IWidgetRepository $widgetRepository;
-
-	/** @var string */
-	protected string $translationDomain = 'ui-module.display';
 
 	/** @var Models\Widgets\Displays\IDisplaysManager */
 	private Models\Widgets\Displays\IDisplaysManager $displaysManager;
@@ -106,36 +102,35 @@ final class DisplayV1Controller extends BaseV1Controller
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($widget->getDisplay()));
+		return $this->buildResponse($request, $response, $widget->getDisplay());
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function update(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$document = $this->createDocument($request);
 
 		$this->validateIdentifier($request, $document);
@@ -194,8 +189,8 @@ final class DisplayV1Controller extends BaseV1Controller
 			} else {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('messages.invalidType.heading'),
-					$this->translator->translate('messages.invalidType.message'),
+					$this->translator->translate('//ui-module.display.messages.invalidType.heading'),
+					$this->translator->translate('//ui-module.display.messages.invalidType.message'),
 					[
 						'pointer' => '/data/type',
 					]
@@ -227,40 +222,36 @@ final class DisplayV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.notUpdated.heading'),
-				$this->translator->translate('messages.notUpdated.message')
+				$this->translator->translate('//ui-module.display.messages.notUpdated.heading'),
+				$this->translator->translate('//ui-module.display.messages.notUpdated.message')
 			);
 		}
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($display));
+		return $this->buildResponse($request, $response, $display);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		// At first, try to load widget
 		$widget = $this->findWidget($request->getAttribute(Router\Routes::URL_WIDGET_ID));
 
 		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Widgets\Display\DisplaySchema::RELATIONSHIPS_WIDGET) {
-			return $response
-				->withEntity(WebServerHttp\ScalarEntity::from($widget));
+			return $this->buildResponse($request, $response, $widget);
 		}
 
-		$this->throwUnknownRelation($relationEntity);
-
-		return $response;
+		return parent::readRelationship($request, $response);
 	}
 
 }

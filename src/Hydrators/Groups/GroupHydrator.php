@@ -44,13 +44,10 @@ final class GroupHydrator extends JsonApiHydrators\Hydrator
 		Schemas\Groups\GroupSchema::RELATIONSHIPS_DASHBOARD,
 	];
 
-	/** @var string */
-	protected string $translationDomain = 'ui-module.groups';
-
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Groups\Group::class;
 	}

@@ -42,7 +42,7 @@ final class GroupedButtonHydrator extends DisplayHydrator
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getEntityName(): string
+	public function getEntityName(): string
 	{
 		return Entities\Widgets\Display\GroupedButton::class;
 	}
@@ -73,8 +73,8 @@ final class GroupedButtonHydrator extends DisplayHydrator
 		if (!Types\WidgetIconType::isValidValue($attributes->get('icon'))) {
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.invalidValue.heading'),
-				$this->translator->translate('messages.invalidValue.message'),
+				$this->translator->translate('//ui-module.widgets.messages.invalidValue.heading'),
+				$this->translator->translate('//ui-module.widgets.messages.invalidValue.message'),
 				[
 					'pointer' => '/data/attributes/icon',
 				]

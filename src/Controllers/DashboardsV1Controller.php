@@ -23,7 +23,6 @@ use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Queries;
 use FastyBird\UIModule\Router;
 use FastyBird\UIModule\Schemas;
-use FastyBird\WebServer\Http as WebServerHttp;
 use Fig\Http\Message\StatusCodeInterface;
 use IPub\DoctrineCrud\Exceptions as DoctrineCrudExceptions;
 use Psr\Http\Message;
@@ -41,9 +40,6 @@ final class DashboardsV1Controller extends BaseV1Controller
 {
 
 	use Controllers\Finders\TDashboardFinder;
-
-	/** @var string */
-	protected string $translationDomain = 'ui-module.dashboards';
 
 	/** @var Hydrators\Dashboards\DashboardHydrator */
 	private Hydrators\Dashboards\DashboardHydrator $dashboardHydrator;
@@ -77,53 +73,52 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$findQuery = new Queries\FindDashboardsQuery();
 
 		$dashboards = $this->dashboardRepository->getResultSet($findQuery);
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($dashboards));
+		// @phpstan-ignore-next-line
+		return $this->buildResponse($request, $response, $dashboards);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function read(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($dashboard));
+		return $this->buildResponse($request, $response, $dashboard);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function create(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$document = $this->createDocument($request);
 
 		if ($document->getResource()->getType() === Schemas\Dashboards\DashboardSchema::SCHEMA_TYPE) {
@@ -184,23 +179,19 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('messages.notCreated.heading'),
-					$this->translator->translate('messages.notCreated.message')
+					$this->translator->translate('//ui-module.dashboards.messages.notCreated.heading'),
+					$this->translator->translate('//ui-module.dashboards.messages.notCreated.message')
 				);
 			}
 
-			/** @var WebServerHttp\Response $response */
-			$response = $response
-				->withEntity(WebServerHttp\ScalarEntity::from($dashboard))
-				->withStatus(StatusCodeInterface::STATUS_CREATED);
-
-			return $response;
+			$response = $this->buildResponse($request, $response, $dashboard);
+			return $response->withStatus(StatusCodeInterface::STATUS_CREATED);
 		}
 
 		throw new JsonApiExceptions\JsonApiErrorException(
 			StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-			$this->translator->translate('messages.invalidType.heading'),
-			$this->translator->translate('messages.invalidType.message'),
+			$this->translator->translate('//ui-module.dashboards.messages.invalidType.heading'),
+			$this->translator->translate('//ui-module.dashboards.messages.invalidType.message'),
 			[
 				'pointer' => '/data/type',
 			]
@@ -209,17 +200,17 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function update(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$document = $this->createDocument($request);
 
 		$this->validateIdentifier($request, $document);
@@ -236,8 +227,8 @@ final class DashboardsV1Controller extends BaseV1Controller
 			} else {
 				throw new JsonApiExceptions\JsonApiErrorException(
 					StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-					$this->translator->translate('messages.invalidType.heading'),
-					$this->translator->translate('messages.invalidType.message'),
+					$this->translator->translate('//ui-module.dashboards.messages.invalidType.heading'),
+					$this->translator->translate('//ui-module.dashboards.messages.invalidType.message'),
 					[
 						'pointer' => '/data/type',
 					]
@@ -269,28 +260,27 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.notUpdated.heading'),
-				$this->translator->translate('messages.notUpdated.message')
+				$this->translator->translate('//ui-module.dashboards.messages.notUpdated.heading'),
+				$this->translator->translate('//ui-module.dashboards.messages.notUpdated.message')
 			);
 		}
 
-		return $response
-			->withEntity(WebServerHttp\ScalarEntity::from($dashboard));
+		return $this->buildResponse($request, $response, $dashboard);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 * @throws Doctrine\DBAL\ConnectionException
 	 */
 	public function delete(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
 		try {
@@ -322,41 +312,35 @@ final class DashboardsV1Controller extends BaseV1Controller
 
 			throw new JsonApiExceptions\JsonApiErrorException(
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
-				$this->translator->translate('messages.notDeleted.heading'),
-				$this->translator->translate('messages.notDeleted.message')
+				$this->translator->translate('//ui-module.dashboards.messages.notDeleted.heading'),
+				$this->translator->translate('//ui-module.dashboards.messages.notDeleted.message')
 			);
 		}
 
-		/** @var WebServerHttp\Response $response */
-		$response = $response->withStatus(StatusCodeInterface::STATUS_NO_CONTENT);
-
-		return $response;
+		return $response->withStatus(StatusCodeInterface::STATUS_NO_CONTENT);
 	}
 
 	/**
 	 * @param Message\ServerRequestInterface $request
-	 * @param WebServerHttp\Response $response
+	 * @param Message\ResponseInterface $response
 	 *
-	 * @return WebServerHttp\Response
+	 * @return Message\ResponseInterface
 	 *
 	 * @throws JsonApiExceptions\IJsonApiException
 	 */
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
-		WebServerHttp\Response $response
-	): WebServerHttp\Response {
+		Message\ResponseInterface $response
+	): Message\ResponseInterface {
 		$dashboard = $this->findDashboard($request->getAttribute(Router\Routes::URL_ITEM_ID));
 
 		$relationEntity = strtolower($request->getAttribute(Router\Routes::RELATION_ENTITY));
 
 		if ($relationEntity === Schemas\Dashboards\DashboardSchema::RELATIONSHIPS_GROUPS) {
-			return $response
-				->withEntity(WebServerHttp\ScalarEntity::from($dashboard->getGroups()));
+			return $this->buildResponse($request, $response, $dashboard->getGroups());
 		}
 
-		$this->throwUnknownRelation($relationEntity);
-
-		return $response;
+		return parent::readRelationship($request, $response);
 	}
 
 }

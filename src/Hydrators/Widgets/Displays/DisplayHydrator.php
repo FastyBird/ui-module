@@ -41,9 +41,6 @@ abstract class DisplayHydrator extends JsonApiHydrators\Hydrator
 		Schemas\Widgets\Display\DisplaySchema::RELATIONSHIPS_WIDGET,
 	];
 
-	/** @var string */
-	protected string $translationDomain = 'ui-module.display';
-
 	/**
 	 * @param JsonAPIDocument\Objects\IStandardObject $attributes
 	 *

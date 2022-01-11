@@ -34,7 +34,7 @@ extensions:
 	fbJsonApi							: FastyBird\JsonApi\DI\JsonApiExtension
 	fbSimpleAuth						: FastyBird\SimpleAuth\DI\SimpleAuthExtension
 	fbWebServer							: FastyBird\WebServer\DI\WebServerExtension
-	fbModulesMetadata					: FastyBird\ModulesMetadata\DI\ModulesMetadataExtension
+	fbMetadata					: FastyBird\Metadata\DI\MetadataExtension
 
 contributteConsole:
 	name: FastyBird:UIModule!
