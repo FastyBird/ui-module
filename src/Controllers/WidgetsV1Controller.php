@@ -211,7 +211,9 @@ final class WidgetsV1Controller extends BaseV1Controller
 			$this->getOrmConnection()->rollBack();
 
 			// Log caught exception
-			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
+			$this->logger->error('An unhandled error occurred', [
+				'source'    => 'ui-module-widgets-controller',
+				'type'      => 'create',
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
@@ -303,7 +305,9 @@ final class WidgetsV1Controller extends BaseV1Controller
 			$this->getOrmConnection()->rollBack();
 
 			// Log caught exception
-			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
+			$this->logger->error('An unhandled error occurred', [
+				'source'    => 'ui-module-widgets-controller',
+				'type'      => 'update',
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
@@ -347,7 +351,9 @@ final class WidgetsV1Controller extends BaseV1Controller
 
 		} catch (Throwable $ex) {
 			// Log caught exception
-			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
+			$this->logger->error('An unhandled error occurred', [
+				'source'    => 'ui-module-widgets-controller',
+				'type'      => 'delete',
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),

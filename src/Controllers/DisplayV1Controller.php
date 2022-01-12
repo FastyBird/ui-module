@@ -213,7 +213,9 @@ final class DisplayV1Controller extends BaseV1Controller
 			$this->getOrmConnection()->rollBack();
 
 			// Log caught exception
-			$this->logger->error('[FB:UI_MODULE:CONTROLLER] ' . $ex->getMessage(), [
+			$this->logger->error('An unhandled error occurred', [
+				'source'    => 'ui-module-display-controller',
+				'type'      => 'update',
 				'exception' => [
 					'message' => $ex->getMessage(),
 					'code'    => $ex->getCode(),
