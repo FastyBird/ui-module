@@ -24,7 +24,7 @@ use Throwable;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *     name="fb_widgets_data_sources_channels_properties",
+ *     name="fb_ui_module_widgets_data_sources_channels_properties",
  *     options={
  *       "collate"="utf8mb4_general_ci",
  *       "charset"="utf8mb4",

@@ -17,8 +17,8 @@ UI module is a [Nette framework](https://nette.org) extension for managing appli
 
 ### Features:
 
-- Dasboards, groups and widgets management
-- Support for data exchange
+- Dashboards, groups and widgets management
+- Support for data [exchange bus](https://github.com/FastyBird/exchange)
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
 - User access check & validation
 - Multilingual

@@ -26,7 +26,7 @@ use Throwable;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *     name="fb_dashboards_groups",
+ *     name="fb_ui_module_dashboards_groups",
  *     options={
  *       "collate"="utf8mb4_general_ci",
  *       "charset"="utf8mb4",
@@ -80,7 +80,7 @@ class Group implements IGroup
 	 *
 	 * @IPubDoctrine\Crud(is={"writable"})
 	 * @ORM\ManyToMany(targetEntity="FastyBird\UIModule\Entities\Widgets\Widget", inversedBy="groups")
-	 * @ORM\JoinTable(name="fb_widgets_groups",
+	 * @ORM\JoinTable(name="fb_ui_module_widgets_groups",
 	 *    joinColumns={
 	 *       @ORM\JoinColumn(name="group_id", referencedColumnName="group_id", onDelete="CASCADE")
 	 *    },
