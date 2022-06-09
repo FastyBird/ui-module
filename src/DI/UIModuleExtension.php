@@ -26,6 +26,7 @@ use FastyBird\UIModule\Models;
 use FastyBird\UIModule\Router;
 use FastyBird\UIModule\Schemas;
 use IPub\DoctrineCrud;
+use IPub\SlimRouter\Routing as SlimRouterRouting;
 use Nette;
 use Nette\DI;
 use Nette\PhpGenerator;
@@ -263,6 +264,16 @@ class UIModuleExtension extends DI\CompilerExtension implements Translation\DI\T
 				$ormAnnotationDriverService,
 				'FastyBird\UIModule\Entities',
 			]);
+		}
+
+		/**
+		 * Routes
+		 */
+
+		$routerService = $builder->getDefinitionByType(SlimRouterRouting\Router::class);
+
+		if ($routerService instanceof DI\Definitions\ServiceDefinition) {
+			$routerService->addSetup('?->registerRoutes(?)', [$builder->getDefinitionByType(Router\Routes::class), $routerService]);
 		}
 	}
 
