@@ -1,7 +1,7 @@
 # FastyBird IoT UI module
 
-[![Build Status](https://badgen.net/github/checks/FastyBird/ui-module/master?cache=300&style=flat-square)](https://github.com/FastyBird/ui-module/actions)
-[![Licence](https://badgen.net/github/license/FastyBird/ui-module?cache=300&style=flat-square)](https://github.com/FastyBird/ui-module/blob/master/LICENSE.md)
+[![Build Status](https://badgen.net/github/checks/FastyBird/ui-module/main?cache=300&style=flat-square)](https://github.com/FastyBird/ui-module/actions)
+[![Licence](https://badgen.net/github/license/FastyBird/ui-module?cache=300&style=flat-square)](https://github.com/FastyBird/ui-module/blob/main/LICENSE.md)
 
 ![PHP](https://badgen.net/packagist/php/FastyBird/ui-module?cache=300&style=flat-square)
 [![PHP code coverage](https://badgen.net/coveralls/c/github/FastyBird/ui-module?cache=300&style=flat-square)](https://coveralls.io/r/FastyBird/ui-module)
@@ -37,7 +37,7 @@ composer require fastybird/ui-module
 
 ## Documentation
 
-Learn how to use UI module and manage your interface elements in [documentation](https://github.com/FastyBird/ui-module/blob/master/.docs/en/index.md).
+Learn how to use UI module and manage your interface elements in [documentation](https://github.com/FastyBird/ui-module/blob/main/.docs/en/index.md).
 
 ## Feedback
 
