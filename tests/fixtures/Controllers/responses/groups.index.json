@@ -1,76 +1,94 @@
 {
-  "data" : [
+  "meta": {
+    "author": "FastyBird team",
+    "copyright": "FastyBird s.r.o"
+  },
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "links": {
+    "self": "/api/ui-module/v1/groups"
+  },
+  "data": [
     {
-      "attributes" : {
-        "comment" : null,
-        "name" : "House heaters",
-        "params" : [],
-        "priority" : 0
+      "type": "com.fastybird.ui-module/group",
+      "id": "89f4a14f-7f78-4216-99b8-584ab9229f1c",
+      "attributes": {
+        "identifier": "sleeping-room",
+        "name": "Sleeping room",
+        "comment": null,
+        "priority": 0
       },
-      "id" : "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263",
-      "links" : {
-        "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263"
-      },
-      "relationships" : {
-        "dashboard" : {
-          "data" : {
-            "id" : "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
-            "type" : "ui-module/dashboard"
+      "relationships": {
+        "widgets": {
+          "links": {
+            "self": "/api/ui-module/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c/relationships/widgets"
           },
-          "links" : {
-            "related" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c",
-            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263/relationships/dashboard"
-          }
-        },
-        "widgets" : {
-          "data" : [],
-          "links" : {
-            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263/relationships/widgets"
-          }
+          "data": [
+            {
+              "type": "com.fastybird.ui-module/widget/analog-sensor",
+              "id": "15553443-4564-454d-af04-0dfeef08aa96"
+            },
+            {
+              "type": "com.fastybird.ui-module/widget/analog-actuator",
+              "id": "1d600901-54e7-43ee-8f5d-a9e22663ddd7"
+            },
+            {
+              "type": "com.fastybird.ui-module/widget/digital-actuator",
+              "id": "5626e7a1-c42c-4a31-9b5d-848e3cf0e82a"
+            },
+            {
+              "type": "com.fastybird.ui-module/widget/digital-actuator",
+              "id": "9a914732-98dc-47f6-bfd1-9d81ca9f8cb6"
+            }
+          ]
         }
       },
-      "type" : "ui-module/group"
+      "links": {
+        "self": "/api/ui-module/v1/groups/89f4a14f-7f78-4216-99b8-584ab9229f1c"
+      }
     },
     {
-      "attributes" : {
-        "comment" : null,
-        "name" : "Main lights",
-        "params" : [],
-        "priority" : 0
+      "type": "com.fastybird.ui-module/group",
+      "id": "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263",
+      "attributes": {
+        "identifier": "house-heaters",
+        "name": "House heaters",
+        "comment": null,
+        "priority": 0
       },
-      "id" : "d721529e-dec6-47c8-8035-a3484070142b",
-      "links" : {
-        "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/d721529e-dec6-47c8-8035-a3484070142b"
-      },
-      "relationships" : {
-        "dashboard" : {
-          "data" : {
-            "id" : "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
-            "type" : "ui-module/dashboard"
+      "relationships": {
+        "widgets": {
+          "links": {
+            "self": "/api/ui-module/v1/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263/relationships/widgets"
           },
-          "links" : {
-            "related" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c",
-            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/d721529e-dec6-47c8-8035-a3484070142b/relationships/dashboard"
-          }
-        },
-        "widgets" : {
-          "data" : [],
-          "links" : {
-            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups/d721529e-dec6-47c8-8035-a3484070142b/relationships/widgets"
-          }
+          "data": []
         }
       },
-      "type" : "ui-module/group"
+      "links": {
+        "self": "/api/ui-module/v1/groups/c74a16b1-67f4-4ffd-812a-9e5ec4bd5263"
+      }
+    },
+    {
+      "type": "com.fastybird.ui-module/group",
+      "id": "d721529e-dec6-47c8-8035-a3484070142b",
+      "attributes": {
+        "identifier": "main-lights",
+        "name": "Main lights",
+        "comment": null,
+        "priority": 0
+      },
+      "relationships": {
+        "widgets": {
+          "links": {
+            "self": "/api/ui-module/v1/groups/d721529e-dec6-47c8-8035-a3484070142b/relationships/widgets"
+          },
+          "data": []
+        }
+      },
+      "links": {
+        "self": "/api/ui-module/v1/groups/d721529e-dec6-47c8-8035-a3484070142b"
+      }
     }
-  ],
-  "jsonapi" : {
-    "version" : "1.1"
-  },
-  "links" : {
-    "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups"
-  },
-  "meta" : {
-    "author" : "FastyBird team",
-    "copyright" : "FastyBird s.r.o"
-  }
+  ]
 }

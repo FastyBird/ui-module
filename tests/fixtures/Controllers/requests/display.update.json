@@ -1,7 +1,7 @@
 {
   "data" : {
     "id" : "467e6d4d-3545-481b-b613-53be7e9aa641",
-    "type" : "ui-module/widget-display-chart-graph",
+    "type" : "com.fastybird.ui-module/display/chart-graph",
     "attributes" : {
       "enable_min_max" : true,
       "maximum_value" : 60,

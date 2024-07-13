@@ -1,43 +1,44 @@
 <?php declare(strict_types = 1);
 
 /**
- * IDashboard.php
+ * Dashboard.php
  *
  * @license        More in LICENSE.md
  * @copyright      https://www.fastybird.com
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Dashboards;
+namespace FastyBird\Module\Ui\Entities\Dashboards;
 
+use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\UIModule\Entities;
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Module\Ui\Entities;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use IPub\DoctrineTimestampable;
+use Nette\Utils;
 use Ramsey\Uuid;
-use Throwable;
+use function array_map;
 
-/**
- * @ORM\Entity
- * @ORM\Table(
- *     name="fb_ui_module_dashboards",
- *     options={
- *       "collate"="utf8mb4_general_ci",
- *       "charset"="utf8mb4",
- *       "comment"="User interface widgets dashboards"
- *     },
- *     indexes={
- *       @ORM\Index(name="dashboard_name_idx", columns={"dashboard_name"})
- *     }
- * )
- */
-class Dashboard implements IDashboard
+#[ORM\Entity]
+#[ORM\Table(
+	name: 'fb_ui_module_dashboards',
+	options: [
+		'collate' => 'utf8mb4_general_ci',
+		'charset' => 'utf8mb4',
+		'comment' => 'User interface widgets dashboards',
+	],
+)]
+#[ORM\Index(columns: ['dashboard_name'], name: 'dashboard_name_idx')]
+class Dashboard implements Entities\Entity,
+	Entities\EntityParams,
+	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
 {
 
 	use Entities\TEntity;
@@ -45,173 +46,177 @@ class Dashboard implements IDashboard
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 
-	/**
-	 * @var Uuid\UuidInterface
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid_binary", name="dashboard_id")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
-	protected Uuid\UuidInterface $id;
+	#[ORM\Id]
+	#[ORM\Column(name: 'dashboard_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
+	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
+	private Uuid\UuidInterface $id;
 
-	/**
-	 * @var string
-	 *
-	 * @IPubDoctrine\Crud(is={"required", "writable"})
-	 * @ORM\Column(type="string", name="dashboard_name", length=50, nullable=false)
-	 */
+	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[ORM\Column(name: 'dashboard_identifier', type: 'string', nullable: false)]
+	private string $identifier;
+
+	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[ORM\Column(name: 'dashboard_name', type: 'string', nullable: false)]
 	private string $name;
 
-	/**
-	 * @var string|null
-	 *
-	 * @IPubDoctrine\Crud(is="writable")
-	 * @ORM\Column(type="text", name="dashboard_comment", nullable=true, options={"default": null})
-	 */
-	private ?string $comment = null;
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\Column(name: 'dashboard_comment', type: 'text', nullable: true, options: ['default' => null])]
+	private string|null $comment = null;
 
-	/**
-	 * @var int
-	 *
-	 * @IPubDoctrine\Crud(is="writable")
-	 * @ORM\Column(type="integer", name="dashboard_priority", length=15, nullable=false, options={"default" = 0})
-	 */
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\Column(name: 'dashboard_priority', type: 'integer', nullable: false, options: ['default' => 0])]
 	private int $priority = 0;
 
-	/**
-	 * @var Common\Collections\Collection<int, Entities\Groups\IGroup>
-	 *
-	 * @IPubDoctrine\Crud(is={"writable"})
-	 * @ORM\OneToMany(targetEntity="FastyBird\UIModule\Entities\Groups\Group", mappedBy="dashboard", cascade={"persist", "remove"}, orphanRemoval=true)
-	 * @ORM\OrderBy({"priority" = "ASC"})
-	 */
-	private Common\Collections\Collection $groups;
+	/** @var Common\Collections\Collection<int, Entities\Widgets\Widget> */
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\ManyToMany(targetEntity: Entities\Widgets\Widget::class, inversedBy: 'dashboards')]
+	#[ORM\JoinTable(
+		name: 'fb_ui_module_widgets_dashboards',
+		joinColumns: [
+			new ORM\JoinColumn(
+				name: 'dashboard_id',
+				referencedColumnName: 'dashboard_id',
+				onDelete: 'CASCADE',
+			),
+		],
+		inverseJoinColumns: [
+			new ORM\JoinColumn(
+				name: 'widget_id',
+				referencedColumnName: 'widget_id',
+				onDelete: 'CASCADE',
+			),
+		],
+	)]
+	private Common\Collections\Collection $widgets;
 
-	/**
-	 * @param string $name
-	 * @param Uuid\UuidInterface|null $id
-	 *
-	 * @throws Throwable
-	 */
 	public function __construct(
+		string $identifier,
 		string $name,
-		?Uuid\UuidInterface $id = null
-	) {
+		Uuid\UuidInterface|null $id = null,
+	)
+	{
 		$this->id = $id ?? Uuid\Uuid::uuid4();
 
+		$this->identifier = $identifier;
 		$this->name = $name;
 
-		$this->groups = new Common\Collections\ArrayCollection();
+		$this->widgets = new Common\Collections\ArrayCollection();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	public function getIdentifier(): string
+	{
+		return $this->identifier;
+	}
+
 	public function getName(): string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function setName(string $name): void
 	{
 		$this->name = $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getComment(): ?string
+	public function getComment(): string|null
 	{
 		return $this->comment;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setComment(?string $comment = null): void
+	public function setComment(string|null $comment = null): void
 	{
 		$this->comment = $comment;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getPriority(): int
 	{
 		return $this->priority;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function setPriority(int $priority): void
 	{
 		$this->priority = $priority;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function addGroup(Entities\Groups\IGroup $group): void
+	public function addWidget(Entities\Widgets\Widget $widget): void
 	{
 		// Check if collection does not contain inserting entity
-		if (!$this->groups->contains($group)) {
+		if (!$this->widgets->contains($widget)) {
 			// ...and assign it to collection
-			$this->groups->add($group);
+			$this->widgets->add($widget);
 		}
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<Entities\Widgets\Widget>
 	 */
-	public function getGroups(): array
+	public function getWidgets(): array
 	{
-		return $this->groups->toArray();
+		return $this->widgets->toArray();
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<Entities\Widgets\Widget> $widgets
 	 */
-	public function setGroups(array $groups = []): void
+	public function setWidgets(array $widgets = []): void
 	{
-		$this->groups = new Common\Collections\ArrayCollection();
+		$this->widgets = new Common\Collections\ArrayCollection();
 
-		// Process all passed entities...
-		/** @var Entities\Groups\IGroup $entity */
-		foreach ($groups as $entity) {
-			if (!$this->groups->contains($entity)) {
-				// ...and assign them to collection
-				$this->groups->add($entity);
-			}
+		foreach ($widgets as $entity) {
+			$this->widgets->add($entity);
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getGroup(string $id): ?Entities\Groups\IGroup
+	public function getWidget(string $id): Entities\Widgets\Widget|null
 	{
-		$found = $this->groups
-			->filter(function (Entities\Groups\IGroup $row) use ($id): bool {
-				return $id === $row->getPlainId();
-			});
+		$found = $this->widgets
+			->filter(static fn (Entities\Widgets\Widget $row): bool => $id === $row->getId()->toString());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
+	public function removeWidget(Entities\Widgets\Widget $widget): void
+	{
+		// Check if collection contain removing entity...
+		if ($this->widgets->contains($widget)) {
+			// ...and remove it from collection
+			$this->widgets->removeElement($widget);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public function removeGroup(Entities\Groups\IGroup $group): void
+	public function toArray(): array
 	{
-		// Check if collection contain removing entity...
-		if ($this->groups->contains($group)) {
-			// ...and remove it from collection
-			$this->groups->removeElement($group);
-		}
+		return [
+			'id' => $this->getId()->toString(),
+			'identifier' => $this->getIdentifier(),
+			'name' => $this->getName(),
+			'comment' => $this->getComment(),
+			'priority' => $this->getPriority(),
+
+			'widgets' => array_map(
+				static fn (Entities\Widgets\Widget $widget): string => $widget->getId()->toString(),
+				$this->getWidgets(),
+			),
+
+			'created_at' => $this->getCreatedAt()?->format(DateTimeInterface::ATOM),
+			'updated_at' => $this->getUpdatedAt()?->format(DateTimeInterface::ATOM),
+		];
+	}
+
+	public function getSource(): MetadataTypes\Sources\Source
+	{
+		return MetadataTypes\Sources\Module::UI;
+	}
+
+	/**
+	 * @throws Utils\JsonException
+	 */
+	public function __toString(): string
+	{
+		return Utils\Json::encode($this->toArray());
 	}
 
 }

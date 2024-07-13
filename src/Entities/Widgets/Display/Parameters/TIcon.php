@@ -8,15 +8,16 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display\Parameters;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display\Parameters;
 
-use FastyBird\UIModule\Types;
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use FastyBird\Module\Ui\Types;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use function is_string;
 
 /**
  * Display icon parameter
@@ -32,38 +33,21 @@ use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
 trait TIcon
 {
 
-	/**
-	 * @var Types\WidgetIconType|null
-	 *
-	 * @IPubDoctrine\Crud(is={"writable"})
-	 */
-	protected ?Types\WidgetIconType $icon = null;
+	#[IPubDoctrine\Crud(writable: true)]
+	protected Types\WidgetIcon|null $icon = null;
 
-	/**
-	 * @return Types\WidgetIconType|null
-	 */
-	public function getIcon(): ?Types\WidgetIconType
+	public function getIcon(): Types\WidgetIcon|null
 	{
 		$value = $this->getParam('icon');
 
-		return $value === null ? null : Types\WidgetIconType::get($value);
+		return is_string($value) && $value !== '' ? Types\WidgetIcon::tryFrom($value) : null;
 	}
 
-	/**
-	 * @param Types\WidgetIconType|null $icon
-	 *
-	 * @return void
-	 */
-	public function setIcon(?Types\WidgetIconType $icon): void
+	public function setIcon(Types\WidgetIcon|null $icon): void
 	{
 		$this->icon = $icon;
 
-		if ($icon !== null) {
-			$this->setParam('icon', $icon->getValue());
-
-		} else {
-			$this->setParam('icon', null);
-		}
+		$this->setParam('icon', $icon?->value ?? null);
 	}
 
 }

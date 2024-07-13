@@ -8,14 +8,17 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display\Parameters;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display\Parameters;
 
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use function intval;
+use function is_numeric;
+use function is_string;
 
 /**
  * Display precision parameter
@@ -31,27 +34,17 @@ use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
 trait TPrecision
 {
 
-	/**
-	 * @var int|null
-	 *
-	 * @IPubDoctrine\Crud(is={"writable"})
-	 */
-	protected ?int $precision = null;
+	#[IPubDoctrine\Crud(writable: true)]
+	protected int|null $precision = null;
 
-	/**
-	 * @return int
-	 */
 	public function getPrecision(): int
 	{
-		return (int) $this->getParam('precision', 2);
+		$value = $this->getParam('precision', 2);
+
+		return (is_string($value) || is_numeric($value)) && $value !== '' ? intval($value) : 2;
 	}
 
-	/**
-	 * @param int|null $precision
-	 *
-	 * @return void
-	 */
-	public function setPrecision(?int $precision): void
+	public function setPrecision(int|null $precision): void
 	{
 		$this->precision = $precision;
 

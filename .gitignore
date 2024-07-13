@@ -1,5 +1,9 @@
 .idea
+/dist
+/node_modules
 /vendor
-/composer.lock
-tests/*/output
-tests/tmp
+/var
+.DS_Store
+composer.lock
+yarn.lock
+tsconfig.tsbuildinfo

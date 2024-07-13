@@ -8,30 +8,19 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets;
+namespace FastyBird\Module\Ui\Entities\Widgets;
 
-/**
- * Actuator
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Entities
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- */
-abstract class Actuator extends Widget implements IActuator
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\MappedSuperclass]
+abstract class Actuator extends Widget
 {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getType(): string
-	{
-		return self::WIDGET_GROUP;
-	}
+	public const WIDGET_GROUP = 'actuator';
 
 }

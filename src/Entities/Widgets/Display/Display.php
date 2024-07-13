@@ -8,46 +8,37 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\UIModule\Entities;
+use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Module\Ui\Entities;
 use IPub\DoctrineTimestampable;
+use Nette\Utils;
 use Ramsey\Uuid;
-use Throwable;
 
-/**
- * @ORM\Entity
- * @ORM\Table(
- *     name="fb_ui_module_widgets_display",
- *     options={
- *       "collate"="utf8mb4_general_ci",
- *       "charset"="utf8mb4",
- *       "comment"="User interface widgets display settings"
- *     },
- *     indexes={
- *       @ORM\Index(name="display_type_idx", columns={"display_type"})
- *     }
- * )
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="display_type", type="string", length=15)
- * @ORM\DiscriminatorMap({
- *    "button"           = "FastyBird\UIModule\Entities\Widgets\Display\Button",
- *    "grouped_button"   = "FastyBird\UIModule\Entities\Widgets\Display\GroupedButton",
- *    "slider"           = "FastyBird\UIModule\Entities\Widgets\Display\Slider",
- *    "gauge"            = "FastyBird\UIModule\Entities\Widgets\Display\Gauge",
- *    "chart_graph"      = "FastyBird\UIModule\Entities\Widgets\Display\ChartGraph",
- *    "analog_value"     = "FastyBird\UIModule\Entities\Widgets\Display\AnalogValue",
- *    "digital_value"    = "FastyBird\UIModule\Entities\Widgets\Display\DigitalValue"
- * })
- * @ORM\MappedSuperclass
- */
-abstract class Display implements IDisplay
+#[ORM\Entity]
+#[ORM\Table(
+	name: 'fb_ui_module_widgets_display',
+	options: [
+		'collate' => 'utf8mb4_general_ci',
+		'charset' => 'utf8mb4',
+		'comment' => 'User interface widgets display settings',
+	],
+)]
+#[ORM\Index(columns: ['display_type'], name: 'display_type_idx')]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'display_type', type: 'string', length: 100)]
+#[ORM\MappedSuperclass]
+abstract class Display implements Entities\Entity,
+	Entities\EntityParams,
+	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
 {
 
 	use Entities\TEntity;
@@ -55,44 +46,69 @@ abstract class Display implements IDisplay
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 
-	/**
-	 * @var Uuid\UuidInterface
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid_binary", name="display_id")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
+	#[ORM\Id]
+	#[ORM\Column(name: 'display_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
+	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	/**
-	 * @var Entities\Widgets\IWidget
-	 *
-	 * @ORM\OneToOne(targetEntity="FastyBird\UIModule\Entities\Widgets\Widget", inversedBy="display")
-	 * @ORM\JoinColumn(name="widget_id", referencedColumnName="widget_id", unique=true, onDelete="CASCADE", nullable=false)
-	 */
-	protected Entities\Widgets\IWidget $widget;
+	#[ORM\OneToOne(
+		mappedBy: 'display',
+		targetEntity: Entities\Widgets\Widget::class,
+		cascade: ['persist', 'remove'],
+	)]
+	#[ORM\JoinColumn(
+		name: 'widget_id',
+		referencedColumnName: 'widget_id',
+		nullable: false,
+		onDelete: 'CASCADE',
+	)]
+	protected Entities\Widgets\Widget $widget;
 
-	/**
-	 * @param Entities\Widgets\IWidget $widget
-	 * @param Uuid\UuidInterface|null $id
-	 *
-	 * @throws Throwable
-	 */
 	public function __construct(
-		Entities\Widgets\IWidget $widget,
-		?Uuid\UuidInterface $id = null
-	) {
+		Entities\Widgets\Widget $widget,
+		Uuid\UuidInterface|null $id = null,
+	)
+	{
 		$this->id = $id ?? Uuid\Uuid::uuid4();
 
 		$this->widget = $widget;
 	}
 
+	abstract public static function getType(): string;
+
+	public function getWidget(): Entities\Widgets\Widget
+	{
+		return $this->widget;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getWidget(): Entities\Widgets\IWidget
+	public function toArray(): array
 	{
-		return $this->widget;
+		return [
+			'id' => $this->getId()->toString(),
+			'type' => static::getType(),
+			'params' => (array) $this->getParams(),
+
+			'widget' => $this->getWidget()->getId()->toString(),
+
+			'created_at' => $this->getCreatedAt()?->format(DateTimeInterface::ATOM),
+			'updated_at' => $this->getUpdatedAt()?->format(DateTimeInterface::ATOM),
+		];
+	}
+
+	public function getSource(): MetadataTypes\Sources\Source
+	{
+		return MetadataTypes\Sources\Module::UI;
+	}
+
+	/**
+	 * @throws Utils\JsonException
+	 */
+	public function __toString(): string
+	{
+		return Utils\Json::encode($this->toArray());
 	}
 
 }

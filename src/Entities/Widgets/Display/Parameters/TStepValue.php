@@ -8,14 +8,17 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display\Parameters;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display\Parameters;
 
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use function floatval;
+use function is_numeric;
+use function is_string;
 
 /**
  * Display step value parameter
@@ -31,27 +34,17 @@ use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
 trait TStepValue
 {
 
-	/**
-	 * @var float|null
-	 *
-	 * @IPubDoctrine\Crud(is={"writable"})
-	 */
-	protected ?float $stepValue = null;
+	#[IPubDoctrine\Crud(writable: true)]
+	protected float|null $stepValue = null;
 
-	/**
-	 * @return float
-	 */
 	public function getStepValue(): float
 	{
-		return (float) $this->getParam('stepValue', 0.1);
+		$value = $this->getParam('stepValue', 0.1);
+
+		return (is_string($value) || is_numeric($value)) && $value !== '' ? floatval($value) : 0.1;
 	}
 
-	/**
-	 * @param float|null $stepValue
-	 *
-	 * @return void
-	 */
-	public function setStepValue(?float $stepValue): void
+	public function setStepValue(float|null $stepValue): void
 	{
 		$this->stepValue = $stepValue;
 

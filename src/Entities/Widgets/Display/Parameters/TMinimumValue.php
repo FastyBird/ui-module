@@ -8,14 +8,17 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display\Parameters;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display\Parameters;
 
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
+use function floatval;
+use function is_numeric;
+use function is_string;
 
 /**
  * Display minimum value parameter
@@ -31,29 +34,17 @@ use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
 trait TMinimumValue
 {
 
-	/**
-	 * @var float|null
-	 *
-	 * @IPubDoctrine\Crud(is={"writable"})
-	 */
-	protected ?float $minimumValue = null;
+	#[IPubDoctrine\Crud(writable: true)]
+	protected float|null $minimumValue = null;
 
-	/**
-	 * @return float|null
-	 */
-	public function getMinimumValue(): ?float
+	public function getMinimumValue(): float|null
 	{
 		$value = $this->getParam('minimumValue');
 
-		return $value === null ? null : (float) $value;
+		return (is_string($value) || is_numeric($value)) && $value !== '' ? floatval($value) : null;
 	}
 
-	/**
-	 * @param float|null $minimumValue
-	 *
-	 * @return void
-	 */
-	public function setMinimumValue(?float $minimumValue): void
+	public function setMinimumValue(float|null $minimumValue): void
 	{
 		$this->minimumValue = $minimumValue;
 

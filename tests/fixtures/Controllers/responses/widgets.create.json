@@ -1,62 +1,68 @@
 {
-  "data" : {
-    "attributes" : {
-      "name" : "New analog widget",
-      "params" : []
+  "meta": {
+    "author": "FastyBird team",
+    "copyright": "FastyBird s.r.o"
+  },
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "links": {
+    "self": "/api/ui-module/v1/widgets"
+  },
+  "data": {
+    "type": "com.fastybird.ui-module/widget/analog-sensor",
+    "id": "329a7ac2-a309-4c39-9d97-c7ba69efe74f",
+    "attributes": {
+      "identifier": "new-analog-widget",
+      "name": "New analog widget"
     },
-    "id" : "329a7ac2-a309-4c39-9d97-c7ba69efe74f",
-    "links" : {
-      "self" : "/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f"
-    },
-    "relationships" : {
-      "data-sources" : {
-        "data" : [],
-        "links" : {
-          "related" : {
-            "href" : "/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/data-sources",
-            "meta" : {
-              "count" : 0
-            }
-          },
-          "self" : "/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/data-sources"
-        }
-      },
-      "display" : {
-        "data" : {
-          "id" : "46b53cf6-cfb8-430a-b900-2363f8b3e904",
-          "type" : "ui-module/widget-display-chart-graph"
+    "relationships": {
+      "display": {
+        "links": {
+          "self": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/display",
+          "related": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/display"
         },
-        "links" : {
-          "related" : "/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/display",
-          "self" : "/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/display"
+        "data": {
+          "type": "com.fastybird.ui-module/display/chart-graph",
+          "id": "46b53cf6-cfb8-430a-b900-2363f8b3e904"
         }
       },
-      "groups" : {
-        "data" : [
+      "data-sources": {
+        "links": {
+          "self": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/data-sources",
+          "related": {
+            "href": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/data-sources",
+            "meta": {
+              "count": 0
+            }
+          }
+        },
+        "data": []
+      },
+      "dashboards": {
+        "links": {
+          "self": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/dashboards"
+        },
+        "data": []
+      },
+      "groups": {
+        "links": {
+          "self": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/groups"
+        },
+        "data": [
           {
-            "id" : "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263",
-            "type" : "ui-module/group"
+            "type": "com.fastybird.ui-module/group",
+            "id": "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263"
           },
           {
-            "id" : "d721529e-dec6-47c8-8035-a3484070142b",
-            "type" : "ui-module/group"
+            "type": "com.fastybird.ui-module/group",
+            "id": "d721529e-dec6-47c8-8035-a3484070142b"
           }
-        ],
-        "links" : {
-          "self" : "/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f/relationships/groups"
-        }
+        ]
       }
     },
-    "type" : "ui-module/widget-analog-sensor"
-  },
-  "jsonapi" : {
-    "version" : "1.1"
-  },
-  "links" : {
-    "self" : "/v1/widgets"
-  },
-  "meta" : {
-    "author" : "FastyBird team",
-    "copyright" : "FastyBird s.r.o"
+    "links": {
+      "self": "/api/ui-module/v1/widgets/329a7ac2-a309-4c39-9d97-c7ba69efe74f"
+    }
   }
 }

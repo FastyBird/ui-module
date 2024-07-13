@@ -8,22 +8,28 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\UIModule\Entities;
+use FastyBird\Library\Application\Entities\Mapping as ApplicationMapping;
+use FastyBird\Module\Ui\Entities;
 use Ramsey\Uuid;
-use Throwable;
+use function array_merge;
 
 /**
  * @ORM\Entity
  */
-class Slider extends Display implements ISlider
+#[ORM\Entity]
+#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+class Slider extends Display implements Entities\Widgets\Display\Parameters\MinimumValue,
+	Entities\Widgets\Display\Parameters\MaximumValue,
+	Entities\Widgets\Display\Parameters\StepValue,
+	Entities\Widgets\Display\Parameters\Precision
 {
 
 	use Entities\Widgets\Display\Parameters\TMinimumValue;
@@ -31,27 +37,39 @@ class Slider extends Display implements ISlider
 	use Entities\Widgets\Display\Parameters\TStepValue;
 	use Entities\Widgets\Display\Parameters\TPrecision;
 
-	/**
-	 * @param Entities\Widgets\IWidget $widget
-	 * @param float $minimumValue
-	 * @param float $maximumValue
-	 * @param float $stepValue
-	 * @param Uuid\UuidInterface|null $id
-	 *
-	 * @throws Throwable
-	 */
+	public const TYPE = 'slider';
+
 	public function __construct(
-		Entities\Widgets\IWidget $widget,
+		Entities\Widgets\Widget $widget,
 		float $minimumValue,
 		float $maximumValue,
 		float $stepValue,
-		?Uuid\UuidInterface $id = null
-	) {
+		Uuid\UuidInterface|null $id = null,
+	)
+	{
 		parent::__construct($widget, $id);
 
 		$this->setMinimumValue($minimumValue);
 		$this->setMaximumValue($maximumValue);
 		$this->setStepValue($stepValue);
+	}
+
+	public static function getType(): string
+	{
+		return self::TYPE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function toArray(): array
+	{
+		return array_merge(parent::toArray(), [
+			'minimum_value' => $this->getMinimumValue(),
+			'maximum_value' => $this->getMaximumValue(),
+			'step_value' => $this->getStepValue(),
+			'precision' => $this->getPrecision(),
+		]);
 	}
 
 }

@@ -8,27 +8,36 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets;
+namespace FastyBird\Module\Ui\Entities\Widgets;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\UIModule\Entities;
+use FastyBird\Library\Application\Entities\Mapping as ApplicationMapping;
+use FastyBird\Module\Ui\Entities;
 
-/**
- * @ORM\Entity
- */
-class AnalogSensor extends Sensor implements IAnalogSensor
+#[ORM\Entity]
+#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+class AnalogSensor extends Sensor
 {
 
-	/** @var string[] */
-	protected array $allowedDisplay = [
-		Entities\Widgets\Display\IChartGraph::class,
-		Entities\Widgets\Display\IGauge::class,
-		Entities\Widgets\Display\IAnalogValue::class,
-	];
+	public const TYPE = 'analog-sensor';
+
+	public static function getType(): string
+	{
+		return self::TYPE;
+	}
+
+	public function getAllowedDisplayTypes(): array
+	{
+		return [
+			Entities\Widgets\Display\ChartGraph::class,
+			Entities\Widgets\Display\Gauge::class,
+			Entities\Widgets\Display\AnalogValue::class,
+		];
+	}
 
 }

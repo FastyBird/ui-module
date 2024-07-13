@@ -1,45 +1,45 @@
 #
 # Module DI configuration
 #
-# @license      More in LICENSE.md
-# @copyright    https://www.fastybird.com
-# @author       Adam Kadlec <adam.kadlec@fastybird.com>
-# @package      FastyBird:UIModule!
-# @subpackage   config
-# @since        0.1.0
+# @license        More in LICENSE.md
+# @copyright      https://www.fastybird.com
+# @author         Adam Kadlec <adam.kadlec@fastybird.com>
+# @package        FastyBird:UiModule!
+# @subpackage     config
+# @since          1.0.0
 #
-# @date         02.12.20
+# @date           08.07.24
 
 php:
     date.timezone: Europe/Prague
 
 extensions:
     contributteTranslation              : Contributte\Translation\DI\TranslationExtension
-    nettrineAnnotations                 : Nettrine\Annotations\DI\AnnotationsExtension
     nettrineCache                       : Nettrine\Cache\DI\CacheExtension
     nettrineDbal                        : Nettrine\DBAL\DI\DbalExtension
     nettrineOrm                         : Nettrine\ORM\DI\OrmExtension
-    nettrineOrmAnnotations              : Nettrine\ORM\DI\OrmAnnotationsExtension
+    nettrineOrmAttributes               : Nettrine\ORM\DI\OrmAttributesExtension
     nettrineOrmConsole                  : Nettrine\ORM\DI\OrmConsoleExtension
     nettrineOrmCache                    : Nettrine\ORM\DI\OrmCacheExtension
-    ipubDoctrineConsistence             : IPub\DoctrineConsistence\DI\DoctrineConsistenceExtension
     ipubDoctrineCrud                    : IPub\DoctrineCrud\DI\DoctrineCrudExtension
-    ipubDoctrineDynamicDiscriminatorMap : IPub\DoctrineDynamicDiscriminatorMap\DI\DoctrineDynamicDiscriminatorMapExtension
     ipubDoctrineTimestampable           : IPub\DoctrineTimestampable\DI\DoctrineTimestampableExtension
     ipubPhone                           : IPub\Phone\DI\PhoneExtension
     fbDateTimeFactory                   : FastyBird\DateTimeFactory\DI\DateTimeFactoryExtension
-    fbExchange                          : FastyBird\Exchange\DI\ExchangeExtension
     fbJsonApi                           : FastyBird\JsonApi\DI\JsonApiExtension
-    fbMetadata                          : FastyBird\Metadata\DI\MetadataExtension
     fbSimpleAuth                        : FastyBird\SimpleAuth\DI\SimpleAuthExtension
+    fbMetadataLibrary                   : FastyBird\Library\Metadata\DI\MetadataExtension
+    fbExchangeLibrary                   : FastyBird\Library\Exchange\DI\ExchangeExtension
 
 services:
-    - {factory: Symfony\Component\Console\Application}
     - {factory: IPub\SlimRouter\Http\ResponseFactory}
     -
         factory: IPub\SlimRouter\Routing\Router
         setup:
             - addMiddleware(@fbJsonApi.middlewares.jsonapi)
+
+    - {factory: FastyBird\Module\Ui\Tests\Tools\DateTimeProvider}
+
+    cache.storage: Nette\Caching\Storages\DevNullStorage
 
 contributteTranslation:
     locales:
@@ -48,7 +48,7 @@ contributteTranslation:
     localeResolvers: []
     dirs:
         - %appDir%/../src/Translations
-        - %appDir%/../vendor/fastybird/json-api/src/Translations
+        - %vendorDir%/fastybird/json-api/src/Translations
 
 nettrineDbal:
     connection:
@@ -61,7 +61,7 @@ nettrineDbal:
         user: root
         password: root
         charset: utf8
-        wrapperClass: \Tests\Tools\ConnectionWrapper
+        wrapperClass: \FastyBird\Module\Ui\Tests\Tools\ConnectionWrapper
 
         types:
             uuid_binary:
@@ -74,23 +74,19 @@ nettrineDbal:
         typesMapping:
             uuid_binary: binary
 
-nettrineAnnotations:
-    debug: %debugMode%
-    ignore:
-        - writable
-        - required
-        - module
-        - author
-        - subpackage
-        - package
-        - phpcsSuppress
+    debug:
+        panel: false
 
 nettrineOrm:
     configuration:
         proxyDir: %tempDir%/cache/doctrine.proxies
 
-nettrineOrmAnnotations:
+nettrineOrmAttributes:
     mapping: []
+
+fbMetadataLibrary:
+    documents:
+        mapping: []
 
 fbSimpleAuth:
     token:
@@ -100,6 +96,8 @@ fbSimpleAuth:
         middleware: true
         doctrine:
             mapping: true
+        nette:
+            application: true
     services:
         identity: true
 

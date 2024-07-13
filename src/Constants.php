@@ -8,12 +8,12 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UiModule!
  * @subpackage     common
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           18.03.20
  */
 
-namespace FastyBird\UIModule;
+namespace FastyBird\Module\Ui;
 
 /**
  * Service constants
@@ -31,19 +31,31 @@ final class Constants
 	 */
 
 	public const ROUTE_NAME_DASHBOARDS = 'dashboards';
+
 	public const ROUTE_NAME_DASHBOARD = 'dashboard';
+
 	public const ROUTE_NAME_DASHBOARD_RELATIONSHIP = 'dashboard.relationship';
-	public const ROUTE_NAME_DASHBOARD_GROUPS = 'dashboard.groups';
-	public const ROUTE_NAME_DASHBOARD_GROUP = 'dashboard.group';
-	public const ROUTE_NAME_DASHBOARD_GROUP_RELATIONSHIP = 'dashboard.group.relationship';
+
+	public const ROUTE_NAME_GROUPS = 'dashboard.groups';
+
+	public const ROUTE_NAME_GROUP = 'dashboard.group';
+
+	public const ROUTE_NAME_GROUP_RELATIONSHIP = 'dashboard.group.relationship';
+
 	public const ROUTE_NAME_WIDGETS = 'widgets';
+
 	public const ROUTE_NAME_WIDGET = 'widget';
+
 	public const ROUTE_NAME_WIDGET_RELATIONSHIP = 'widget.relationship';
 
 	public const ROUTE_NAME_WIDGET_DISPLAY = 'widget.display';
+
 	public const ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP = 'widget.display.relationship';
+
 	public const ROUTE_NAME_WIDGET_DATA_SOURCES = 'widget.widget.data-sources';
+
 	public const ROUTE_NAME_WIDGET_DATA_SOURCE = 'widget.widget.data-source';
+
 	public const ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP = 'widget.widget.data-source.relationship';
 
 }

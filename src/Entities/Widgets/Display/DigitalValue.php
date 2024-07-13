@@ -8,19 +8,26 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\Display;
+namespace FastyBird\Module\Ui\Entities\Widgets\Display;
 
 use Doctrine\ORM\Mapping as ORM;
+use FastyBird\Library\Application\Entities\Mapping as ApplicationMapping;
 
-/**
- * @ORM\Entity
- */
-class DigitalValue extends Display implements IDigitalValue
+#[ORM\Entity]
+#[ApplicationMapping\DiscriminatorEntry(name: self::TYPE)]
+class DigitalValue extends Display
 {
+
+	public const TYPE = 'digital-value';
+
+	public static function getType(): string
+	{
+		return self::TYPE;
+	}
 
 }

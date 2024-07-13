@@ -8,16 +8,24 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities;
+namespace FastyBird\Module\Ui\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use Nette\Utils;
+use function array_key_exists;
+use function array_merge;
+use function array_pop;
+use function count;
+use function explode;
+use function is_array;
+use function is_string;
+use function trim;
 
 /**
  * Entity params field trait
@@ -30,39 +38,33 @@ use Nette\Utils;
 trait TEntityParams
 {
 
-	/**
-	 * @var mixed[]|null
-	 *
-	 * @IPubDoctrine\Crud(is="writable")
-	 * @ORM\Column(type="json", name="params", nullable=true)
-	 */
-	protected ?array $params = null;
+	/** @var array<string, mixed>|null */
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\Column(name: 'params', type: 'json', nullable: true)]
+	protected array|null $params = null;
 
-	/**
-	 * @return Utils\ArrayHash
-	 */
 	public function getParams(): Utils\ArrayHash
 	{
 		return $this->params !== null ? Utils\ArrayHash::from($this->params) : Utils\ArrayHash::from([]);
 	}
 
 	/**
-	 * @param mixed[] $params
+	 * @param array<string, mixed> $params
 	 *
-	 * @return void
+	 * @throws Utils\JsonException
 	 */
 	public function setParams(array $params): void
 	{
-		$this->params = $this->params !== null ? array_merge($this->params, $params) : $params;
+		$toUpdate = $this->params !== null ? array_merge($this->params, $params) : $params;
+		/** @var array<string, mixed>|false $toUpdate */
+		$toUpdate = Utils\Json::decode(Utils\Json::encode($toUpdate), forceArrays: true);
+
+		if (is_array($toUpdate)) {
+			$this->params = $toUpdate;
+		}
 	}
 
-	/**
-	 * @param string $key
-	 * @param mixed|null $value
-	 *
-	 * @return void
-	 */
-	public function setParam(string $key, $value = null): void
+	public function setParam(string $key, mixed $value = null): void
 	{
 		if ($this->params === null) {
 			$this->params = [];
@@ -90,19 +92,14 @@ trait TEntityParams
 		} else {
 			if ($value === null) {
 				unset($this->params[$parts[0]]);
+
 			} else {
 				$this->params[$parts[0]] = $value;
 			}
 		}
 	}
 
-	/**
-	 * @param string $key
-	 * @param mixed|null $default
-	 *
-	 * @return mixed|null
-	 */
-	public function getParam(string $key, $default = null)
+	public function getParam(string $key, mixed $default = null): mixed
 	{
 		if ($this->params === null) {
 			return $default;
@@ -116,18 +113,13 @@ trait TEntityParams
 
 				foreach ($parts as $part) {
 					if (isset($val)) {
-						if (isset($val[$part])) {
-							$val = $val[$part];
-						} else {
-							$val = null;
-						}
+						$val = is_array($val) && array_key_exists($part, $val) ? $val[$part] : null;
 					} else {
 						$val = $this->params[$part] ?? $default;
 					}
 				}
 
 				return $val ?? $default;
-
 			} else {
 				return is_string($this->params[$parts[0]]) ? trim($this->params[$parts[0]]) : $this->params[$parts[0]];
 			}

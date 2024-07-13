@@ -8,33 +8,37 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Groups;
+namespace FastyBird\Module\Ui\Entities\Groups;
 
+use DateTimeInterface;
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\UIModule\Entities;
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Module\Ui\Entities;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use IPub\DoctrineTimestampable;
+use Nette\Utils;
 use Ramsey\Uuid;
-use Throwable;
+use function array_map;
 
-/**
- * @ORM\Entity
- * @ORM\Table(
- *     name="fb_ui_module_dashboards_groups",
- *     options={
- *       "collate"="utf8mb4_general_ci",
- *       "charset"="utf8mb4",
- *       "comment"="Dashboard groups"
- *     }
- * )
- */
-class Group implements IGroup
+#[ORM\Entity]
+#[ORM\Table(
+	name: 'fb_ui_module_groups',
+	options: [
+		'collate' => 'utf8mb4_general_ci',
+		'charset' => 'utf8mb4',
+		'comment' => 'Widget groups',
+	],
+)]
+#[ORM\Index(columns: ['group_name'], name: 'group_name_idx')]
+class Group implements Entities\Entity,
+	Entities\EntityParams,
+	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
 {
 
 	use Entities\TEntity;
@@ -42,145 +46,99 @@ class Group implements IGroup
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 
-	/**
-	 * @var Uuid\UuidInterface
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid_binary", name="group_id")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
-	protected Uuid\UuidInterface $id;
+	#[ORM\Id]
+	#[ORM\Column(name: 'group_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
+	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
+	private Uuid\UuidInterface $id;
 
-	/**
-	 * @var string
-	 *
-	 * @IPubDoctrine\Crud(is={"required", "writable"})
-	 * @ORM\Column(type="string", name="group_name", length=50, nullable=false)
-	 */
+	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[ORM\Column(name: 'group_identifier', type: 'string', nullable: false)]
+	private string $identifier;
+
+	#[IPubDoctrine\Crud(required: true, writable: true)]
+	#[ORM\Column(name: 'group_name', type: 'string', nullable: false)]
 	private string $name;
 
-	/**
-	 * @var string|null
-	 *
-	 * @IPubDoctrine\Crud(is="writable")
-	 * @ORM\Column(type="text", name="group_comment", nullable=true, options={"default": null})
-	 */
-	private ?string $comment = null;
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\Column(name: 'group_comment', type: 'text', nullable: true, options: ['default' => null])]
+	private string|null $comment = null;
 
-	/**
-	 * @var int
-	 *
-	 * @IPubDoctrine\Crud(is="writable")
-	 * @ORM\Column(type="integer", name="group_priority", length=15, nullable=false, options={"default" = 0})
-	 */
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\Column(name: 'group_priority', type: 'integer', nullable: false, options: ['default' => 0])]
 	private int $priority = 0;
 
-	/**
-	 * @var Common\Collections\Collection<int, Entities\Widgets\IWidget>
-	 *
-	 * @IPubDoctrine\Crud(is={"writable"})
-	 * @ORM\ManyToMany(targetEntity="FastyBird\UIModule\Entities\Widgets\Widget", inversedBy="groups")
-	 * @ORM\JoinTable(name="fb_ui_module_widgets_groups",
-	 *    joinColumns={
-	 *       @ORM\JoinColumn(name="group_id", referencedColumnName="group_id", onDelete="CASCADE")
-	 *    },
-	 *    inverseJoinColumns={
-	 *       @ORM\JoinColumn(name="widget_id", referencedColumnName="widget_id", onDelete="CASCADE")
-	 *    }
-	 * )
-	 */
+	/** @var Common\Collections\Collection<int, Entities\Widgets\Widget> */
+	#[IPubDoctrine\Crud(writable: true)]
+	#[ORM\ManyToMany(targetEntity: Entities\Widgets\Widget::class, inversedBy: 'groups')]
+	#[ORM\JoinTable(
+		name: 'fb_ui_module_widgets_groups',
+		joinColumns: [
+			new ORM\JoinColumn(
+				name: 'group_id',
+				referencedColumnName: 'group_id',
+				onDelete: 'CASCADE',
+			),
+		],
+		inverseJoinColumns: [
+			new ORM\JoinColumn(
+				name: 'widget_id',
+				referencedColumnName: 'widget_id',
+				onDelete: 'CASCADE',
+			),
+		],
+	)]
 	private Common\Collections\Collection $widgets;
 
-	/**
-	 * @var Entities\Dashboards\IDashboard
-	 *
-	 * @IPubDoctrine\Crud(is="required")
-	 * @ORM\ManyToOne(targetEntity="FastyBird\UIModule\Entities\Dashboards\Dashboard", inversedBy="groups")
-	 * @ORM\JoinColumn(name="dashboard_id", referencedColumnName="dashboard_id", onDelete="CASCADE", nullable=false)
-	 */
-	private Entities\Dashboards\IDashboard $dashboard;
-
-	/**
-	 * @param Entities\Dashboards\IDashboard $dashboard
-	 * @param string $name
-	 * @param Uuid\UuidInterface|null $id
-	 *
-	 * @throws Throwable
-	 */
 	public function __construct(
-		Entities\Dashboards\IDashboard $dashboard,
+		string $identifier,
 		string $name,
-		?Uuid\UuidInterface $id = null
-	) {
+		Uuid\UuidInterface|null $id = null,
+	)
+	{
 		$this->id = $id ?? Uuid\Uuid::uuid4();
 
-		$this->dashboard = $dashboard;
-
+		$this->identifier = $identifier;
 		$this->name = $name;
 
 		$this->widgets = new Common\Collections\ArrayCollection();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	public function getIdentifier(): string
+	{
+		return $this->identifier;
+	}
+
 	public function getName(): string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function setName(string $name): void
 	{
 		$this->name = $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getComment(): ?string
+	public function getComment(): string|null
 	{
 		return $this->comment;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function setComment(?string $comment = null): void
+	public function setComment(string|null $comment = null): void
 	{
 		$this->comment = $comment;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getPriority(): int
 	{
 		return $this->priority;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function setPriority(int $priority): void
 	{
 		$this->priority = $priority;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDashboard(): Entities\Dashboards\IDashboard
-	{
-		return $this->dashboard;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function addWidget(Entities\Widgets\IWidget $widget): void
+	public function addWidget(Entities\Widgets\Widget $widget): void
 	{
 		// Check if collection does not contain inserting entity
 		if (!$this->widgets->contains($widget)) {
@@ -190,7 +148,7 @@ class Group implements IGroup
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return array<Entities\Widgets\Widget>
 	 */
 	public function getWidgets(): array
 	{
@@ -198,45 +156,67 @@ class Group implements IGroup
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param array<Entities\Widgets\Widget> $widgets
 	 */
 	public function setWidgets(array $widgets = []): void
 	{
 		$this->widgets = new Common\Collections\ArrayCollection();
 
-		// Process all passed entities...
-		/** @var Entities\Widgets\IWidget $entity */
 		foreach ($widgets as $entity) {
-			if (!$this->widgets->contains($entity)) {
-				// ...and assign them to collection
-				$this->widgets->add($entity);
-			}
+			$this->widgets->add($entity);
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getWidget(string $id): ?Entities\Widgets\IWidget
+	public function getWidget(string $id): Entities\Widgets\Widget|null
 	{
 		$found = $this->widgets
-			->filter(function (Entities\Widgets\IWidget $row) use ($id): bool {
-				return $id === $row->getPlainId();
-			});
+			->filter(static fn (Entities\Widgets\Widget $row): bool => $id === $row->getId()->toString());
 
 		return $found->isEmpty() ? null : $found->first();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function removeWidget(Entities\Widgets\IWidget $widget): void
+	public function removeWidget(Entities\Widgets\Widget $widget): void
 	{
 		// Check if collection contain removing entity...
 		if ($this->widgets->contains($widget)) {
 			// ...and remove it from collection
 			$this->widgets->removeElement($widget);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function toArray(): array
+	{
+		return [
+			'id' => $this->getId()->toString(),
+			'identifier' => $this->getIdentifier(),
+			'name' => $this->getName(),
+			'comment' => $this->getComment(),
+			'priority' => $this->getPriority(),
+
+			'widgets' => array_map(
+				static fn (Entities\Widgets\Widget $widget): string => $widget->getId()->toString(),
+				$this->getWidgets(),
+			),
+
+			'created_at' => $this->getCreatedAt()?->format(DateTimeInterface::ATOM),
+			'updated_at' => $this->getUpdatedAt()?->format(DateTimeInterface::ATOM),
+		];
+	}
+
+	public function getSource(): MetadataTypes\Sources\Source
+	{
+		return MetadataTypes\Sources\Module::UI;
+	}
+
+	/**
+	 * @throws Utils\JsonException
+	 */
+	public function __toString(): string
+	{
+		return Utils\Json::encode($this->toArray());
 	}
 
 }

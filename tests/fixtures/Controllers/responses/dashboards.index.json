@@ -1,82 +1,75 @@
 {
-  "data" : [
+  "meta": {
+    "author": "FastyBird team",
+    "copyright": "FastyBird s.r.o"
+  },
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "links": {
+    "self": "/api/ui-module/v1/dashboards"
+  },
+  "data": [
     {
-      "attributes" : {
-        "comment" : null,
-        "name" : "Main dashboard",
-        "params" : [],
-        "priority" : 0
+      "type": "com.fastybird.ui-module/dashboard",
+      "id": "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
+      "attributes": {
+        "identifier": "main-dashboard",
+        "name": "Main dashboard",
+        "comment": null,
+        "priority": 0
       },
-      "id" : "272379d8-8351-44b6-ad8d-73a0abcb7f9c",
-      "links" : {
-        "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c"
-      },
-      "relationships" : {
-        "groups" : {
-          "data" : [
+      "relationships": {
+        "widgets": {
+          "links": {
+            "self": "/api/ui-module/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/relationships/widgets",
+            "related": "/com.fastybird.ui-module/dashboard/272379d8-8351-44b6-ad8d-73a0abcb7f9c/widgets"
+          },
+          "data": [
             {
-              "id" : "c74a16b1-67f4-4ffd-812a-9e5ec4bd5263",
-              "type" : "ui-module/group"
+              "type": "com.fastybird.ui-module/widget/analog-sensor",
+              "id": "15553443-4564-454d-af04-0dfeef08aa96"
             },
             {
-              "id" : "d721529e-dec6-47c8-8035-a3484070142b",
-              "type" : "ui-module/group"
+              "type": "com.fastybird.ui-module/widget/analog-actuator",
+              "id": "1d600901-54e7-43ee-8f5d-a9e22663ddd7"
+            },
+            {
+              "type": "com.fastybird.ui-module/widget/digital-actuator",
+              "id": "5626e7a1-c42c-4a31-9b5d-848e3cf0e82a"
+            },
+            {
+              "type": "com.fastybird.ui-module/widget/digital-actuator",
+              "id": "9a914732-98dc-47f6-bfd1-9d81ca9f8cb6"
             }
-          ],
-          "links" : {
-            "related" : {
-              "href" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/groups",
-              "meta" : {
-                "count" : 2
-              }
-            },
-            "self" : "/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c/relationships/groups"
-          }
+          ]
         }
       },
-      "type" : "ui-module/dashboard"
+      "links": {
+        "self": "/api/ui-module/v1/dashboards/272379d8-8351-44b6-ad8d-73a0abcb7f9c"
+      }
     },
     {
-      "attributes" : {
-        "comment" : null,
-        "name" : "First floor",
-        "params" : [],
-        "priority" : 0
+      "type": "com.fastybird.ui-module/dashboard",
+      "id": "ab369e71-ada6-4d1a-a5a8-b6ee5cd58296",
+      "attributes": {
+        "identifier": "first-floor",
+        "name": "First floor",
+        "comment": null,
+        "priority": 0
       },
-      "id" : "ab369e71-ada6-4d1a-a5a8-b6ee5cd58296",
-      "links" : {
-        "self" : "/v1/dashboards/ab369e71-ada6-4d1a-a5a8-b6ee5cd58296"
-      },
-      "relationships" : {
-        "groups" : {
-          "data" : [
-            {
-              "id" : "89f4a14f-7f78-4216-99b8-584ab9229f1c",
-              "type" : "ui-module/group"
-            }
-          ],
-          "links" : {
-            "related" : {
-              "href" : "/v1/dashboards/ab369e71-ada6-4d1a-a5a8-b6ee5cd58296/groups",
-              "meta" : {
-                "count" : 1
-              }
-            },
-            "self" : "/v1/dashboards/ab369e71-ada6-4d1a-a5a8-b6ee5cd58296/relationships/groups"
-          }
+      "relationships": {
+        "widgets": {
+          "links": {
+            "self": "/api/ui-module/v1/dashboards/ab369e71-ada6-4d1a-a5a8-b6ee5cd58296/relationships/widgets",
+            "related": "/com.fastybird.ui-module/dashboard/ab369e71-ada6-4d1a-a5a8-b6ee5cd58296/widgets"
+          },
+          "data": []
         }
       },
-      "type" : "ui-module/dashboard"
+      "links": {
+        "self": "/api/ui-module/v1/dashboards/ab369e71-ada6-4d1a-a5a8-b6ee5cd58296"
+      }
     }
-  ],
-  "jsonapi" : {
-    "version" : "1.1"
-  },
-  "links" : {
-    "self" : "/v1/dashboards"
-  },
-  "meta" : {
-    "author" : "FastyBird team",
-    "copyright" : "FastyBird s.r.o"
-  }
+  ]
 }

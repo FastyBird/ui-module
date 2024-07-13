@@ -8,41 +8,38 @@
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  * @package        FastyBird:UIModule!
  * @subpackage     Entities
- * @since          0.1.0
+ * @since          1.0.0
  *
  * @date           25.05.20
  */
 
-namespace FastyBird\UIModule\Entities\Widgets\DataSources;
+namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\UIModule\Entities;
-use IPub\DoctrineCrud\Mapping\Annotation as IPubDoctrine;
+use FastyBird\Library\Metadata\Types as MetadataTypes;
+use FastyBird\Module\Ui\Entities;
+use IPub\DoctrineCrud\Mapping\Attribute as IPubDoctrine;
 use IPub\DoctrineTimestampable;
+use Nette\Utils;
 use Ramsey\Uuid;
-use Throwable;
 
-/**
- * @ORM\Entity
- * @ORM\Table(
- *     name="fb_ui_module_widgets_data_sources",
- *     options={
- *       "collate"="utf8mb4_general_ci",
- *       "charset"="utf8mb4",
- *       "comment"="User interface widgets data sources"
- *     },
- *     indexes={
- *       @ORM\Index(name="data_source_type_idx", columns={"data_source_type"})
- *     }
- * )
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="data_source_type", type="string", length=25)
- * @ORM\DiscriminatorMap({
- *    "channel_property" = "FastyBird\UIModule\Entities\Widgets\DataSources\ChannelPropertyDataSource"
- * })
- * @ORM\MappedSuperclass
- */
-abstract class DataSource implements IDataSource
+#[ORM\Entity]
+#[ORM\Table(
+	name: 'fb_ui_module_widgets_data_sources',
+	options: [
+		'collate' => 'utf8mb4_general_ci',
+		'charset' => 'utf8mb4',
+		'comment' => 'User interface widgets data sources',
+	],
+)]
+#[ORM\Index(columns: ['data_source_type'], name: 'data_source_type_idx')]
+#[ORM\InheritanceType('JOINED')]
+#[ORM\DiscriminatorColumn(name: 'data_source_type', type: 'string', length: 100)]
+#[ORM\MappedSuperclass]
+abstract class DataSource implements Entities\Entity,
+	Entities\EntityParams,
+	DoctrineTimestampable\Entities\IEntityCreated, DoctrineTimestampable\Entities\IEntityUpdated
 {
 
 	use Entities\TEntity;
@@ -50,34 +47,30 @@ abstract class DataSource implements IDataSource
 	use DoctrineTimestampable\Entities\TEntityCreated;
 	use DoctrineTimestampable\Entities\TEntityUpdated;
 
-	/**
-	 * @var Uuid\UuidInterface
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid_binary", name="data_source_id")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
+	#[ORM\Id]
+	#[ORM\Column(name: 'data_source_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
+	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]
 	protected Uuid\UuidInterface $id;
 
-	/**
-	 * @var Entities\Widgets\IWidget
-	 *
-	 * @IPubDoctrine\Crud(is="required")
-	 * @ORM\ManyToOne(targetEntity="FastyBird\UIModule\Entities\Widgets\Widget", inversedBy="dataSources")
-	 * @ORM\JoinColumn(name="widget_id", referencedColumnName="widget_id", onDelete="CASCADE")
-	 */
-	protected Entities\Widgets\IWidget $widget;
+	#[IPubDoctrine\Crud(required: true)]
+	#[ORM\ManyToOne(
+		targetEntity: Entities\Widgets\Widget::class,
+		cascade: ['persist'],
+		inversedBy: 'dataSources',
+	)]
+	#[ORM\JoinColumn(
+		name: 'widget_id',
+		referencedColumnName: 'widget_id',
+		nullable: false,
+		onDelete: 'CASCADE',
+	)]
+	protected Entities\Widgets\Widget $widget;
 
-	/**
-	 * @param Entities\Widgets\IWidget $widget
-	 * @param Uuid\UuidInterface|null $id
-	 *
-	 * @throws Throwable
-	 */
 	public function __construct(
-		Entities\Widgets\IWidget $widget,
-		?Uuid\UuidInterface $id = null
-	) {
+		Entities\Widgets\Widget $widget,
+		Uuid\UuidInterface|null $id = null,
+	)
+	{
 		$this->id = $id ?? Uuid\Uuid::uuid4();
 
 		$this->widget = $widget;
@@ -85,12 +78,41 @@ abstract class DataSource implements IDataSource
 		$widget->addDataSource($this);
 	}
 
+	abstract public static function getType(): string;
+
+	public function getWidget(): Entities\Widgets\Widget
+	{
+		return $this->widget;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getWidget(): Entities\Widgets\IWidget
+	public function toArray(): array
 	{
-		return $this->widget;
+		return [
+			'id' => $this->getId()->toString(),
+			'type' => static::getType(),
+			'params' => (array) $this->getParams(),
+
+			'widget' => $this->getWidget()->getId()->toString(),
+
+			'created_at' => $this->getCreatedAt()?->format(DateTimeInterface::ATOM),
+			'updated_at' => $this->getUpdatedAt()?->format(DateTimeInterface::ATOM),
+		];
+	}
+
+	public function getSource(): MetadataTypes\Sources\Source
+	{
+		return MetadataTypes\Sources\Module::UI;
+	}
+
+	/**
+	 * @throws Utils\JsonException
+	 */
+	public function __toString(): string
+	{
+		return Utils\Json::encode($this->toArray());
 	}
 
 }
